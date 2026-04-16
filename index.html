@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agrupamento 439 – São João Baptista de Vila do Conde. 50 anos de escutismo, aventura, serviço e amizade. CNE - Corpo Nacional de Escutas.">
+  <meta name="keywords" content="escuteiros, escutismo, agrupamento 439, Vila do Conde, CNE, lobitos, exploradores, pioneiros, caminheiros">
+  <meta property="og:title" content="Agrupamento 439 – São João Baptista de Vila do Conde">
+  <meta property="og:description" content="50 anos a formar jovens para a vida através da aventura, serviço e amizade.">
+  <meta property="og:type" content="website">
+  <title>Agrupamento 439 – Escuteiros de Vila do Conde</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css?v=2">
+  
+  <!-- i18n -->
+  <script src="js/i18n.js"></script>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="assets/logo.png" alt="Logo Agrupamento 439">
+        <div class="nav-brand-text">Agrupamento <span>439</span></div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#inicio" class="active" data-i18n="nav_inicio">Início</a>
+        <a href="#seccoes" data-i18n="nav_seccoes">Secções</a>
+        <a href="#calendario" data-i18n="nav_calendario">Calendário</a>
+        <a href="#cronologia" data-i18n="nav_cronologia">Cronologia</a>
+        <a href="#caixatempo" data-i18n="nav_caixatempo">Caixa do Tempo</a>
+        <a href="#visitantes" data-i18n="nav_visitantes">Visitantes</a>
+        <a href="#cancioneiro" data-i18n="nav_cancioneiro">Cancioneiro</a>
+        <a href="#inscricao" data-i18n="nav_contactos">Contactos</a>
+      </div>
+
+
+      <div class="nav-controls">
+        <button class="nav-toggle-btn lang-toggle" id="langToggle" onclick="toggleLang()" title="Change Language">EN</button>
+        <button class="nav-toggle-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">☀️</button>
+        <a href="admin.html" class="nav-toggle-btn" title="Admin" style="text-decoration:none; font-size:0.85rem;">⚙️</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-particles"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero_badge">🏕️ 50 Anos de Escutismo em Vila do Conde</div>
+
+      <!-- Foto do Agrupamento -->
+      <div class="hero-group-photo-wrap">
+        <img src="assets/imagem.jpg" alt="Foto do Agrupamento 439" class="hero-group-photo">
+        <div class="hero-group-photo-overlay"></div>
+      </div>
+
+      <img src="assets/logo.png" alt="Flor de Lis" class="hero-logo">
+      <h1>
+        <span data-i18n="hero_title_1">Agrupamento</span>
+        <span class="highlight" data-i18n="hero_title_2">439</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">São João Baptista de Vila do Conde — Desde 1975, a formar jovens para a vida através da aventura, do serviço e da amizade.</p>
+
+      <div class="hero-cta">
+        <a href="#inscricao" class="btn btn-primary" data-i18n="hero_cta_join">Quero ser Escuteiro</a>
+        <a href="#seccoes" class="btn btn-outline" data-i18n="hero_cta_learn">Saber Mais</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number" data-target="50" data-suffix="+">0</div>
+          <div class="stat-label" data-i18n="stat_years">Anos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="500" data-suffix="+">0</div>
+          <div class="stat-label" data-i18n="stat_scouts">Escuteiros Formados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="200" data-suffix="+">0</div>
+          <div class="stat-label" data-i18n="stat_camps">Acampamentos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="1000" data-suffix="+">0</div>
+          <div class="stat-label" data-i18n="stat_nights">Noites ao Relento</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="hero-scroll-icon"></div>
+    </div>
+  </section>
+
+  <!-- ============ NEWS ============ -->
+  <section class="section" id="noticias">
+    <div class="container">
+      <h2 class="section-title reveal" data-i18n="news_title">Notícias & <span class="gold">Avisos</span></h2>
+      <p class="section-subtitle reveal" data-i18n="news_subtitle">As últimas novidades do nosso agrupamento</p>
+
+      <div class="news-filters reveal">
+        <button class="filter-btn active" onclick="filterNews('all')" data-i18n="filter_all">Todos</button>
+        <button class="filter-btn" onclick="filterNews('geral')" data-i18n="filter_geral">Geral</button>
+        <button class="filter-btn" onclick="filterNews('lobitos')">Lobitos</button>
+        <button class="filter-btn" onclick="filterNews('exploradores')">Exploradores</button>
+        <button class="filter-btn" onclick="filterNews('pioneiros')">Pioneiros</button>
+        <button class="filter-btn" onclick="filterNews('caminheiros')">Caminheiros</button>
+      </div>
+
+      <div class="news-grid" id="newsGrid">
+        <!-- Notícias serão carregadas dinamicamente aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTIONS ============ -->
+  <section class="section" id="seccoes" style="background: var(--bg-secondary);">
+    <div class="container">
+      <!-- Descobre o Escutismo (Saiba Mais) -->
+      <div class="scouting-intro-grid reveal" style="padding-bottom: var(--s-2xl);">
+        <a href="https://escutismo.pt/perguntas-frequentes/" target="_blank" class="scouting-intro-card">
+          <div class="scouting-intro-icon">❓</div>
+          <h4 data-i18n="info_faq">Perguntas Frequentes</h4>
+          <span data-i18n="info_faq_desc">Tudo o que precisas de saber</span>
+        </a>
+        <a href="https://escutismo.pt/historia/" target="_blank" class="scouting-intro-card">
+          <div class="scouting-intro-icon">📜</div>
+          <h4 data-i18n="info_history">A Nossa História</h4>
+          <span data-i18n="info_history_desc">Um legado de aventura</span>
+        </a>
+        <a href="https://escutismo.pt/porque-somos-unicos/" target="_blank" class="scouting-intro-card">
+          <div class="scouting-intro-icon">✨</div>
+          <h4 data-i18n="info_unique">Porque somos únicos</h4>
+          <span data-i18n="info_unique_desc">O segredo do método</span>
+        </a>
+        <a href="https://escutismo.pt/missao-e-visao/" target="_blank" class="scouting-intro-card">
+          <div class="scouting-intro-icon">🏹</div>
+          <h4 data-i18n="info_mission">Missão e Visão</h4>
+          <span data-i18n="info_mission_desc">Construir um mundo melhor</span>
+        </a>
+      </div>
+      <h2 class="section-title reveal" data-i18n="sections_title">As Nossas <span class="gold">Secções</span></h2>
+      <p class="section-subtitle reveal" data-i18n="sections_subtitle">Quatro faixas etárias, quatro grandes aventuras. Descobre a tua.</p>
+
+      <div class="section-tabs reveal">
+        <button class="section-tab active" data-section="lobitos">🐺 Lobitos</button>
+        <button class="section-tab" data-section="exploradores">🧭 Exploradores</button>
+        <button class="section-tab" data-section="pioneiros">🔥 Pioneiros</button>
+        <button class="section-tab" data-section="caminheiros">🥾 Caminheiros</button>
+      </div>
+
+      <!-- LOBITOS -->
+      <div class="section-panel active" id="panel-lobitos">
+        <div class="section-info">
+          <div class="age-range" style="background:rgba(var(--c-primary-rgb),0.15); color:var(--c-primary);" data-i18n="lobitos_age">6 aos 10 anos</div>
+          <h2 style="color: var(--c-primary); font-family: var(--f-heading); margin-bottom: 0.5rem;">🐺 <span data-i18n="lobitos_name">Lobitos</span></h2>
+          <p><strong>Alcateia nº 164 – S. Francisco de Assis</strong></p>
+          <p data-i18n="lobitos_desc">A Alcateia nº 164 – S. Francisco de Assis é o primeiro passo no escutismo. Aqui os mais novos aprendem, brincam e crescem através do imaginário do Livro da Selva de Rudyard Kipling, desenvolvendo valores como a amizade, a partilha e o respeito pela natureza.</p>
+
+          <!-- New Info List -->
+          <ul class="scout-info-list" style="margin-top: 1.5rem;">
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🐺</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_1">O grupo de Lobitos designa-se por Alcateia...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">👥</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_2">Dentro da Alcateia, os Lobitos dividem-se em Bandos...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🎨</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_3">Os Bandos distinguem-se por cores: Branco, Cinzento, Preto, Castanho e Ruivo...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏠</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_4">O local das reuniões dos Lobitos chama-se Covil;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🕊️</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_5">O patrono da I Secção é S. Francisco de Assis...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">☀️</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_6">A cor da Secção é o Amarelo (sol dourado);</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏹</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_7">A grande atividade dos Lobitos é a Caçada...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🕵️</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_8">O Jogo de Pista é a atividade típica da secção;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">📖</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_9">Equipa de Animação liderada pelo Àquelá...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">💪</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_10">A divisa dos Lobitos é “Da melhor vontade”...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🐾</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_11">Ao entrar na Alcateia, são denominados por Pata-Tenras;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🐯</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_12">Vivem a história do Livro da Selva (Máugli);</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">📜</span>
+              <span class="scout-info-text" data-i18n="lobitos_info_13">Seguem a Lei da Alcateia...</span>
+            </li>
+          </ul>
+
+          <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="#inscricao" class="btn btn-primary btn-sm" data-i18n="lobitos_cta">Quero inscrever-me!</a>
+            <a href="https://escutismo.pt/lobitos-6-aos-10-anos/" target="_blank" class="btn btn-outline btn-sm" data-i18n="lobitos_learn_more">Saber mais no CNE</a>
+            <button class="btn btn-outline btn-sm" onclick="openSongModal('s10')" data-i18n="hymn_cta">Ouve o nosso hino 🎵</button>
+          </div>
+        </div>
+        <div class="uniform-infographic-wrap">
+          <img src="assets/uniforme_lobito.png" alt="Infográfico Uniforme Lobito" class="uniform-infographic">
+        </div>
+      </div>
+
+      <!-- EXPLORADORES -->
+      <div class="section-panel" id="panel-exploradores">
+        <div class="section-info">
+          <div class="age-range" style="background:rgba(var(--c-primary-rgb),0.15); color:var(--c-primary);" data-i18n="exploradores_age">10 aos 14 anos</div>
+          <h2 style="color: var(--c-primary); font-family: var(--f-heading); margin-bottom: 0.5rem;">🧭 <span data-i18n="exploradores_name">Exploradores</span></h2>
+          <p><strong>Grupo Explorador nº 164 – São João Baptista</strong></p>
+          <p data-i18n="exploradores_desc">O Grupo Explorador nº 164 – São João Baptista é a secção da aventura. As patrulhas exploram, constroem, acampam e percorrem os Caminhos de Santiago. É a idade das grandes expedições e das primeiras responsabilidades.</p>
+
+          <!-- New Info List -->
+          <ul class="scout-info-list" style="margin-top: 1.5rem;">
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🧭</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_1">A Expedição é composta pelos Exploradores...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">👥</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_2">Organizam-se em Patrulhas de 4 a 8 elementos...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🐾</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_3">Cada Patrulha tem o nome de um Animal (Totem)...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏕️</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_4">O local de reunião denomina-se Base...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🚶</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_5">O Patrono Nacional é São Tiago Maior...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🌿</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_6">A cor da secção é o Verde (Esperança e Natureza);</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🔦</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_7">A atividade típica denomina-se Aventura...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🤝</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_8">Equipa de Animação focada no Método Escutista...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">⚖️</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_9">Conselho de Guias é o órgão consultivo...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏛️</span>
+              <span class="scout-info-text" data-i18n="exploradores_info_10">Conselho de Expedição para tomadas de decisão...</span>
+            </li>
+          </ul>
+
+          <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="#inscricao" class="btn btn-primary btn-sm" data-i18n="exploradores_cta">Quero inscrever-me!</a>
+            <a href="https://escutismo.pt/exploradores-10-aos-14-anos/" target="_blank" class="btn btn-outline btn-sm" data-i18n="exploradores_learn_more">Saber mais no CNE</a>
+            <button class="btn btn-outline btn-sm" onclick="openSongModal('s9')" data-i18n="hymn_cta">Ouve o nosso hino 🎵</button>
+          </div>
+        </div>
+        <div class="uniform-infographic-wrap">
+          <img src="assets/uniforme_explorador.png" alt="Infográfico Uniforme Explorador" class="uniform-infographic">
+        </div>
+      </div>
+
+      <!-- PIONEIROS -->
+      <div class="section-panel" id="panel-pioneiros">
+        <div class="section-info">
+          <div class="age-range" style="background:rgba(var(--c-primary-rgb),0.15); color:var(--c-primary);" data-i18n="pioneiros_age">14 aos 18 anos</div>
+          <h2 style="color: var(--c-primary); font-family: var(--f-heading); margin-bottom: 0.5rem;">🚩 <span data-i18n="pioneiros_name">Pioneiros</span></h2>
+          <p><strong>Grupo Pioneiro nº 164 – Nª Srª da Guia</strong></p>
+          <p data-i18n="pioneiros_desc">O Grupo Pioneiro nº 164 – Nª Srª da Guia é o lugar do empreendedorismo. Os jovens assumem projetos, servem a comunidade e constroem o seu caminho pessoal. Aceita o desafio!</p>
+
+          <!-- New Info List -->
+          <ul class="scout-info-list" style="margin-top: 1.5rem;">
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🚩</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_1">A Unidade denomina-se Comunidade...</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">👥</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_2">Divididos em grupos de 4 a 8 elementos (Equipas);</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">👤</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_3">Equipas com nome de Santos, pioneiros ou heróis;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏠</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_4">O local de reunião designa-se por Abrigo;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">⛪</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_5">O Patrono da III Secção é São Pedro;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🌌</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_6">Cor Azul (céu e mar), ideal "Sempre Mais Longe";</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏔️</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_7">Atividade típica: Empreendimento;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏅</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_8">Competição Inter-equipas e espírito de corpo;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🤝</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_9">Equipa de Animação liderada pelo Chefe de Unidade;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">⚖️</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_10">Conselho de Comunidade para escolher o projeto;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">⚔️</span>
+              <span class="scout-info-text" data-i18n="pioneiros_info_11">Conselho de Guias é o "motor da unidade";</span>
+            </li>
+          </ul>
+
+          <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="#inscricao" class="btn btn-primary btn-sm" data-i18n="pioneiros_cta">Quero inscrever-me!</a>
+            <a href="https://escutismo.pt/pioneiros-14-aos-18-anos/" target="_blank" class="btn btn-outline btn-sm" data-i18n="pioneiros_learn_more">Saber mais no CNE</a>
+            <button class="btn btn-outline btn-sm" onclick="openSongModal('s11')" data-i18n="hymn_cta">Ouve o nosso hino 🎵</button>
+          </div>
+        </div>
+        <div class="uniform-infographic-wrap">
+          <img src="assets/uniforme_pioneiro.png" alt="Infográfico Uniforme Pioneiro" class="uniform-infographic">
+        </div>
+      </div>
+
+      <!-- CAMINHEIROS -->
+      <div class="section-panel" id="panel-caminheiros">
+        <div class="section-info">
+          <div class="age-range" style="background:rgba(var(--c-primary-rgb),0.15); color:var(--c-primary);" data-i18n="caminheiros_age">18 aos 22 anos</div>
+          <h2 style="color: var(--c-primary); font-family: var(--f-heading); margin-bottom: 0.5rem;">🎒 <span data-i18n="caminheiros_name">Caminheiros</span></h2>
+          <p><strong>Clã nº 107 – São Nuno de Santa Maria</strong></p>
+          <p data-i18n="caminheiros_desc">O Clã nº 107 – São Nuno de Santa Maria é o objetivo do Homem Novo. Os caminheiros vivem em serviço à comunidade e ajudam as secções mais novas. São os futuros líderes do agrupamento.</p>
+
+          <!-- New Info List -->
+          <ul class="scout-info-list" style="margin-top: 1.5rem;">
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🎒</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_1">O grupo de Caminheiros denomina-se Clã;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">👥</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_2">Organizam-se em Tribos de 4 a 8 elementos;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🕊️</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_3">Cada Tribo escolhe um Patrono como inspiração;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏠</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_4">O local das reuniões chama-se Albergue;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">⛪</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_5">São Paulo é o patrono dos Caminheiros;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">❤️</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_6">Cor Vermelha (Vida e Amor);</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🚶</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_7">Atividade principal: Caminhada;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🧣</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_8">Lenço Vermelho debruado a Branco;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🤝</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_9">Divisa: “Servir”, rumo ao Homem Novo;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">⚖️</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_10">Conselho de Guias para preparar grandes atividades;</span>
+            </li>
+            <li class="scout-info-item">
+              <span class="scout-info-icon">🏛️</span>
+              <span class="scout-info-text" data-i18n="caminheiros_info_11">Conselho de Clã para decisões mais importantes.</span>
+            </li>
+          </ul>
+
+          <div style="margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="#inscricao" class="btn btn-primary btn-sm" data-i18n="caminheiros_cta">Quero inscrever-me!</a>
+            <a href="https://escutismo.pt/caminheiros-18-aos-22-anos/" target="_blank" class="btn btn-outline btn-sm" data-i18n="caminheiros_learn_more">Saber mais no CNE</a>
+            <button class="btn btn-outline btn-sm" onclick="openSongModal('s23')" data-i18n="hymn_cta">Ouve o nosso hino 🎵</button>
+          </div>
+        </div>
+        <div class="uniform-infographic-wrap">
+          <img src="assets/uniforme_caminheiro.jpg" alt="Infográfico Uniforme Caminheiro" class="uniform-infographic">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ATIVIDADES E EVENTOS ============ -->
+  <section class="section" id="calendario">
+    <div class="container">
+      <h2 class="section-title reveal" data-i18n="calendar_title">Atividades e <span class="gold">Eventos</span></h2>
+      <p class="section-subtitle reveal" data-i18n="calendar_subtitle">Descobre o que temos vivido e o que aí vem</p>
+
+      <!-- Countdown Next Event -->
+      <div class="countdown-next reveal">
+        <h3 data-i18n="countdown_label">📍 Próximo Evento: Magusto Escutista 2025</h3>
+        <div class="countdown-digits" id="countdown" data-date="2025-11-15T20:30:00"></div>
+      </div>
+
+      <div class="calendar-grid" id="calendarGrid">
+        <!-- Eventos serão carregados dinamicamente aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="section" id="cronologia" style="background: var(--bg-secondary);">
+    <div class="container">
+      <h2 class="section-title reveal" data-i18n="timeline_title">A Nossa <span class="gold">História</span></h2>
+      <p class="section-subtitle reveal" data-i18n="timeline_subtitle">50 anos de aventura, serviço e amizade</p>
+
+      <div class="timeline" id="timelineGrid">
+        <!-- Eventos históricos serão carregados dinamicamente aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE MODAL -->
+  <div class="modal-overlay" id="timeline-modal">
+    <div class="modal" style="max-width: 700px; max-height: 85vh; overflow-y: auto; position: relative; padding: 2rem;">
+      <button class="nav-toggle-btn" onclick="closeTimelineModal()" style="position: absolute; top: 1rem; right: 1rem; width: 40px; height: 40px; z-index: 10;">✕</button>
+      <div id="timeline-modal-body" style="margin-top: 1rem; line-height: 1.6; color: var(--text-primary);">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CAIXA DO TEMPO ============ -->
+  <section class="section" id="caixatempo">
+    <div class="container">
+      <h2 class="section-title reveal" data-i18n="caixatempo_title">Caixa do <span class="gold">Tempo</span></h2>
+      <p class="section-subtitle reveal" data-i18n="caixatempo_subtitle">Recortes de notícias e memórias de outros tempos</p>
+
+      <div id="caixaTempoGrid" class="caixa-tempo-grid reveal">
+        <!-- Itens carregados dinamicamente aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VISITANTES ============ -->
+  <section class="section" id="visitantes">
+    <div class="container">
+      <h2 class="section-title reveal"><span class="gold">Visitantes</span> Amigos</h2>
+      <p class="section-subtitle reveal">Escuteiros de todo o mundo que já passaram pela nossa "casa".</p>
+
+      <div id="visitsGrid" class="visits-grid reveal">
+        <!-- Visitas carregadas dinamicamente aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close">✕</button>
+    <img id="lightbox-img" src="" alt="Gallery Image">
+  </div>
+
+  <!-- ============ CANCIONEIRO ============ -->
+  <section class="section" id="cancioneiro" style="background: var(--bg-secondary);">
+    <div class="container">
+      <h2 class="section-title reveal" data-i18n="cancioneiro_title"><span class="gold">Cancioneiro</span></h2>
+      <p class="section-subtitle reveal" data-i18n="cancioneiro_subtitle">Os hinos e canções do nosso agrupamento</p>
+
+      <div id="songsGrid" class="songs-column-grid reveal">
+        <!-- Músicas serão carregadas dinamicamente aqui -->
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ MAP ============ -->
+  <section class="section" style="background: var(--bg-secondary); padding-top: 2rem;">
+    <div class="container">
+      <h2 class="section-title reveal">📍 A Nossa <span class="gold">Sede</span></h2>
+      <p class="section-subtitle reveal">Escola dos Sininhos — Rua 5 de Outubro, 665, Vila do Conde</p>
+
+      <div class="row" style="display: flex; flex-wrap: wrap; gap: 2rem;">
+        <div class="col-md-6" style="flex: 1; min-width: 300px;">
+          <h3 style="margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">Nossa Sede</h3>
+          <div class="map-container" style="margin-bottom: 1.5rem; height: 400px;">
+            <iframe src="https://maps.google.com/maps?q=Rua%205%20de%20Outubro,%20665,%20Vila%20do%20Conde&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <div class="col-md-6" style="flex: 1; min-width: 300px;">
+          <h3 style="margin-bottom: 1rem; font-family: 'Outfit', sans-serif;">Outros Locais</h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <a href="https://maps.app.goo.gl/BZRHaVMjrf2jRguD8" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📍 Igreja Lapa</a>
+            <a href="https://maps.app.goo.gl/Ga2JUddCDY52HmZQ6" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📍 Igreja Misericórdia</a>
+            <a href="https://maps.app.goo.gl/YaLUJpwzig9RXctd7" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📍 Bairro Pescadores</a>
+            <a href="https://maps.app.goo.gl/EgRPodPaW2Y4Nexs8" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📍 Capela N. Sra. da Guia</a>
+            <a href="https://maps.app.goo.gl/wevFDgqDTrgNj6Eo7" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">📍 Capela Formariz</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VEM SER ESCUTEIRO ============ -->
+  <section class="section" id="inscricao" style="background: var(--bg-card); overflow: hidden;">
+    <div class="container">
+      <div class="join-header reveal" style="text-align: center; margin-bottom: 3rem;">
+        <h2 class="section-title">Vem ser <span class="gold">Escuteiro</span></h2>
+        <p class="section-subtitle">“O Acampamento é o local mais amigável do mundo”</p>
+      </div>
+
+      <img src="assets/vemser_img2.png" id="recruitment-header-img" alt="Escuteiros a celebrar" class="reveal" style="width: 100%; height: 250px; object-fit: cover; border-radius: var(--r-lg); margin-bottom: 3rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
+
+      <div class="join-grid" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start;">
+        <div class="join-content reveal">
+          <div class="parent-letter blockquote-style" style="background: rgba(var(--c-primary-rgb), 0.05); border-left: 4px solid var(--c-primary); padding: 2rem; border-radius: 0 var(--r-md) var(--r-md) 0; margin-bottom: 3rem;">
+            <h4 style="color: var(--c-primary); margin-bottom: 1rem; font-family: var(--f-heading);">CARTA DE UM PAI ESCUTEIRO</h4>
+            <p style="font-style: italic; margin-bottom: 1rem;">Alguém me perguntou: "Porque desperdiças o teu tempo e energia para ter os teus filhos nos escuteiros, e fazer atividades e acampamentos?"</p>
+            <p style="margin-bottom: 0.5rem;">A minha resposta foi:</p>
+            <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>Para que aprendam a ser disciplinados e a trabalhar em equipa.</li>
+              <li>Para que valorizem a natureza e cuidem do corpo e mente.</li>
+              <li>Para que aprendam a lidar com a deceção e descubram que a chave é trabalhar ainda mais arduamente.</li>
+              <li>Para compreenderem que o sucesso exige horas de trabalho, e não acontece da noite para o dia.</li>
+            </ul>
+            <p>Não pago pelas atividades escutistas, porque os seus Dirigentes são voluntários que oferecem o seu tempo, carinho e paciência. Obrigado pelas oportunidades oferecidas, dando-lhes a possibilidade de dar valor à vida, construindo um mundo melhor.</p>
+          </div>
+
+          <!-- THE FULL-SIZE FLYER -->
+          <div class="flyer-container reveal" style="margin-bottom: 3rem;">
+             <img src="assets/vemser_img1.png" id="recruitment-flyer-img" alt="Aventura-te Flyer" style="width: 100%; border-radius: var(--r-md); box-shadow: var(--shadow-md);">
+          </div>
+
+          <!-- PDF PREVIEW -->
+          <div class="pdf-container reveal" style="display: flex; gap: 1.5rem; align-items: center; background: rgba(var(--c-primary-rgb), 0.05); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--r-md); margin-bottom: 3rem; flex-wrap: wrap;">
+            <div style="flex-shrink: 0; width: 70px; height: 95px; background: #fff; box-shadow: var(--shadow-sm); border: 1px solid #ccc; position: relative;">
+               <img src="assets/flyer1.jpg" id="recruitment-pdf-img" style="width: 100%; height: 100%; object-fit: cover;" alt="PDF Preview">
+               <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #e31837; color: white; font-size: 0.6rem; text-align: center; font-weight: bold; padding: 2px;">PDF</div>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+               <h4 style="margin-bottom: 0.2rem; font-family: var(--f-heading); font-size: 1.2rem;">O Método Escutista</h4>
+               <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem;">Acede num ficheiro prático a toda a apresentação resumida do Agrupamento.</p>
+               <a href="https://drive.google.com/file/d/1QQajQ4CBA_Sn8JnB8fJhNBXKV9-QcPUE/view" id="recruitment-pdf-link" target="_blank" class="btn btn-outline" style="font-size: 0.9rem; padding: 0.5rem 1rem;">⬇️ Descarregar PDF</a>
+            </div>
+          </div>
+
+          <div class="join-video reveal" style="margin-bottom: 3rem;">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQHC2VCNfK4" title="Vem ser Escuteiro!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="border-radius: var(--r-md); box-shadow: var(--shadow-md);" allowfullscreen></iframe>
+          </div>
+
+          <div class="join-reasons reveal">
+             <h3 style="margin-bottom: 1.5rem; font-family: var(--f-heading); color: var(--text-primary); font-size: 1.5rem;">10 Razões para Entrar</h3>
+             <div class="reasons-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏕️</div>
+                   <h5 style="margin-bottom: 0.25rem;">1. Fazer amigos para a vida</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">O acampamento constrói amizades fortes.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌍</div>
+                   <h5 style="margin-bottom: 0.25rem;">2. Ver o mundo de forma diferente</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Abre horizontes para novas ideias.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">😀</div>
+                   <h5 style="margin-bottom: 0.25rem;">3. Ambiente amigável</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">A receita perfeita para um bom momento.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🛠️</div>
+                   <h5 style="margin-bottom: 0.25rem;">4. Ganham aptidões</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Liderança, primeiros socorros, ou canoagem.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🛡️</div>
+                   <h5 style="margin-bottom: 0.25rem;">5. Lugar seguro para falhar</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Descobrem o erro e superam limitações.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔑</div>
+                   <h5 style="margin-bottom: 0.25rem;">6. Ganham autonomia</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Aprendem agindo e desenrascando-se.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌟</div>
+                   <h5 style="margin-bottom: 0.25rem;">7. Experienciam o novo</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Fazem no campo o que sonhavam ao inscrever-se.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏃</div>
+                   <h5 style="margin-bottom: 0.25rem;">8. Coloca-os a mexer</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Mais saudável do que qualquer atividade de ecrã.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💪</div>
+                   <h5 style="margin-bottom: 0.25rem;">9. Vão ganhar confiança</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Ultrapassam medos e colecionam vitórias.</p>
+                </div>
+                <div class="reason-card" style="background: var(--bg-secondary); padding: 1rem; border-radius: var(--r-md); border: 1px solid var(--border-color);">
+                   <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">❤️</div>
+                   <h5 style="margin-bottom: 0.25rem;">10. Ultrapassam saudades</h5>
+                   <p style="font-size: 0.8rem; color: var(--text-secondary);">Têm apoio para lidar com medos e distância de casa.</p>
+                </div>
+             </div>
+             
+             <!-- SWINLANE CAROUSEL -->
+             <div class="swimlane-container reveal" style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 1rem; font-family: var(--f-heading); color: var(--text-primary); font-size: 1.5rem;">O Nosso Método</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">Desliza para explorar os detalhes da vida de um escuteiro.</p>
+                <div class="swimlane-gallery" style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; scroll-snap-type: x mandatory;">
+                   <img src="assets/flyer1.jpg" alt="Metodologia 1" style="height: 350px; border-radius: var(--r-md); box-shadow: var(--shadow-sm); scroll-snap-align: start;">
+                   <img src="assets/flyer2.jpg" alt="Metodologia 2" style="height: 350px; border-radius: var(--r-md); box-shadow: var(--shadow-sm); scroll-snap-align: start;">
+                   <img src="assets/flyer3.jpg" alt="Metodologia 3" style="height: 350px; border-radius: var(--r-md); box-shadow: var(--shadow-sm); scroll-snap-align: start;">
+                   <img src="assets/flyer4.jpg" alt="Metodologia 4" style="height: 350px; border-radius: var(--r-md); box-shadow: var(--shadow-sm); scroll-snap-align: start;">
+                </div>
+             </div>
+
+          </div>
+        </div>
+
+        <div class="join-form-wrapper reveal" style="position: sticky; top: 100px;">
+          <form class="contact-form" id="contact-form" style="border: 2px solid rgba(var(--c-primary-rgb), 0.5); box-shadow: 0 10px 40px rgba(var(--c-primary-rgb), 0.15); border-radius: var(--r-lg); padding: 2.5rem 2rem; background: var(--bg-primary);">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+               <h3 style="font-size: 2.2rem; font-family: var(--f-heading); margin-bottom: 0.5rem; color: var(--c-primary);">Quero inscrever-me!</h3>
+               <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.4;">Preenche o formulário para te juntares à nossa grande família ou para tirar qualquer dúvida.</p>
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label data-i18n="contact_form_name" style="font-size: 0.95rem; margin-bottom: 0.5rem;">O teu Nome / Enc. de Educação</label>
+              <input type="text" id="contact-name" required style="font-size: 1rem; padding: 0.8rem;">
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <label data-i18n="contact_form_email" style="font-size: 0.95rem; margin-bottom: 0.5rem;">O teu Email</label>
+              <input type="email" id="contact-email" required style="font-size: 1rem; padding: 0.8rem;">
+            </div>
+            <div class="form-group" style="margin-bottom: 2rem;">
+              <label data-i18n="contact_form_message" style="font-size: 0.95rem; margin-bottom: 0.5rem;">Idade e Mensagem</label>
+              <textarea id="contact-message" rows="5" required placeholder="Exemplo: O João tem 11 anos e quer muito ser explorador..." style="font-size: 1rem; padding: 0.8rem; height: 120px;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content: center; padding: 1.2rem; font-size: 1.2rem; font-weight: 700; box-shadow: var(--shadow-md); letter-spacing: 0.5px;">Enviar Pedido</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTOS ============ -->
+  <section class="section" id="contactos">
+    <div class="container">
+      <h2 class="section-title reveal" data-i18n="contact_title"><span class="gold">Contactos</span></h2>
+      <p class="section-subtitle reveal" data-i18n="contact_subtitle">O nosso Agrupamento e tudo o que precisa de saber sobre Vila do Conde e o Escutismo.</p>
+
+      <!-- ===== ROW 1: Agrupamento + Contactos Úteis ===== -->
+      <div class="contacts-master-grid reveal">
+
+        <!-- COL A: Agrupamento 439 -->
+        <div class="contacts-block">
+          <div class="contacts-block-header">
+            <span class="contacts-block-icon">⚜️</span>
+            <h3>Agrupamento 439</h3>
+          </div>
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-icon">📧</div>
+              <div>
+                <h4>Email Geral</h4>
+                <p><a href="mailto:geral.439@escutismo.pt">geral.439@escutismo.pt</a></p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">📋</div>
+              <div>
+                <h4>Secretaria</h4>
+                <p><a href="mailto:sa.439@escutismo.pt">sa.439@escutismo.pt</a></p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">💰</div>
+              <div>
+                <h4>Tesouraria</h4>
+                <p><a href="mailto:ta.439@escutismo.pt">ta.439@escutismo.pt</a></p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">📍</div>
+              <div>
+                <h4>Morada</h4>
+                <p>Rua 5 de Outubro, Nº 665-667<br>4480-477 Vila do Conde</p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-icon">🕐</div>
+              <div>
+                <h4>Horários</h4>
+                <p>Sábados 15h - 18h (Set. a Jul.)</p>
+              </div>
+            </div>
+          </div>
+          <div class="social-links" style="margin-top: 1.5rem;">
+            <a href="https://www.facebook.com/Agr439SaoJoaoBaptista/" target="_blank" class="social-link" title="Facebook">📘</a>
+            <a href="https://www.instagram.com/escutismo439vcd/" target="_blank" class="social-link" title="Instagram">📸</a>
+            <a href="https://cegodomaio.escutismo.pt/ncm-vila-do-conde/" target="_blank" class="social-link" title="Núcleo">⚜️</a>
+            <a href="https://www.cm-viladoconde.pt/servicos/servicos-municipais/poi-29/corpo-nacional-de-escutas-agrupamento-439-s-joao-baptista" target="_blank" class="social-link" title="CM Vila do Conde">🏛️</a>
+          </div>
+        </div>
+
+        <!-- COL B: Contactos Úteis de Vila do Conde -->
+        <div class="contacts-block">
+          <div class="contacts-block-header">
+            <span class="contacts-block-icon">🏙️</span>
+            <h3>Contactos Úteis em Vila do Conde</h3>
+          </div>
+          <div class="useful-links-grid">
+            <a href="https://www.visitviladoconde.pt/conhecer/contactos-uteis/servicos-de-emergencia" target="_blank" class="useful-link-card useful-link-emergency">
+              <div class="useful-link-icon">🚑</div>
+              <div>
+                <strong>Serviços de Emergência</strong>
+                <span>Bombeiros, PSP, GNR</span>
+              </div>
+              <div class="useful-link-arrow">→</div>
+            </a>
+            <a href="https://www.visitviladoconde.pt/conhecer/contactos-uteis/servicos-de-saude" target="_blank" class="useful-link-card useful-link-health">
+              <div class="useful-link-icon">🏥</div>
+              <div>
+                <strong>Serviços de Saúde</strong>
+                <span>Centros de saúde e hospitais</span>
+              </div>
+              <div class="useful-link-arrow">→</div>
+            </a>
+            <a href="https://www.visitviladoconde.pt/conhecer/contactos-uteis/servicos-de-transporte" target="_blank" class="useful-link-card useful-link-transport">
+              <div class="useful-link-icon">🚍</div>
+              <div>
+                <strong>Serviços de Transporte</strong>
+                <span>Autocarros, comboios e táxis</span>
+              </div>
+              <div class="useful-link-arrow">→</div>
+            </a>
+            <a href="https://www.visitviladoconde.pt/conhecer/contactos-uteis/farmacias" target="_blank" class="useful-link-card useful-link-pharmacy">
+              <div class="useful-link-icon">⚕️</div>
+              <div>
+                <strong>Farmácias</strong>
+                <span>Farmácias de turno e serviço</span>
+              </div>
+              <div class="useful-link-arrow">→</div>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- end contacts-master-grid ROW 1 -->
+
+      <!-- ===== ROW 2: Escutismo Nacional ===== -->
+      <div class="contacts-scouting-section reveal">
+        <div class="contacts-block-header" style="justify-content: center; margin-bottom: 2rem;">
+          <span class="contacts-block-icon">⚜️</span>
+          <h3>Saiba Mais sobre o Escutismo</h3>
+        </div>
+
+        <!-- 3 big buttons -->
+        <div class="scouting-links-row">
+          <a href="https://escutismo.pt/" target="_blank" class="scouting-big-btn">
+            <span class="scouting-big-btn-icon">🌍</span>
+            <strong>Escutismo</strong>
+            <small>O Movimento Mundial</small>
+          </a>
+          <a href="https://escutismo.pt/missao-e-visao/" target="_blank" class="scouting-big-btn">
+            <span class="scouting-big-btn-icon">🎯</span>
+            <strong>O que fazemos</strong>
+            <small>Atividades e missão</small>
+          </a>
+          <a href="https://escutismo.pt/porque-somos-unicos/" target="_blank" class="scouting-big-btn">
+            <span class="scouting-big-btn-icon">📊</span>
+            <strong>Factos e Números</strong>
+            <small>Estatísticas e impacto</small>
+          </a>
+        </div>
+
+        <!-- 12 icon badges grid -->
+        <div class="scouting-badges-section">
+          <p class="scouting-badges-label">Progresso e Especialidades Escutistas</p>
+          <div class="scouting-badges-grid" id="scoutingBadgesGrid">
+            <a href="https://www.scout.org/" target="_blank" class="badge-icon-link" title="WOSM"><img src="assets/icon2.png" alt="WOSM"></a>
+            <a href="https://braga.escutismo.pt/" target="_blank" class="badge-icon-link" title="Região de Braga"><img src="assets/icon3.png" alt="Região de Braga"></a>
+            <a href="https://flordelis.escutismo.pt/" target="_blank" class="badge-icon-link" title="Flor de Lis"><img src="assets/icon4.png" alt="Flor de Lis"></a>
+            <a href="https://escutismo.pt/" target="_blank" class="badge-icon-link" title="CNE Nacional"><img src="assets/icon5.png" alt="CNE Nacional"></a>
+            <a href="https://cegodomaio.escutismo.pt/" target="_blank" class="badge-icon-link" title="Núcleo Cego do Maio"><img src="assets/icon6.png" alt="Núcleo Cego do Maio"></a>
+            <a href="https://cegodomaio.escutismo.pt/noticias/o-cantil/" target="_blank" class="badge-icon-link" title="O Cantil"><img src="assets/icon7.png" alt="O Cantil"></a>
+            <a href="https://www.facebook.com/Agr439SaoJoaoBaptista" target="_blank" class="badge-icon-link" title="Facebook Agr 439"><img src="assets/icon8.png" alt="Facebook"></a>
+            <a href="https://www.cm-viladoconde.pt/" target="_blank" class="badge-icon-link" title="CM Vila do Conde"><img src="assets/icon9.png" alt="Município"></a>
+            <a href="https://www.instagram.com/vilajovemvdc/?locale=uken1&e=93e3c437-ad63-4bd4-90d8-df90e8f8d2bb&g=5" target="_blank" class="badge-icon-link" title="Vila Jovem"><img src="assets/icon10.png" alt="Vila Jovem"></a>
+            <a href="https://fe.escutismo.pt/sao-jorge/" target="_blank" class="badge-icon-link" title="Fé e Escutismo"><img src="assets/icon11.png" alt="São Jorge"></a>
+            <a href="https://www.paroquiadeviladoconde.pt/" target="_blank" class="badge-icon-link" title="Paróquia"><img src="assets/icon12.png" alt="Paróquia"></a>
+            <a href="https://www.visitviladoconde.pt/" target="_blank" class="badge-icon-link" title="Visit Vila do Conde"><img src="assets/icon13.png" alt="Turismo"></a>
+          </div>
+        </div>
+
+        <!-- BP Drawing + Quote -->
+        <div class="bp-quote-block reveal">
+          <div class="bp-drawing-wrap">
+            <img src="assets/imagem2.png" alt="Desenho de Robert Baden-Powell" class="bp-drawing-img">
+          </div>
+          <blockquote class="bp-quote">
+            <p>«Tenta deixar o mundo um pouco melhor do que o encontraste.»</p>
+            <footer>― Robert Baden-Powell<br><small>Fundador do Escutismo</small></footer>
+          </blockquote>
+        </div>
+
+      </div><!-- end contacts-scouting-section -->
+
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER ============ -->
+  <section class="section" style="padding: 2rem 0 4rem;">
+    <div class="container">
+      <div class="newsletter-banner reveal">
+        <h3 data-i18n="newsletter_title">📬 Fica a par de tudo!</h3>
+        <p data-i18n="newsletter_desc">Subscreve a nossa newsletter e recebe as novidades diretamente.</p>
+        <form class="newsletter-form" id="newsletter-form">
+          <input type="email" required data-i18n="newsletter_placeholder" placeholder="O teu email...">
+          <button type="submit" class="btn btn-primary" data-i18n="newsletter_btn">Subscrever</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <img src="assets/logo.png" alt="Logo" style="width:36px; height:36px; border-radius:50%;">
+            <div class="nav-brand-text">Agrupamento <span>439</span></div>
+          </div>
+          <p data-i18n="footer_desc">Agrupamento 439 – São João Baptista de Vila do Conde. A formar jovens para a vida desde 1975, através da aventura, serviço e amizade.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer_links">Links Rápidos</h4>
+          <a href="#seccoes" data-i18n="nav_seccoes">Secções</a>
+          <a href="#calendario" data-i18n="nav_calendario">Calendário</a>
+          <a href="#cronologia" data-i18n="nav_cronologia">Cronologia</a>
+          <a href="#inscricao" data-i18n="nav_contactos">Contactos</a>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer_external">Links Externos</h4>
+          <a href="http://escutismo.pt" target="_blank" data-i18n="footer_cne">CNE - Escutismo</a>
+          <a href="https://cegodomaio.escutismo.pt/ncm-vila-do-conde/" target="_blank" data-i18n="footer_nucleus">Núcleo Cego do Maio</a>
+          <a href="https://www.cm-viladoconde.pt" target="_blank" data-i18n="footer_municipality">CM Vila do Conde</a>
+          <a href="https://www.facebook.com/Agr439SaoJoaoBaptista/" target="_blank">Facebook</a>
+          <a href="https://www.instagram.com/escutismo439vcd/" target="_blank">Instagram</a>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <a href="#" data-i18n="footer_privacy">Privacidade</a>
+          <a href="admin.html" data-i18n="nav_admin">Área Admin</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span data-i18n="footer_rights">© 2025 Agrupamento 439. Todos os direitos reservados.</span>
+        <span data-i18n="footer_made">Feito com ❤️ por escuteiros do 439</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Song Modal -->
+  <div class="modal-overlay" id="song-modal">
+    <div class="modal song-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--s-md);">
+        <div>
+          <h2 id="song-modal-title" style="margin-bottom: 0.25rem;">Título da Música</h2>
+          <p id="song-modal-subtitle" style="color: var(--c-primary); font-family: var(--f-heading); font-weight: 500; font-size: 0.9rem;">Subtítulo</p>
+        </div>
+        <button class="nav-toggle-btn" onclick="closeSongModal()" style="width: 40px; height: 40px;">✕</button>
+      </div>
+
+      <div class="song-modal-grid">
+        <div class="song-lyrics-container" id="song-modal-lyrics">
+          <!-- Letra e Cifras -->
+        </div>
+        <div class="song-video-container">
+          <h4 style="margin-bottom: var(--s-sm); display: flex; align-items: center; gap: 0.5rem;">🎬 Vídeo / Áudio</h4>
+          <div id="song-modal-video-placeholder" class="song-video-wrapper">
+            <!-- Iframe para YouTube -->
+          </div>
+          <p id="song-no-video" style="display: none; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+            Vídeo não disponível para esta música.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/songs-data.js"></script>
+  <script src="js/visits-data.js"></script>
+  <script src="js/timeline-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

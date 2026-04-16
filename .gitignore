@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+Thumbs.db
+temp_page.html
+urls_all.txt
+parse_urls.js
+package-lock.json
+package.json

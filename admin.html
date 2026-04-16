@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — Agrupamento 439</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+</head>
+<body class="admin-body">
+
+  <!-- ============ LOGIN VIEW ============ -->
+  <div class="login-container" id="login-view">
+    <div class="login-card">
+      <img src="assets/logo.png" alt="Logo Agrupamento 439">
+      <h2>Área de <span style="color: var(--c-gold);">Administração</span></h2>
+      <p>Agrupamento 439 – São João Baptista</p>
+
+      <div class="login-error" id="login-error"></div>
+
+      <div class="form-group">
+        <label style="text-align: left;">Utilizador</label>
+        <input type="text" id="login-user" placeholder="Utilizador" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label style="text-align: left;">Password</label>
+        <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password"
+               onkeypress="if(event.key==='Enter') doLogin()">
+      </div>
+      <button class="btn btn-primary" style="width:100%; justify-content: center; margin-top: 0.5rem;" onclick="doLogin()">
+        Entrar
+      </button>
+      <div style="margin-top: 1.5rem;">
+        <a href="index.html" style="font-size: 0.85rem; color: var(--text-muted);">← Voltar ao site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ADMIN VIEW ============ -->
+  <div class="admin-layout" id="admin-view" style="display: none;">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="assets/logo.png" alt="Logo">
+        <h2>Admin <span>439</span></h2>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-label">Principal</div>
+        <button class="sidebar-link active" data-section="dashboard" onclick="navigateTo('dashboard')">
+          <span class="icon">📊</span> Dashboard
+        </button>
+
+        <div class="sidebar-section-label">Conteúdo</div>
+        <button class="sidebar-link" data-section="news" onclick="navigateTo('news')">
+          <span class="icon">📰</span> Notícias / Avisos
+        </button>
+        <button class="sidebar-link" data-section="hero" onclick="navigateTo('hero')">
+          <span class="icon">✨</span> Destaques Hero
+        </button>
+        <button class="sidebar-link" data-section="events" onclick="navigateTo('events')">
+          <span class="icon">📅</span> Eventos
+        </button>
+        <button class="sidebar-link" data-section="timeline" onclick="navigateTo('timeline')">
+          <span class="icon">⌛</span> Cronologia
+        </button>
+        <button class="sidebar-link" data-section="gallery" onclick="navigateTo('gallery')">
+          <span class="icon">🖼️</span> Galeria
+        </button>
+        <button class="sidebar-link" data-section="songs" onclick="navigateTo('songs')">
+          <span class="icon">🎵</span> Cancioneiro
+        </button>
+        <button class="sidebar-link" data-section="visits" onclick="navigateTo('visits')">
+          <span class="icon">👥</span> Visitantes
+        </button>
+        <button class="sidebar-link" data-section="recruitment" onclick="navigateTo('recruitment')">
+          <span class="icon">📢</span> Recrutamento
+        </button>
+        <button class="sidebar-link" data-section="pages" onclick="navigateTo('pages')">
+          <span class="icon">🌐</span> Páginas
+        </button>
+
+        <div class="sidebar-section-label">Comunicação</div>
+        <button class="sidebar-link" data-section="newsletter" onclick="navigateTo('newsletter')">
+          <span class="icon">📧</span> Newsletter
+        </button>
+        <button class="sidebar-link" data-section="messages" onclick="navigateTo('messages')">
+          <span class="icon">💬</span> Mensagens
+        </button>
+
+        <div class="sidebar-section-label">Configuração</div>
+        <button class="sidebar-link" data-section="settings" onclick="navigateTo('settings')">
+          <span class="icon">⚙️</span> Definições Admin
+        </button>
+      </nav>
+
+
+      <div class="sidebar-footer">
+        <a href="index.html">← Voltar ao site</a>
+        <a href="#" onclick="doLogout()" style="margin-top: 0.5rem; color: var(--c-gold);">🚪 Terminar sessão</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1 id="admin-title">📊 <span>Dashboard</span></h1>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="nav-toggle-btn" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark')" title="Toggle Theme">🌓</button>
+          <button class="nav-toggle-btn" onclick="toggleSidebar()" style="display:none;" id="sidebar-toggle-btn" title="Menu">☰</button>
+        </div>
+      </div>
+
+      <div id="admin-content"></div>
+    </main>
+  </div>
+
+  <script src="js/songs-data.js"></script>
+  <script src="js/visits-data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

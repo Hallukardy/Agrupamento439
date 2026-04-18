@@ -1,0 +1,401 @@
+{
+  "gallery": [
+    {
+      "id": "mo4ild0ndyqss",
+      "description": "icon",
+      "category": "hero",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/icon_202604181551.png",
+      "approved": true,
+      "date": "2026-04-18T15:51:20.615Z"
+    },
+    {
+      "id": "mo4imbm60akrf",
+      "description": "flyer",
+      "category": "recrutamento",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/scout_registration_2026_home_202604181552.png",
+      "approved": true,
+      "date": "2026-04-18T15:52:05.454Z"
+    },
+    {
+      "id": "mo4iopo6fd7v3",
+      "description": "group",
+      "category": "recrutamento",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/recrutamento1_202604181553.jpg",
+      "approved": true,
+      "date": "2026-04-18T15:53:56.982Z"
+    },
+    {
+      "id": "mo4k8fbogmmmg",
+      "description": "1975-1",
+      "category": "timeline",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1975_1_202604181637.jpg",
+      "approved": true,
+      "date": "2026-04-18T16:37:16.308Z"
+    },
+    {
+      "id": "mo4k8q7c5p4qo",
+      "description": "cronologia-2",
+      "category": "timeline",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1975_2_202604181637.png",
+      "approved": true,
+      "date": "2026-04-18T16:37:30.408Z"
+    }
+  ],
+  "news": [
+    {
+      "id": "mo4hpxkuld9r5",
+      "title": "titulo teste",
+      "content": "conteudeo teste",
+      "tag": "geral",
+      "published": true,
+      "imageUrl": "",
+      "date": "2026-04-18T15:26:54.270Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "mo4j0kjrjo04a",
+      "title": "evento 1",
+      "date": "2026-04-18T17:02",
+      "location": "sede",
+      "description": "descrição 1",
+      "galleryIds": []
+    }
+  ],
+  "caixa-tempo": [
+    {
+      "id": "mock1",
+      "year": "1985",
+      "title": "Escuteiros 439 em destaque no jornal local",
+      "description": "Reportagem sobre a atividade dos nossos pioneiros durante o acampamento de verão.",
+      "imageUrl": "https://images.unsplash.com/photo-1585829365234-750ca8186175?auto=format&fit=crop&q=80&w=800",
+      "category": "Imprensa"
+    },
+    {
+      "id": "mock2",
+      "year": "1976",
+      "title": "A primeira promessa do Agrupamento",
+      "description": "Recorte histórico do jornal da paróquia assinalando as primeiras promessas do 439.",
+      "imageUrl": "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800",
+      "category": "História"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "1975",
+      "year": "1975",
+      "title": "Fundação do Agrupamento",
+      "description": "Início oficial do agrupamento.",
+      "content": "\n      <p>Primeiras promessas realizadas a 22 de Junho de 1975.</p>\n      <p>No primeiro ano, o agrupamento tinha 30 rapazes.</p>\n      <p>Filiado em Ordem de Serviço Nacional nº 353, com data de 22.06.1975.</p>\n      <p><strong>Unidades Filiadas:</strong><br>\n      Alcateia nº 164 – S. Francisco de Assis<br>\n      Grupo Explorador nº 164 – São João Baptista<br>\n      Grupo Pioneiro nº 164 – Nª Srª da Guia<br>\n      Clã nº 107 – São Nuno</p>\n      <p>É o chefe Joaquim Orlando Pacheco e o então Prior de Vila do Conde, Padre Adriano Teixeira, quem fundam o atual Agrupamento 439 – São João Baptista de Vila do Conde.</p>\n    "
+    },
+    {
+      "id": "1981",
+      "year": "1981",
+      "title": "Primeiras Cerimónias",
+      "description": "Promessas 1981",
+      "content": "\n      <p>Cerimónia da Promessa realiza-se na Igreja Matriz, em 22 de Junho de 1981.</p>\n      <p>No primeiro ano o agrupamento tinha 30 rapazes.</p>\n    "
+    },
+    {
+      "id": "1987",
+      "year": "1987",
+      "title": "Acampamento Nacional em Bagunte",
+      "description": "Primeiro acampamento nacional em Bagunte, Vila do Conde. Marco histórico para o agrupamento.",
+      "content": ""
+    },
+    {
+      "id": "1995",
+      "year": "1995",
+      "title": "20º Aniversário – Cortejo Histórico",
+      "description": "Celebração dos 20 anos com cortejo histórico e comemoração dos 70 anos do Núcleo Cego do Maio.",
+      "content": ""
+    },
+    {
+      "id": "2003",
+      "year": "2003",
+      "title": "Roverway Portugal",
+      "description": "“NOVOS MUNDOS, UM SÓ RUMO!”",
+      "content": "\n      <p>Os caminheiros do Clã 107 – Beato Nuno, do Agrupamento 439 – São João Baptista de Vila do Conde, vão associar-se às comemorações dos 400 anos da Capela do Socorro, monumento fortemente ligado ao passado marítimo de Vila do Conde, construindo um acampamento sob a forma de uma embarcação quinhentista, na zona ribeirinha onde durante décadas estiveram implantados os estaleiros navais.</p>\n      <p>A iniciativa integra-se no projeto Roverway, uma atividade internacional. O trabalho de construção da embarcação, uma atividade de pioneirismo típica dos escuteiros, e a encenação à época da atividade alfandegária serão executados por cinco equipas de escuteiros estrangeiros, e pela equipa José Régio, do Clã 107.</p>\n      <p>A construção tem aproximadamente 14,50 m de comprimento e 4,60 m de largura. Na área de descanso, há uma tenda elevada e um altar para o “Fogo de Conselho”.</p>\n      <p>Nesta encenação estão envolvidas 50 personagens, todas vestidas à época, e contará com diversas atividades e ateliers, como a construção naval em madeira típica dos estaleiros de Vila do Conde.</p>\n    "
+    },
+    {
+      "id": "2007",
+      "year": "2007",
+      "title": "Acampamento Nacional Idanha-a-Nova & JOTI",
+      "description": "Acampamento nacional em Idanha-a-Nova. Início da participação no JOTI.",
+      "content": ""
+    },
+    {
+      "id": "2013",
+      "year": "2013",
+      "title": "Mudança de Sede",
+      "description": "Nova sede na Escola dos Sininhos, Rua 5 de Outubro, Vila do Conde. Mais espaço, mais possibilidades!",
+      "content": ""
+    },
+    {
+      "id": "2015-2019",
+      "year": "2015",
+      "title": "Caminhos de Santiago (2015-2019)",
+      "description": "Os exploradores visitam a Catedral de Santiago de Compostela (2015 e 2019) e realizam raids pelos caminhos de Santiago.",
+      "content": ""
+    },
+    {
+      "id": "202021",
+      "year": "2020",
+      "title": "Ano Escutista 2020/2021",
+      "description": "Pandemia e Reconstrução",
+      "content": "\n      <h4>Carlo Acutis, patrono deste ano escutista</h4>\n      <p>Foi de grande inspiração para o nosso agrupamento nestes tempos de adversidade e adaptação do método escutista a uma nova realidade.</p>\n      <p>Com a ajuda, empenho, disponibilidade, imaginação e espirito de superação de todos, nunca baixamos os braços. Fomos capazes de evoluir, e conseguir chegar a todos aqueles que já não estavam presentes na nossa sede e reuniões presenciais.</p>\n      <p>Felizmente, as nossas famílias foram um suporte fundamental. Tudo isto só foi possível devido a um sem-número de ferramentas informáticas que tiveram aqui um papel preponderante.</p>\n      <hr>\n      <h4>Outros destaques do ano</h4>\n      <ul>\n        <li><strong>Vacinação:</strong> Escuteiros do Agrupamento 439 fizeram serviço no centro de vacinação.</li>\n        <li><strong>Formação:</strong> Candidatos a dirigentes terminaram o Encontro Inicial no Campo Escola de Fraião.</li>\n        <li><strong>46º Aniversário:</strong> Em 22 de Junho de 2021 o agrupamento celebrou os seus 46 anos com muita dedicação.</li>\n        <li><strong>Retoma:</strong> Em Abril as atividades presenciais recomeçaram com cuidado.</li>\n        <li><strong>Promessas:</strong> Realizadas no dia 8 de Maio com muita alegria.</li>\n        <li><strong>EStalento:</strong> Carlota Silva ganhou o 1º lugar com a arte de Rendas de Bilros.</li>\n      </ul>\n    "
+    },
+    {
+      "id": "202122",
+      "year": "2021",
+      "title": "Ano Escutista 2021/2022",
+      "description": "Retoma Total",
+      "content": "\n      <h4>Fim de um ano diferente, mas cheio de aventuras</h4>\n      <p>Realizou-se a atividade de Verão com a temática \"Tudo é possível\". Houve novas experiências, cozinha selvagem e muito crescimento. Para alguns, foi a despedida antes de saltarem para a próxima secção.</p>\n      <p>Foram dias de grande convívio para Exploradores, Pioneiros e Caminheiros, seguindo o lema do agrupamento.</p>\n      <p>“Retirando a sílaba IM da palavra impossível, qualquer pessoa terá a certeza de chegar à frente.” — B.P.</p>\n    "
+    },
+    {
+      "id": "202223",
+      "year": "2022",
+      "title": "Ano Escutista 2022/2023",
+      "description": "Aventuras Constantes",
+      "content": "\n      <h4>Aventuras, Formação e Espírito de Equipa</h4>\n      <p>Neste ano, o Agrupamento viveu diversas atividades marcantes.</p>\n      <p>Várias secções do agrupamento realizaram expedições e investiram fortemente em formação de novos líderes, que seguirão os ensinamentos práticos de B.P.</p>\n      <p>Focámo-nos fortemente em serviço comunitário e participação em Acampamentos Regionais.</p>\n    "
+    },
+    {
+      "id": "202324",
+      "year": "2023",
+      "title": "Ano Escutista 2023/2024",
+      "description": "Rumos aos 50 Anos",
+      "content": "\n      <h4>Serviço e Comunidade</h4>\n      <p>O Agrupamento esteve bastante investido na ação social.</p>\n      <p>Junto da comunidade e seguindo o nosso compromisso, participamos ativamente em campanhas solidárias.</p>\n      <p>Apoiámos também os bombeiros bombeiros de Fajões (Oliveira de Azeméis) e de Vila do Conde com recolhas comunitárias para ajudá-los nas suas árduas tarefas, reafirmando que Juntos fazemos a diferença!</p>\n    "
+    },
+    {
+      "id": "2024",
+      "year": "2024",
+      "title": "50 Anos! 🎉",
+      "description": "Grande Atividade Descobre o teu Encanto em Fontelo. O encanto continua… sempre em boa caça!",
+      "content": ""
+    }
+  ],
+  "songs": [
+    {
+      "id": "s1",
+      "title": "Abriu-se a manhã",
+      "subtitle": "Música e Letra",
+      "lyrics": "Abriu-se a manhã e eu Te encontrei.\nTua chama brilhou e o seu fogo entrou em mim.\nMesmo se distantes, para nós o longe é perto,\no nosso horizonte é um céu unido ao mar.\nAmar é a partida de um sonho sem chegada,\nVoar nas asas do vento e subir ao infinito.\nNão há fronteiras que separem\nNossa amizade em sermos um só.\nSó o Amor faz renascer\na vida em nós, a vida em nós.",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s2",
+      "title": "Despertou de um sonho",
+      "subtitle": "Música e Letra",
+      "lyrics": "Despertou de um sonho… um homem viu…\nE fez nascer em cada olhar a semente da nova alegria.\nDando a mão a quem precisa, sempre certos da divisa,\ncaminhando monte acima renovando a vida.\nOlhar o mundo como ele o vê\nqueremos ser a imagem de B.P..\nO topo está mais perto, dentro de nós,\nvamos levar ao mundo a sua voz;\na sua voz, a razão de viver, o seu viver para construir,\ndeixando o mundo sempre um pouco melhor,\nsempre alerta para servir.",
+      "chords": "Sol Dó Sol\nDó Sol Si- Dó Lá- Ré\nSol Dó Sol Dó\nSol Si- Dó Lá- Ré\nSol Ré\nSol Ré\nDó Ré\nDó Ré\nSi- Mi- Si- Mi-\nLá- Ré\nLá- Ré",
+      "videoUrl": ""
+    },
+    {
+      "id": "s3",
+      "title": "Escuta CNE",
+      "subtitle": "Música e Letra",
+      "lyrics": "Há quem me chame maluco\nEu não sei bem porque é\nDeve ser pelo meu aspecto\nOu pela cor do meu boné.\nQuando vou acampar\nLevo só o necessário\nDesde a máquina de lavar\nAo alpista pró canário.\n\nRefrão:\nNão importa o que dizem\nNão importa o que pensam\nPorque eu sou, porque eu sou\nEscuta do CNE.\n\nP’ra se viver no campo\nÉ preciso ser esperto\nNunca entrar numa tenda\nSem que o fecho esteja aberto\nHá ainda uma regra\nQue não deve ser violada\nQuando o chefe te chamar\nBate logo em retirada.",
+      "chords": "Mi Lá Si\nMi Lá Si\nMi Lá Si\nMi Lá Si\nLá Si\nLá Si\nLá Si\nMi",
+      "videoUrl": ""
+    },
+    {
+      "id": "s4",
+      "title": "Falar com Deus",
+      "subtitle": "Música e Letra",
+      "lyrics": "Na oração encontro calma\nNa oração encontro paz\nOrar a Deus faz bem à alma\nFalar com Deus me satisfaz\nFalar com Deus, que privilégio\nAbrir a alma ao Criador\nSentir que os céus estão abertos\nE ouvir a voz do Salvador\n\nGrande é o nosso Deus\nE as obras que Ele faz\nO Seu amor não tem limites\nEm Seu perdão encontro paz\nFalar com Deus é o que preciso\nPois Ele é fonte de poder\nSó Nele a vida faz sentido\nPois me dá forças pra viver",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s5",
+      "title": "Eu por ti",
+      "subtitle": "Música e Letra",
+      "lyrics": "Eu por ti acertaria o meu passo\nao teu caminhar\nEu por ti o teu problema\narcaria sobre mim\nE abraçaria o horizonte\nque trazes dentro do teu olhar.\nEu por ti, buscar-te-ia no mar da tua solidão\nEu por ti, te encontraria no grito dos teus porquês\nNão pensando às minhas decisões\nE aos meus critérios se falas Tu.\n\nEu por ti, palpitaria pelos teus desejos,\nEu por ti, daria voz às tuas mil razões,\nEu por ti, Eu por ti\nPerder-me-ia no teu pranto,\ncantaria o teu próprio canto\nQue esta força em mim,\ndeixaria a ti primeiro, colher a flor do meu jardim\n\nEu por ti, faria ecoar no meu peito a voz da tua dor\nEu por ti, suportaria a tua fragilidade,\nE ancorar-te-ia à minha mão,\nse fosses arrastado na maré\nEu por ti, faria minha a angústia que vive em ti\nEu por ti, entregaria os meus trunfos à tua mão.\nPor ti sentiria a saudade,\npelo fragor da terra que deixaste\nEu por ti, Eu por ti\nSeria o eco do teu canto, na apatia e na alegria.\nQue esta força em mim\ndeixaria a ti primeiro, colher a flor do meu jardim",
+      "chords": "Si- Sol Lá\nSi- Sol Lá\nMi Ré Mi Lá\nRé Mi\nFá#- Ré Mi\nFá#- Ré Mi\nLá- Fá Sol Dó\nLá- Sol Fá\nSol Dó\nLá- Sol Fá\nMi- Lá- Sol Fá Sol Lá-",
+      "videoUrl": ""
+    },
+    {
+      "id": "s6",
+      "title": "Flor da Fragrância",
+      "subtitle": "Música e Letra",
+      "lyrics": "Somos a flor da fragrância\nQue se difunde à distância\nPulsamos dentro do peito\nUm coração que anda feito\nAos heroicos sacrifícios\nDe vencer paixões e vícios\nE à mais renhida peleja\nPela Pátria e pela Igreja\nNos combates da virtude\nConquistamos a saúde\nE ganhamos cada dia\nO doce pão da alegria\nQueremos a alma no olhar\nLimpidamente a brilhar\nEncantadora a sorrir\nBela aurora do porvir",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s7",
+      "title": "Foi um Dia em Brownsea",
+      "subtitle": "Música e Letra",
+      "lyrics": "Foi um dia em Brownsea que tudo aconteceu\nCriado por um homem de fé, o escutismo apareceu.\nBaden-Powell seu nome o nosso querido B.P.\nJuntou os jovens que andavam no mundo sem saberem porquê\n\n(Refrão)\nAmarelo, verde, Vermelho ou Azul\nNão importa o lenço que se usar\nPara fazer deste mundo um lugar bom para amar\nPor isso, irmão escuteiro\nLobito, Chefe ou Explorador/Caminheiro\nDá aqueles que te rodeiam alegria e amor.\n\nPor vezes não é nada fácil os outros ajudar\nMas é nos momentos difíceis que não deves desanimar\nE com fé e coragem conseguirás chegar ao fim\nE a tua B.A. desse dia cumprirás assim.\n\nOrgulha-te da farda que usas como ela, não há igual\nEla é o melhor testemunho do teu altivo ideal\nLembra a tua promessa na renunciaste ao mal\nE prometeste ficar sempre alerta por Portugal!",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s8",
+      "title": "Hino do C.N.E",
+      "subtitle": "Música e Letra",
+      "lyrics": "Nós somos os escuteiros\nDesta Pátria sem rival\nE fomos nós os primeiros\nA levantar Portugal\n\nAvante escuteiros\nEm frente a cantar\nMarchemos ligeiros\nE sem vacilar\n\nA Pátria confia\nNo escuta leal\nÉ deus quem nos guia\nALERTA!!!\nViva Portugal",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s9",
+      "title": "Hino dos Exploradores",
+      "subtitle": "Música e Letra",
+      "lyrics": "Somos escuteiros, (bis)\nGostamos do campo, (bis)\nde fazer raids, (bis)\ne acampar. (bis)\nSomos exploradores, (bis)\nQueremos crescer, (bis)\nDe verde ao peito, (bis)\nPara vencer. (bis)\nVivemos aventuras dos nossos heróis,\nE seguimos as pistas deixadas por BP\n\nRefrão:\nSegunda, segunda, somos a segunda secção (bis)\n\nLogo amanhece, (bis)\nMochilas às costas, (bis)\nNovos desafios, (bis)\nIremos viver. (bis)\nMais tarde escurece, (bis)\nVamos acampar, (bis)\nMontar a tenda, (bis)\nE descansar. (bis)\nE à noitinha todos nos reunimos,\nE à fogueira, para rir e cantar.",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s10",
+      "title": "Hino do Lobito",
+      "subtitle": "Música e Letra",
+      "lyrics": "São Francisco de Assis\nEnsina cada lobito :\nComo há-de ser feliz. (Bis)\nPraticou a boa ação,\nSempre fiel, cada dia;\ntinha um bom coração,\nSempre cheio de alegria.\nFoi puro e obediente,\nDeu exemplo de bondade;\nViveu sempre contente,\nEspalhou a felicidade.",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s11",
+      "title": "Hino dos Pioneiros",
+      "subtitle": "Música e Letra",
+      "lyrics": "O nosso azul, cor do céu e do mar,\nDá-nos mais força, para lá chegar.\nChegar é ser feliz, sentir-te perto de mim\nPoder cantar e rir, dizer-te sempre que sim.\n\nSomos pioneiros, e sempre os primeiros,\nQueremos viver, sempre a crescer.\nPega na mochila, na tua viola,\nVamos em equipa, todos acampar.\n\nRefrão:\nVamos acampar, para serra e para o mar,\nE à fogueira, as cantigas ao luar.\nSeguimos a pista, de mãos dadas,\nE, em conjunto, rumo ao fim.\nSomos pioneiros, construtores do Mundo,\nSentimos força, p´ra criar e lutar.\nProtege o verde, que nos deixa viver,\nEstar sempre Alerta para Servir.",
+      "chords": "Mi Si7 Dó#m Sol#m\nLá Mi Lá Si7\nMi Si7 Dó#m Sol#\nLá Mi Si7 Mi\nFá#m Si7 Mi Dó#m\nFá#m Si7\nFá#m Si7 Mi Dó#m\nFá#m Si7",
+      "videoUrl": ""
+    },
+    {
+      "id": "s12",
+      "title": "Impele a Tua Própria Canoa",
+      "subtitle": "BP é quem nos diz",
+      "lyrics": "Não deixes cair teus olhos,\nNem te deixes enganar.\nOlha de frente os escolhos,\nOlha, podes encalhar.\nÉ urgente estar atento,\nVer para onde corre a maré.\nVer donde sopra o vento,\nNão vás tu perder o pé.\n\nBP é quem nos diz Oh, Oh,\nimpele a tua própria canoa\nSe queres mesmo ser feliz.\nNão te deixes ir à toa,\nImpele a tua própria canoa,\nImpele a tua própria canoa.\n\nA vida não é deserto,\nNão queiras ficar no cais.\nBP é rumo certo,\nDecide tu aonde vais,\nNão queiras ficar no cais.",
+      "chords": "Ré Lá Sol Mi-\nRé Lá Mi- Sol Lá Ré\nRé Sol Lá\nRé Lá Ré\nSol Lá\nSol Si-\nRé Lá\nSol Lá Ré",
+      "videoUrl": ""
+    },
+    {
+      "id": "s13",
+      "title": "Pedacinho de Deus",
+      "subtitle": "Música e Letra",
+      "lyrics": "Se sentes dentro de ti a vontade de amar\nEm gestos que criem fontes, a audácia de sonhar\nMais longínquos horizontes e o apelo a escalar\nCada vez mais altos montes\nCada vez mais altos montes\nEntão...\n\nTens em ti um pedacinho de Deus\nTens rumos certos no coração\nDesperta o sonho: tens em ti os céus\nLiberta a vida da palma da mão\nFaz desses rumos os caminhos teus\nDe Jesus recebeste esta missão\n\nSe sentes dentro de ti sempre a sede de gritar\no nome da liberdade, a coragem de falar\na palavra da verdade e a servir participar\nna construção da cidade, então…\nSe sentes dentro de ti o silêncio inspirar\na paz ao teu coração chamando-te a enfrentar\na vida com decisão e teimas acreditar\nna esperança de um mundo bom, então…",
+      "chords": "Ré Fá#- Mi- Lá\nRé Fá#- Mi- Fá#-\nSol Fá#- Sol Fá#-\nSol Fá#- Mi- Lá\nRé Sol Dó Ré Sol\nRé Sol Dó Ré\nSi- Sol Lá Sol Ré",
+      "videoUrl": ""
+    },
+    {
+      "id": "s14",
+      "title": "Que Levas na Mochila Tu",
+      "subtitle": "Música e Letra",
+      "lyrics": "Lá fora a vida acontece\nTu preso num medo vazio\nEmbora a tua alma estremeça\nAnsiando aquele desafio\nVives agarrado ao banal\nSem coragem de ir embora\nMas como vais ser feliz\nSabendo o que espera lá fora?\n\nEntão faz a mochila e segue caminho\nNo fundo tu sabes que não estás sozinho\nPara cima, mais alto, é a direção\nE não há melhor bússola que o coração\n\nTens o mundo à tua espera\nE uma sede de infinito\nSolta a tua voz mais sincera\nFaz ouvir o teu grito!\nÉs tu quem traça o teu destino\nNão deixes a folha em branco\nAgarra os lápis e pinta\nPreenche cada recanto",
+      "chords": "D A E F#m\nA E F#m D\nB F#m G#m E",
+      "videoUrl": ""
+    },
+    {
+      "id": "s15",
+      "title": "Renasce em mim",
+      "subtitle": "Música e Letra",
+      "lyrics": "Se um dia eu ficasse sem Ti,\nolharia as estrelas do céu\np’ra lembrar que viveste por mim,\ne para sempre guardar-Te, para sempre lembrar-Te\nna marca de um gesto meu.\n\nRenasce em mim, mostra como ama alguém\nque precisa de mim\np’ra mostrar o melhor que Deus tem.\n\nO que sinto não posso explicar, é difícil saber e dizer…\nO que eu tenho, não posso negar que é aquilo que eu quero,\né a Ti que eu desejo, e não vou abandonar.\n\nReviver o que vivi, renascer conTigo,\nconquistar o Teu espaço astral,\npois quem ama não teme o bem e o mal.",
+      "chords": "Dó Sol Ré\nLá- Sol Dó Sol\nLá- Dó\nSol Dó Sol Dó Ré\nMi- Dó Sol Dó Ré\nDó Ré Mi- Dó Ré- Mi-\nDó Ré\nLá- Sol Dó Ré",
+      "videoUrl": ""
+    },
+    {
+      "id": "s16",
+      "title": "Rumos (Homem Novo)",
+      "subtitle": "Rumos do Homem Novo",
+      "lyrics": "Na vara que se abre em dois caminhos\naceitamos proposta de opção\nsabendo que nunca vamos, sozinhos\nquando é por Cristo, a decisão.\n\nMochila às costas, com o pão e a palavra\nlevamos tenda prontos para partir\nguia-nos um fogo, que não se apaga\nque acende no lenço, a cor do servir.\n\nSer Caminheiro nos rumos do Homem Novo\nser construtor, de um mundo novo\ncaminhando no amor ser Homem Novo.\n\nPelo projecto pessoal da vida sonhamos cada dia o amanhã\ne que queremos de esperança decidida e partilhar na carta de clã.\nNossos rumos prosseguem aventuras\nde encontros do Homem com Deus, na história\na exigir a coragem de rupturas de que a cruz no mundo, gritar memórias.\n\nNas palavras de montanha, a verdade\na chamar por coerência e compromisso\no evangelho feito comunidade vivido em atitude de serviço.\nDe B.P. vem o apelo a navegar caminhos de triunfo, a felicidade\nem Jesus Cristo a meta a alcançar o Homem Novo chamado à eternidade.",
+      "chords": "Dó9 Sim7 Lám7\nDó9 Sim7 Mim Lám7 Dó9 Ré\nSol Fá Dó Ré\nDó9 Sol Lá# Fá",
+      "videoUrl": ""
+    },
+    {
+      "id": "s17",
+      "title": "Minha Promessa",
+      "subtitle": "Música e Letra",
+      "lyrics": "Minha promessa atende, meu Deus, Deus meu\nE sobre mim estende o manto Teu\nEu te amo e quero amar cada vez mais\nNão deixes de escutar, Senhor, meus ais.\n\nJuro seguir Teus passos como Cristão\nE depôr em Teus braços meu coração\nDefende-me do mal, Jesus meu rei\nE em prol de Portugal batalharei\nMinh’alma toda cega de fé e de amor\nHoje e sempre se entrega a Vós Senhor",
+      "chords": "Dó Lá- Sol Dó Sol Sol7 Dó\nFá Dó Ré- Dó Fá Dó Ré- Sol Sol7 Dó",
+      "videoUrl": ""
+    },
+    {
+      "id": "s18",
+      "title": "Somos ilhas",
+      "subtitle": "Música e Letra",
+      "lyrics": "Se te sentes só no mundo e pensas que não tens um amigo\nSe te sentes uma ilha toda rodeada de mar\nVem junta-te a nós\n\nSomos ilhas como tu\nSó que o mar que nos rodeia é feito de escutas sempre a cantar\nSomos ilhas, mas estamos juntos sempre juntos no ideal de BP\nNão há mar que nos separe\nNão há guerra que nos pare\nÉ este mar de jovens cantando que nos dá força p’ra prosseguir\n\nHá continentes inteiros que estão separados\nSão as guerras só quem não quer é que não vê\nSomos ilhas mas estamos juntos\nE do mundo queremos fazer uma ilha gigante e unida pelo ideal de BP",
+      "chords": "",
+      "videoUrl": ""
+    },
+    {
+      "id": "s19",
+      "title": "Somos Um",
+      "subtitle": "Hino do Agrupamento",
+      "lyrics": "Ao passar a vida, eu sei que nem tudo vai ser como sonhei.\nTer caminho p’ra fazer e um plano, sem saber ser “Mais alguém”.\n\nE vais ver, vais sentir, Não precisas desistir\nQuando a vida te pára e diz “Não!”\nPois Eu estou junto a ti, Dou-te a Força que há em mim,\nTu és mais do que um só – somos Um!\n\nSomos Um, somos Um, somos Um... (Eu e tu somos um)\n\nPosso ser igual a mim, ou terei de desistir de ser assim?\nConfiar no coração, ou no plano que Deus Tem para mim?\nMesmo os que aqui não estão De ti esperam, com razão,\nTeu rumo tu estás a traçar.\nSeres alguém, seres feliz, Porque “Alguém” assim o quis,\nSeres um “mais” para ti: somos um!\n\nSomos um, eu e tu, Como a terra e o céu, Unidos pelo mesmo sol.\nE de ti vais colher O orgulho de crescer\nE sorrires quando vires que somos um!",
+      "chords": "Sol Si- Mi- Ré Dó Sol\nSol Lá- Fá Dó Sol Dó Ré Sol Ré Sol\nSol Dó Ré",
+      "videoUrl": ""
+    },
+    {
+      "id": "s20",
+      "title": "Tempo novo, Homens novos",
+      "subtitle": "Música e Letra",
+      "lyrics": "Desde sempre sopra uma brisa, Forte envolvência que nos quer guiar,\nSábia voz que nos toca o coração. Sabemos hoje onde nos pode levar.\nO mundo avança com a nossa vontade. Se uma criança sonhar ser grande:\nNós queremos realizar esse sonho! Será um tempo novo… Novo!\n\nSeremos realizadores de sonhos, (seremos realizadores de sonhos)\nHomens Novos, num Tempo Novo. (num Tempo Novo, e Amanhã)\nSeremos realizadores de sonhos (…um Tempo Novo…)\nTempo Novo (…Homens Novos!) Homens Novos!\n\nAo chegar ao alto da montanha, desafia o eco gritando: Felicidade!\nE ela virá de volta uma e outra vez de cada vez que encontres a dificuldade.\nQueremos aceitar o nosso desafio! Caminheiro é saber crescer por dentro,\nDespertar do sonho, realizar a vida, e avançar, consciente, em cada encruzilhada.\n\nE espalharemos esta mensagem: Há sempre uma brisa que sopra.\nEla traz a Voz sábia de Deus E irá tocar-vos o Coração.",
+      "chords": "Ré Dó#- Si- Lá\nMi Ré Lá Mi Ré Lá Fá#-\nDó#- Ré Si- Mi",
+      "videoUrl": ""
+    },
+    {
+      "id": "s21",
+      "title": "Um Escuteiro Diferente",
+      "subtitle": "Hino do ACAREG 2016",
+      "lyrics": "Vem! Vem! Vem! Dá o passo em frente\nDá o teu melhor e sê um ESCUTEIRO DIFERENTE!\n\nTudo começou com a melhor das vontades\nSaber ver, ouvir, falar sempre a verdade. Qual é?\nA tua vontade de seguir nesta caçada?\nDepois vem a lei, vem o ser generoso\nDescobres que vida é já mais do que um jogo. Qual é?\nA tua vontade de embarcar nesta grande aventura?\n\nHey! Hey! Hey! Este é o jogo da vida\nO teu querer é a tua medida\nUm modo de ser, forma de viver\nPorque a promessa não é só prometer\n\nVem! Vem! Vem! Dá o passo em frente\nDá o teu melhor e sê um ESCUTEIRO DIFERENTE!",
+      "chords": "Ré Lá Sol Lá Ré\nRé Lá Sim Sol\nLá Sol Lá",
+      "videoUrl": ""
+    },
+    {
+      "id": "s22",
+      "title": "Um sorriso num olhar",
+      "subtitle": "Música e Letra",
+      "lyrics": "Abri a caixa do tempo E relembrei como foi\nEsvaziei o pensamento E num sonho viajei\nCorre, salta, dança, voa Vem andar sobre o luar\nAma, agradece num sorriso Quem te olha a chorar (bis)\nErgue o teu olhar O Mundo vai-te abraçar (bis)",
+      "chords": "Sol Ré9(/Fá#) Dó9",
+      "videoUrl": ""
+    },
+    {
+      "id": "s23",
+      "title": "Hino dos Caminheiros",
+      "subtitle": "Clã nº 107 – São Nuno",
+      "lyrics": "(Letra a adicionar via Admin)",
+      "chords": "",
+      "videoUrl": ""
+    }
+  ],
+  "visits": [
+    {
+      "id": "v1",
+      "title": "Agrupamento 123 - Lisboa",
+      "date": "Agosto 2024",
+      "imageUrl": "assets/visits/visit1.jpg",
+      "description": "Uma mensagem de amizade deixada pelos pioneiros de Lisboa durante o seu acampamento de verão em Vila do Conde."
+    },
+    {
+      "id": "v2",
+      "title": "Caminheiros de Braga",
+      "date": "Julho 2023",
+      "imageUrl": "assets/visits/visit2.jpg",
+      "description": "Postal de agradecimento pela hospitalidade na nossa sede."
+    }
+  ],
+  "pages": [
+    {
+      "id": "hero",
+      "content": "ssss",
+      "contentEn": "ssss"
+    },
+    {
+      "id": "about",
+      "content": "São João Baptista de Vila do Conde — Desde 1975, a formar jovens para a vida através da aventura, do serviço e da amizade.",
+      "contentEn": "ssss"
+    }
+  ],
+  "hero-stats": {
+    "icon": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/icon_202604181551.png",
+    "title1": "Agrupamento",
+    "title2": "439",
+    "subtitle": "São João Baptista de Vila do Conde — Desde 1975, a formar jovens para a vida através da aventura, do serviço e da amizade.",
+    "years": 50,
+    "scouts": 500,
+    "camps": 200,
+    "nights": 1000
+  },
+  "recruitment": []
+}

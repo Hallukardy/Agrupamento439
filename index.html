@@ -17,8 +17,10 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css?v=2">
   
-  <!-- i18n -->
+  <!-- AI Service & i18n -->
+  <script src="js/ai-service.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="js/chatbot.js" defer></script>
   <link rel="icon" href="assets/logo.png" type="image/png">
 </head>
 <body>
@@ -870,6 +872,28 @@
   </section>
 
   <!-- ============ FOOTER ============ -->
+  <!-- AI Chatbot Widget -->
+  <div class="ai-bot-widget">
+    <div class="ai-bot-window" id="aiBotWindow">
+      <div class="ai-bot-header">
+        <h4>🤖 <span>AI Assistente 439</span></h4>
+        <button class="ai-bot-close" onclick="toggleChatbot()">✕</button>
+      </div>
+      <div class="ai-bot-messages" id="aiBotMessages">
+        <div class="message bot">
+          Olá! Sou o assistente de IA do Agrupamento 439. Como posso ajudar-te hoje?
+        </div>
+      </div>
+      <div class="ai-bot-input-area">
+        <input type="text" class="ai-bot-input" id="aiBotInput" placeholder="Faz uma pergunta..." onkeypress="if(event.key === 'Enter') sendChatbotMessage()">
+        <button class="ai-bot-send" onclick="sendChatbotMessage()">➤</button>
+      </div>
+    </div>
+    <div class="ai-bot-bubble" onclick="toggleChatbot()">
+      🤖
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">

@@ -4,8 +4,10 @@
    ============================================================ */
 
 // ---------- AUTH ----------
-const ADMIN_USER = 'admin439';
-const ADMIN_PASS = 'escuteiros2025';
+const AUTH_CONFIG = {
+  user: 'admin439',
+  pass: 'escuteiros2025' // Moving to a config object; in production this should be handled by a real backend
+};
 
 function checkAuth() {
   return sessionStorage.getItem('agr439-admin-auth') === 'true';
@@ -16,7 +18,7 @@ function doLogin() {
   const pass = document.getElementById('login-pass').value;
   const errorEl = document.getElementById('login-error');
 
-  if (user === ADMIN_USER && pass === ADMIN_PASS) {
+  if (user === AUTH_CONFIG.user && pass === AUTH_CONFIG.pass) {
     sessionStorage.setItem('agr439-admin-auth', 'true');
     showDashboard();
   } else {
@@ -34,6 +36,8 @@ function doLogout() {
 document.addEventListener('DOMContentLoaded', () => {
   if (checkAuth()) {
     showDashboard();
+    syncFromGitHub(); // Sincronização automática silenciosa ao carregar
+    fixGalleryPaths();
   } else {
     showLogin();
   }
@@ -42,6 +46,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('agr439-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
 });
+
+/**
+ * Converte caminhos locais (assets/gallery/...) que não existem localmente
+ * em URLs diretos do GitHub (raw.githubusercontent.com)
+ */
+function fixGalleryPaths() {
+  const gallery = getStore('agr439-admin-gallery');
+  const config = getGitHubConfig();
+  if (!config.owner || !config.repo) return;
+  
+  let changed = false;
+  const baseUrl = `https://raw.githubusercontent.com/${config.owner}/${config.repo}/${config.branch || 'main'}/`;
+  
+  const updated = gallery.map(item => {
+    // Se o URL começar com assets/gallery/, mudamos para o URL do GitHub
+    if (item.url && item.url.startsWith('assets/gallery/')) {
+      item.url = baseUrl + item.url;
+      changed = true;
+    }
+    return item;
+  });
+  
+  if (changed) {
+    setStore('agr439-admin-gallery', updated);
+  }
+}
 
 function showLogin() {
   document.getElementById('login-view').style.display = 'flex';
@@ -125,6 +155,13 @@ function navigateTo(section) {
       headerTitle.innerHTML = '⚙️ <span>Definições Admin</span>';
       renderSettings(main);
       break;
+    case 'ai-settings':
+      headerTitle.innerHTML = '🤖 <span>AI Engine & RAG</span>';
+      renderAISettings(main);
+      break;
+    case 'publish':
+      publishSiteData();
+      break;
   }
 }
 
@@ -132,7 +169,13 @@ function navigateTo(section) {
 
 // ---------- STORAGE HELPERS ----------
 function getStore(key) {
-  return JSON.parse(localStorage.getItem(key) || '[]');
+  try {
+    const val = localStorage.getItem(key);
+    return val ? JSON.parse(val) : [];
+  } catch (e) {
+    console.error(`Error parsing ${key}`, e);
+    return [];
+  }
 }
 
 function setStore(key, data) {
@@ -167,6 +210,19 @@ function renderDashboard(container) {
   const archive = getStore('agr439-admin-caixa-tempo');
 
   container.innerHTML = `
+    <div class="stats-row" style="grid-column: 1/-1; margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <div class="stat-card" style="flex: 1; min-width: 300px; border: 2px solid var(--c-primary);">
+        <h4 style="margin-bottom: 0.5rem;">🚀 Publicação do Site</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Dica: Clique em "Publicar" para enviar as suas alterações para o site oficial.
+        </p>
+        <div style="display:flex; gap:0.75rem;">
+          <button class="btn btn-save" onclick="publishSiteData()">🚀 Publicar Agora</button>
+          <button class="btn btn-outline" onclick="syncFromGitHub(true)">🔄 Sincronizar Dados</button>
+        </div>
+      </div>
+    </div>
+
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-icon">📰</div>
@@ -196,7 +252,7 @@ function renderDashboard(container) {
       <div class="stat-card">
         <div class="stat-icon">⌛</div>
         <div class="stat-value">${archive.length}</div>
-        <div class="stat-name">Arquivo</div>
+        <div class="stat-name">Caixa do Tempo</div>
       </div>
     </div>
 
@@ -288,14 +344,15 @@ function openNewsModal(id) {
       <label>Imagem da Notícia</label>
       <div style="display: flex; gap: 0.5rem; align-items: center;">
         <input type="text" id="m-news-img" value="${item ? esc(item.imageUrl || '') : ''}" placeholder="https://..." style="flex: 1;">
-        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-news-img').value = url)">🖼️ Escolher</button>
+        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-news-img').value = url, 'geral')">🖼️ Escolher</button>
       </div>
       <small style="color: var(--text-muted); font-size: 0.75rem;">Link da imagem ou escolha da galeria.</small>
     </div>
     <div class="form-group">
       <label><input type="checkbox" id="m-news-published" ${item?.published ? 'checked' : ''}> Publicar</label>
     </div>
-    <div class="modal-actions">
+    <div class="modal-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <button class="btn btn-outline btn-sm" onclick="helpWriteNews()" style="margin-right: auto;">🤖 Ajudar a escrever (AI)</button>
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
       <button class="btn-save" onclick="saveNews('${id || ''}')">Guardar</button>
     </div>
@@ -488,7 +545,7 @@ function renderTimelineCRUD(container) {
                   <td>${esc(t.title)}</td>
                   <td><span class="status-badge status-published">${itemsCount} Itens</span></td>
                   <td>
-                    <button class="action-btn" onclick="renderTimelineItemsCRUD('${t.id}')" title="Gerir Sub-itens deste ano" style="background:#f0e6d2; color:#b08d55;">📂 Abrir Itens</button>
+                    <button class="action-btn-open" onclick="renderTimelineItemsCRUD('${t.id}')" title="Gerir Sub-itens deste ano">📂 Abrir Itens</button>
                     <button class="action-btn edit" onclick="openTimelineMilestoneModal('${t.id}')" title="Editar Ano">✏️</button>
                     <button class="action-btn delete" onclick="deleteTimelineMilestone('${t.id}')" title="Apagar Ano e os seus itens">🗑️</button>
                   </td>
@@ -630,7 +687,7 @@ function openTimelineItemModal(milestoneId, itemId) {
       <label>Imagem (Opcional)</label>
       <div style="display: flex; gap: 0.5rem; align-items: center;">
         <input type="text" id="m-tli-img" value="${item ? esc(item.imageUrl || '') : ''}" placeholder="https://..." style="flex: 1;">
-        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-tli-img').value = url)">🖼️ Escolher</button>
+        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-tli-img').value = url, 'timeline')">🖼️ Escolher</button>
       </div>
     </div>
     <div class="form-group">
@@ -689,25 +746,63 @@ function deleteTimelineItem(milestoneId, itemId) {
 
 
 // ---------- GALLERY CRUD ----------
+let galleryFilterCat = 'all';
+let gallerySortCol = 'description';
+let gallerySortDir = 'asc';
+
 function renderGalleryCRUD(container) {
-  const gallery = getStore('agr439-admin-gallery');
+  let gallery = getStore('agr439-admin-gallery');
+  const allCats = [...new Set(gallery.map(g => g.category))];
+
+  // Aplicar Filtro
+  if (galleryFilterCat !== 'all') {
+    gallery = gallery.filter(g => g.category === galleryFilterCat);
+  }
+
+  // Aplicar Ordenação
+  gallery.sort((a, b) => {
+    let valA = (gallerySortCol === 'category' ? getCatLabel(a.category) : a[gallerySortCol]).toLowerCase();
+    let valB = (gallerySortCol === 'category' ? getCatLabel(b.category) : b[gallerySortCol]).toLowerCase();
+    
+    if (valA < valB) return gallerySortDir === 'asc' ? -1 : 1;
+    if (valA > valB) return gallerySortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const sortIcon = (col) => {
+    if (gallerySortCol !== col) return '↕️';
+    return gallerySortDir === 'asc' ? '🔼' : '🔽';
+  };
 
   container.innerHTML = `
     <div class="admin-table-container">
       <div class="admin-table-header">
-        <h3>Galeria (${gallery.length})</h3>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <h3>Galeria (${gallery.length})</h3>
+          <select class="admin-filter-select" onchange="setGalleryFilter(this.value)">
+            <option value="all" ${galleryFilterCat === 'all' ? 'selected' : ''}>Todas as Categorias</option>
+            ${allCats.sort().map(cat => `
+              <option value="${cat}" ${galleryFilterCat === cat ? 'selected' : ''}>${getCatLabel(cat)}</option>
+            `).join('')}
+          </select>
+        </div>
         <button class="btn btn-primary btn-sm" onclick="openGalleryModal()">+ Adicionar Foto</button>
       </div>
-      ${gallery.length === 0 ? '<div class="empty-state"><div class="icon">🖼️</div><p>Nenhuma foto na galeria.</p><button class="btn btn-primary btn-sm" onclick="openGalleryModal()">Adicionar Primeira Foto</button></div>' : `
+      ${gallery.length === 0 ? '<div class="empty-state"><div class="icon">🖼️</div><p>Nenhuma foto encontrada com os filtros atuais.</p><button class="btn btn-primary btn-sm" onclick="openGalleryModal()">Adicionar Foto</button></div>' : `
         <table class="admin-table">
           <thead>
-            <tr><th>Descrição</th><th>Categoria</th><th>Estado</th><th>Ações</th></tr>
+            <tr>
+              <th class="sortable" onclick="setGallerySort('description')">Descrição ${sortIcon('description')}</th>
+              <th class="sortable" onclick="setGallerySort('category')">Categoria ${sortIcon('category')}</th>
+              <th>Estado</th>
+              <th>Ações</th>
+            </tr>
           </thead>
           <tbody>
             ${gallery.map(g => `
               <tr>
                 <td>${esc(g.description)}</td>
-                <td>${esc(g.category)}</td>
+                <td>${esc(getCatLabel(g.category))}</td>
                 <td><span class="status-badge ${g.approved ? 'status-published' : 'status-draft'}">${g.approved ? 'Aprovada' : 'Pendente'}</span></td>
                 <td>
                   <button class="action-btn edit" onclick="toggleGalleryApproval('${g.id}')" title="${g.approved ? 'Desaprovar' : 'Aprovar'}">${g.approved ? '❌' : '✅'}</button>
@@ -722,6 +817,22 @@ function renderGalleryCRUD(container) {
   `;
 }
 
+function setGalleryFilter(cat) {
+  galleryFilterCat = cat;
+  renderGalleryCRUD(document.getElementById('admin-content'));
+}
+
+function setGallerySort(col) {
+  if (gallerySortCol === col) {
+    gallerySortDir = gallerySortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    gallerySortCol = col;
+    gallerySortDir = 'asc';
+  }
+  renderGalleryCRUD(document.getElementById('admin-content'));
+}
+
+
 function openGalleryModal() {
   showModal(`
     <h3>🖼️ Adicionar Foto</h3>
@@ -732,6 +843,8 @@ function openGalleryModal() {
     <div class="form-group">
       <label>Categoria</label>
       <select id="m-gallery-cat">
+        <option value="hero">Destaques Hero</option>
+        <option value="timeline">Cronologia</option>
         <option value="geral">Geral</option>
         <option value="lobitos">Lobitos</option>
         <option value="exploradores">Exploradores</option>
@@ -778,7 +891,7 @@ async function saveGalleryItem() {
     btn.textContent = 'A carregar...';
     try {
       const result = await uploadToGitHub(fileInput.files[0]);
-      finalUrl = result.url; // Use the local path
+      finalUrl = result.githubUrl; // Utilizar o URL direto do GitHub para visibilidade imediata
       showToast('🚀 Imagem enviada para o GitHub!');
     } catch (err) {
       alert('Erro no upload: ' + err.message);
@@ -826,83 +939,7 @@ function deleteGalleryItem(id) {
   renderGalleryCRUD(document.getElementById('admin-content'));
 }
 
-// ---------- PAGES CRUD ----------
-function renderPagesCRUD(container) {
-  const pages = getStore('agr439-admin-pages');
-
-  const defaultPages = [
-    { id: 'hero', label: 'Hero / Banner', key: 'hero_subtitle' },
-    { id: 'about', label: 'Sobre o Agrupamento', key: 'footer_desc' },
-  ];
-
-  container.innerHTML = `
-    <div class="admin-table-container">
-      <div class="admin-table-header">
-        <h3>Conteúdo Editável</h3>
-      </div>
-      <table class="admin-table">
-        <thead>
-          <tr><th>Secção</th><th>Conteúdo Atual</th><th>Ações</th></tr>
-        </thead>
-        <tbody>
-          ${defaultPages.map(p => {
-            const custom = pages.find(pg => pg.id === p.id);
-            return `
-              <tr>
-                <td><strong>${p.label}</strong></td>
-                <td>${custom ? esc(custom.content.substring(0, 80)) + '…' : '<em>Padrão</em>'}</td>
-                <td><button class="action-btn edit" onclick="openPageModal('${p.id}', '${p.label}')" title="Editar">✏️</button></td>
-              </tr>
-            `;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
-}
-
-function openPageModal(pageId, label) {
-  const pages = getStore('agr439-admin-pages');
-  const existing = pages.find(p => p.id === pageId);
-
-  showModal(`
-    <h3>✏️ Editar: ${label}</h3>
-    <div class="form-group">
-      <label>Conteúdo (PT)</label>
-      <textarea id="m-page-content-pt" rows="4">${existing ? esc(existing.content) : ''}</textarea>
-    </div>
-    <div class="form-group">
-      <label>Conteúdo (EN)</label>
-      <textarea id="m-page-content-en" rows="4">${existing ? esc(existing.contentEn || '') : ''}</textarea>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="savePage('${pageId}')">Guardar</button>
-    </div>
-  `);
-}
-
-function savePage(pageId) {
-  const pages = getStore('agr439-admin-pages');
-  const idx = pages.findIndex(p => p.id === pageId);
-  const data = {
-    id: pageId,
-    content: document.getElementById('m-page-content-pt').value,
-    contentEn: document.getElementById('m-page-content-en').value,
-  };
-
-  if (idx >= 0) {
-    pages[idx] = data;
-  } else {
-    pages.push(data);
-  }
-
-  setStore('agr439-admin-pages', pages);
-  closeModal();
-  showToast('✅ Conteúdo guardado!');
-  renderPagesCRUD(document.getElementById('admin-content'));
-}
-
+// ---------- DELETED DUE TO DUPLICATION (MOVED TO BOTTOM FOR NEW PAGES CRUD) ----------
 // ---------- NEWSLETTER ----------
 function renderNewsletter(container) {
   const subs = getStore('agr439-newsletter');
@@ -1129,7 +1166,7 @@ function openVisitModalCRUD(id) {
       <label>Foto da Carta/Postal</label>
       <div style="display: flex; gap: 0.5rem; align-items: center;">
         <input type="url" id="m-visit-image" value="${visit ? esc(visit.imageUrl) : ''}" placeholder="https://..." style="flex: 1;">
-        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-visit-image').value = url)">🖼️ Galeria</button>
+        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-visit-image').value = url, 'visitantes')">🖼️ Galeria</button>
       </div>
       <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Upload primeiro na galeria para escolher aqui, ou use um URL direto.</p>
     </div>
@@ -1194,7 +1231,7 @@ function renderCaixaTempoCRUD(container) {
           <tbody>
             ${items.map(p => `
               <tr>
-                <td><img src="${p.imageUrl}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td>
+                <td><img src="${p.imageUrls ? p.imageUrls[0] : p.imageUrl}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;"></td>
                 <td><strong>${esc(p.year)}</strong></td>
                 <td>${esc(p.title)}</td>
                 <td><span class="news-card-tag tag-geral">${esc(p.category)}</span></td>
@@ -1236,12 +1273,21 @@ function openCaixaTempoModal(id) {
       <textarea id="m-archive-desc" rows="3">${item ? esc(item.description) : ''}</textarea>
     </div>
     <div class="form-group">
-      <label>Imagem (Recorte de Jornal / Foto Antiga)</label>
-      <div style="display: flex; gap: 0.5rem; align-items: center;">
-        <input type="text" id="m-archive-img" value="${item ? esc(item.imageUrl || '') : ''}" placeholder="https://..." style="flex: 1;">
-        <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => document.getElementById('m-archive-img').value = url)">🖼️ Escolher</button>
+      <label>Imagens (Recortes de Jornal / Fotos Antigas)</label>
+      <div id="m-archive-images-container">
+        ${(() => {
+          const urls = item?.imageUrls || (item?.imageUrl ? [item.imageUrl] : ['']);
+          return urls.map((url, i) => `
+            <div class="archive-img-row" style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+              <input type="text" class="m-archive-img-input" value="${esc(url)}" placeholder="https://..." style="flex: 1;">
+              <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => this.previousElementSibling.value = url, 'caixatempo')">🖼️</button>
+              ${i > 0 ? `<button class="btn btn-outline btn-sm" onclick="this.parentElement.remove()" style="color: var(--c-danger);">✕</button>` : ''}
+            </div>
+          `).join('');
+        })()}
       </div>
-      <small style="color: var(--text-muted); font-size: 0.75rem;">Link da imagem ou escolha da galeria.</small>
+      <button class="btn btn-outline btn-sm" style="width: 100%; margin-top: 0.2rem;" onclick="addArchiveImageRow()">+ Adicionar Outra Imagem</button>
+      <small style="color: var(--text-muted); font-size: 0.75rem;">Adicione várias imagens para criar um carrossel no site.</small>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
@@ -1250,15 +1296,34 @@ function openCaixaTempoModal(id) {
   `);
 }
 
+/** Helper para adicionar nova linha de imagem na modal */
+window.addArchiveImageRow = () => {
+  const container = document.getElementById('m-archive-images-container');
+  const div = document.createElement('div');
+  div.className = 'archive-img-row';
+  div.style = 'display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;';
+  div.innerHTML = `
+    <input type="text" class="m-archive-img-input" value="" placeholder="https://..." style="flex: 1;">
+    <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => this.previousElementSibling.value = url, 'caixatempo')">🖼️</button>
+    <button class="btn btn-outline btn-sm" onclick="this.parentElement.remove()" style="color: var(--c-danger);">✕</button>
+  `;
+  container.appendChild(div);
+};
+
 function saveCaixaTempoItem(id) {
   const items = getStore('agr439-admin-caixa-tempo');
+  const imageUrls = Array.from(document.querySelectorAll('.m-archive-img-input'))
+    .map(input => input.value.trim())
+    .filter(url => url !== '');
+
   const data = {
     id: id || generateId(),
     title: document.getElementById('m-archive-title').value,
     year: document.getElementById('m-archive-year').value,
     category: document.getElementById('m-archive-cat').value,
     description: document.getElementById('m-archive-desc').value,
-    imageUrl: document.getElementById('m-archive-img').value,
+    imageUrls: imageUrls,
+    imageUrl: imageUrls[0] || '', // Mantém legacy field para compatibilidade simples
     date: new Date().toISOString(),
   };
 
@@ -1283,79 +1348,292 @@ function deleteCaixaTempoItem(id) {
   renderCaixaTempoCRUD(document.getElementById('admin-content'));
 }
 
-// ---------- MODAL HELPERS ----------
-function showModal(content) {
-  let overlay = document.getElementById('modal-overlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'modal-overlay';
-    overlay.className = 'modal-overlay';
-    overlay.innerHTML = '<div class="modal" id="modal-body"></div>';
-    document.body.appendChild(overlay);
-
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal();
-    });
-  }
-
-  document.getElementById('modal-body').innerHTML = content;
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('modal-overlay')?.classList.remove('active');
-  document.body.style.overflow = '';
-}
+// [showModal and closeModal are defined once in the UI HELPERS section below]
 
 
 // ---------- SETTINGS & GITHUB API ----------
-function renderSettings(container) {
-  const config = getGitHubConfig();
+  `;
+}
+
+async function renderAISettings(container) {
+  const mode = localStorage.getItem('agr439-ai-mode') || 'local';
+  const provider = localStorage.getItem('agr439-ai-provider') || 'openai';
+  
+  let apiKey = '';
+  const encrypted = localStorage.getItem('agr439-ai-apikey-secure');
+  if (encrypted && window.Security) {
+    apiKey = await window.Security.decrypt(encrypted) || '';
+  }
 
   container.innerHTML = `
-    <div class="admin-table-container" style="max-width: 600px;">
+    <div class="admin-table-container" style="max-width: 700px;">
       <div class="admin-table-header">
-        <h3>🚀 Configuração GitHub API</h3>
+        <h3>🤖 Configuração de Inteligência Artificial</h3>
       </div>
       <div style="padding: 1.5rem;">
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-          Configure as credenciais para permitir o upload direto de imagens para o repositório. 
-          O Token é guardado apenas no seu navegador.
-        </p>
-        
-        <div class="form-group">
-          <label>GitHub Personal Access Token (PAT)</label>
-          <input type="password" id="gh-token" value="${config.token || ''}" placeholder="ghp_xxxxxxxxxxxx">
-          <small style="color: var(--text-muted); font-size: 0.75rem;">Crie um token com permissão 'contents: write' no GitHub.</small>
-        </div>
-        
-        <div class="form-group">
-          <label>Utilizador GitHub (Owner)</label>
-          <input type="text" id="gh-owner" value="${config.owner || ''}" placeholder="ex: OTeuUser">
-        </div>
-        
-        <div class="form-group">
-          <label>Nome do Repositório</label>
-          <input type="text" id="gh-repo" value="${config.repo || ''}" placeholder="ex: Escuteiros">
-        </div>
-        
-        <div class="form-group">
-          <label>Branch</label>
-          <input type="text" id="gh-branch" value="${config.branch || 'main'}" placeholder="main">
+        <div class="form-group" style="margin-bottom: 2rem;">
+          <label>Modo de Conexão</label>
+          <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="radio" name="ai-mode" value="local" ${mode === 'local' ? 'checked' : ''} onchange="toggleAIFields()">
+              <span>Portal_AI (Local / Dev)</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="radio" name="ai-mode" value="production" ${mode === 'production' ? 'checked' : ''} onchange="toggleAIFields()">
+              <span>Modo Produção (Direto)</span>
+            </label>
+          </div>
+          <small style="color: var(--text-muted);">Use Portal_AI para desenvolvimento local. Use Produção para quando o site estiver publicado.</small>
         </div>
 
-        <div style="margin-top: 2rem;">
-          <button class="btn btn-primary" onclick="saveGitHubSettings()">Guardar Configurações</button>
+        <div id="ai-production-fields" style="display: ${mode === 'production' ? 'block' : 'none'}; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+          <div class="form-group">
+            <label>Provedor AI (Top 10)</label>
+            <select id="ai-provider" style="width: 100%;">
+              <option value="openai" ${provider === 'openai' ? 'selected' : ''}>OpenAI (Default)</option>
+              <option value="gemini" ${provider === 'gemini' ? 'selected' : ''}>Google Gemini</option>
+              <option value="anthropic" ${provider === 'anthropic' ? 'selected' : ''}>Anthropic Claude</option>
+              <option value="groq" ${provider === 'groq' ? 'selected' : ''}>Groq (Llama 3)</option>
+              <option value="mistral" ${provider === 'mistral' ? 'selected' : ''}>Mistral AI</option>
+              <option value="perplexity" ${provider === 'perplexity' ? 'selected' : ''}>Perplexity</option>
+              <option value="deepseek" ${provider === 'deepseek' ? 'selected' : ''}>DeepSeek</option>
+              <option value="together" ${provider === 'together' ? 'selected' : ''}>Together AI</option>
+              <option value="openrouter" ${provider === 'openrouter' ? 'selected' : ''}>OpenRouter</option>
+              <option value="cohere" ${provider === 'cohere' ? 'selected' : ''}>Cohere</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>API Key</label>
+            <input type="password" id="ai-apikey" value="${apiKey}" placeholder="Sua chave API...">
+            <small style="color: var(--text-muted);">A chave é guardada localmente no seu navegador.</small>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(var(--c-primary-rgb), 0.1); border-radius: 8px;">
+          <h4 style="margin-bottom: 0.5rem;">🧠 Estado do RAG (Contexto Local)</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);">
+            O sistema está a indexar automaticamente o seu <code>site-data.json</code> para fornecer contexto ao Chatbot.
+          </p>
+          <button class="btn btn-outline btn-sm" style="margin-top: 0.5rem;" onclick="window.AI.init(); showToast('🧠 Dados re-indexados!');">🔄 Re-indexar Agora</button>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="testAndSaveAISettings()" id="btn-ai-test">💾 Guardar & Testar Ligação</button>
+          <button class="btn btn-outline" onclick="saveAISettings()">Apenas Guardar</button>
         </div>
       </div>
     </div>
   `;
 }
 
+function toggleAIFields() {
+  const fields = document.getElementById('ai-production-fields');
+  const mode = document.querySelector('input[name="ai-mode"]:checked').value;
+  fields.style.display = mode === 'production' ? 'block' : 'none';
+}
+
+async function saveAISettings() {
+  const mode = document.querySelector('input[name="ai-mode"]:checked').value;
+  const provider = document.getElementById('ai-provider').value;
+  const apiKey = document.getElementById('ai-apikey').value.trim();
+
+  localStorage.setItem('agr439-ai-mode', mode);
+  localStorage.setItem('agr439-ai-provider', provider);
+  
+  if (apiKey && window.Security) {
+    const encrypted = await window.Security.encrypt(apiKey);
+    localStorage.setItem('agr439-ai-apikey-secure', encrypted);
+    localStorage.removeItem('agr439-ai-apikey');
+  }
+
+  showToast('✅ Configurações de AI guardadas de forma segura!');
+}
+
+async function testAndSaveAISettings() {
+  await saveAISettings();
+
+  const mode = document.querySelector('input[name="ai-mode"]:checked').value;
+  if (mode === 'local') {
+    showToast('🚀 Ligação salva para Modo de Desenvolvimento (Portal_AI).');
+    return;
+  }
+
+  const btn = document.getElementById('btn-ai-test');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'A testar ligação...';
+  
+  try {
+    const result = await window.AI.testConnection();
+    alert(`✅ Ligação com o provedor estabelecida com sucesso!\n\nResposta do provedor: ${result}`);
+  } catch (err) {
+    alert(`❌ Falha na ligação AI:\n\n${err.message}\n\nA sua chave foi guardada na mesma, mas poderá não funcionar corretamente com a configuração atual.`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+/**
+ * AI ADMIN HELPERS
+ */
+async function helpWriteNews() {
+  const title = document.getElementById('m-news-title').value;
+  const content = document.getElementById('m-news-content').value;
+  
+  if (!title && !content) {
+    showToast('⚠️ Escreve pelo menos um título ou ideia inicial.');
+    return;
+  }
+
+  showToast('🤖 AI a processar rascunho...');
+  
+  try {
+    const prompt = `Estou a escrever uma notícia para o site do Agrupamento 439 (Escuteiros). 
+    Título atual: ${title}
+    Conteúdo atual: ${content}
+    
+    Por favor, melhora este texto para ser mais cativante, mantendo o tom escutista. 
+    Se o conteúdo estiver vazio, expande o título para uma notícia completa de 2 parágrafos.
+    Responde APENAS com o texto final da notícia.`;
+
+    const result = await window.AI.complete([{ role: 'user', content: prompt }]);
+    document.getElementById('m-news-content').value = result;
+    showToast('✨ Texto melhorado pela AI!');
+  } catch (err) {
+    showToast('❌ Erro na AI: ' + err.message);
+  }
+}
+
+/**
+ * SITE SYNCHRONIZATION & PUBLISHING SYSTEM
+ * ----------------------------------------
+ */
+
+const SYNC_KEYS = [
+  'agr439-admin-gallery',
+  'agr439-admin-news',
+  'agr439-admin-events',
+  'agr439-admin-caixa-tempo',
+  'agr439-admin-timeline',
+  'agr439-admin-songs',
+  'agr439-admin-visits',
+  'agr439-admin-pages',
+  'agr439-admin-hero-stats',
+  'agr439-admin-recruitment'
+];
+
+async function syncFromGitHub(manual = false) {
+  const config = getGitHubConfig();
+  if (!config.owner || !config.repo) return;
+  
+  if (manual) showToast('🔍 Procurando atualizações no GitHub...');
+
+  try {
+    const url = `https://raw.githubusercontent.com/${config.owner}/${config.repo}/${config.branch || 'main'}/data/site-data.json?t=${Date.now()}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      if (manual) showToast('ℹ️ Nenhum ficheiro de dados encontrado no GitHub.');
+      return;
+    }
+    
+    const remoteData = await res.json();
+    let updatedCount = 0;
+
+    SYNC_KEYS.forEach(key => {
+      const dataKey = key.replace('agr439-admin-', '').replace('agr439-', '');
+      if (remoteData[dataKey]) {
+        localStorage.setItem(key, JSON.stringify(remoteData[dataKey]));
+        updatedCount++;
+      }
+    });
+
+    if (updatedCount > 0 && manual) {
+      showToast('✅ Sincronizado com sucesso! A recarregar...');
+      setTimeout(() => location.reload(), 1500);
+    }
+  } catch (err) {
+    if (manual) showToast('❌ Erro na sincronização: ' + err.message);
+  }
+}
+
+async function publishSiteData() {
+  const config = getGitHubConfig();
+  if (!config.token || !config.owner || !config.repo) {
+    alert('Erro: Configure o Token do GitHub nas Definições primeiro.');
+    return;
+  }
+
+  if (!confirm('Tem a certeza que deseja tornar as suas alterações públicas para todos os visitantes?')) return;
+
+  const btn = document.getElementById('btn-publish');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '🚀 A publicar...';
+
+  try {
+    // 1. Collect all data
+    const payload = {};
+    SYNC_KEYS.forEach(key => {
+      const dataKey = key.replace('agr439-admin-', '').replace('agr439-', '');
+      const saved = localStorage.getItem(key);
+      payload[dataKey] = saved ? JSON.parse(saved) : [];
+    });
+
+    // 2. Get current SHA if file exists
+    let sha = null;
+    const path = 'data/site-data.json';
+    const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
+    
+    const getRes = await fetch(apiUrl, {
+      headers: { 'Authorization': `token ${config.token}` }
+    });
+    
+    if (getRes.ok) {
+      const fileData = await getRes.json();
+      sha = fileData.sha;
+    }
+
+    // 3. Upload/Update file
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${config.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: '🚀 Publish site content update',
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))),
+        sha: sha || undefined,
+        branch: config.branch
+      })
+    });
+
+    if (!putRes.ok) {
+      const err = await putRes.json();
+      throw new Error(err.message || 'Erro ao comunicar com a API do GitHub');
+    }
+
+    showToast('✨ Site publicado com sucesso! Visite para ver as mudanças.');
+  } catch (err) {
+    alert('Erro na publicação: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
 function getGitHubConfig() {
   const saved = localStorage.getItem('agr439-gh-config');
-  return saved ? JSON.parse(saved) : { owner: '', repo: '', branch: 'main', token: '' };
+  const defaults = { owner: 'Hallukardy', repo: 'Agrupamento439', branch: 'main', token: '' };
+  
+  if (!saved) return defaults;
+  try {
+    const config = JSON.parse(saved);
+    return { ...defaults, ...config };
+  } catch (e) {
+    return defaults;
+  }
 }
 
 function saveGitHubSettings() {
@@ -1426,21 +1704,23 @@ async function uploadToGitHub(file) {
 
 // ---------- UI HELPERS ----------
 function showModal(html) {
-  let modal = document.getElementById('modal-overlay');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'modal-overlay';
-    modal.className = 'modal-overlay';
-    document.body.appendChild(modal);
+  let overlay = document.getElementById('modal-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'modal-overlay';
+    overlay.className = 'modal-overlay';
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
   }
-  modal.innerHTML = `<div class="modal">${html}</div>`;
-  modal.classList.add('active');
-  modal.onclick = (e) => { if(e.target === modal) closeModal(); };
+  overlay.innerHTML = `<div class="modal">${html}</div>`;
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden'; // prevent body scroll when modal is open
 }
 
 function closeModal() {
-  const modal = document.getElementById('modal-overlay');
-  if (modal) modal.classList.remove('active');
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.remove('active');
+  document.body.style.overflow = ''; // restore body scroll
 }
 
 // ---------- RECRUITMENT CRUD ----------
@@ -1463,7 +1743,7 @@ function renderRecruitmentCRUD(container) {
             <div style="flex: 1; min-width: 300px;">
               <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
                 <input type="text" id="rec-flyer-url" value="${data.flyerUrl || 'assets/vemser_img1.png'}" placeholder="URL da imagem" style="flex: 1;">
-                <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => { document.getElementById('rec-flyer-url').value = url; updateRecPreview('flyer-preview', url); })">🖼️ Galeria</button>
+                <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => { document.getElementById('rec-flyer-url').value = url; updateRecPreview('flyer-preview', url); }, 'recrutamento')">🖼️ Galeria</button>
               </div>
               <p style="font-size: 0.8rem; color: var(--text-muted);">Este é o flyer que aparece no centro da secção de recrutamento.</p>
             </div>
@@ -1479,7 +1759,7 @@ function renderRecruitmentCRUD(container) {
             <div style="flex: 1; min-width: 300px;">
               <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
                 <input type="text" id="rec-header-url" value="${data.headerUrl || 'assets/vemser_img2.png'}" placeholder="URL da imagem" style="flex: 1;">
-                <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => { document.getElementById('rec-header-url').value = url; updateRecPreview('header-preview', url); })">🖼️ Galeria</button>
+                <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => { document.getElementById('rec-header-url').value = url; updateRecPreview('header-preview', url); }, 'recrutamento')">🖼️ Galeria</button>
               </div>
               <p style="font-size: 0.8rem; color: var(--text-muted);">Imagem que aparece logo no início da secção (imagem de celebração).</p>
             </div>
@@ -1501,7 +1781,7 @@ function renderRecruitmentCRUD(container) {
                 <label>Miniatura do PDF</label>
                 <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
                   <input type="text" id="rec-pdf-img-url" value="${data.pdfImageUrl || 'assets/flyer1.jpg'}" placeholder="URL da miniatura" style="flex: 1;">
-                  <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => { document.getElementById('rec-pdf-img-url').value = url; updateRecPreview('pdf-preview', url); })">🖼️ Galeria</button>
+                  <button class="btn btn-outline btn-sm" onclick="openImagePicker(url => { document.getElementById('rec-pdf-img-url').value = url; updateRecPreview('pdf-preview', url); }, 'recrutamento')">🖼️ Galeria</button>
                 </div>
               </div>
               <div style="width: 70px; height: 95px; background: #fff; border: 1px solid #ccc; box-shadow: var(--shadow-sm); overflow: hidden;">
@@ -1538,25 +1818,144 @@ function saveRecruitment() {
 }
 
 
+// ---------- PAGES CRUD ----------
+const _defaultPages = [
+  { id: 'hero',  label: 'Hero / Banner',          key: 'hero_subtitle', content: '', contentEn: '' },
+  { id: 'about', label: 'Sobre o Agrupamento',    key: 'footer_desc',   content: '', contentEn: '' },
+];
+
+function renderPagesCRUD(container) {
+  // Merge: add any _defaultPages entries that don't yet exist in the store
+  // This handles partial data (e.g., only 1 of 2 entries saved from a previous session)
+  const _existing = getStore('agr439-admin-pages');
+  let _changed = false;
+  _defaultPages.forEach(def => {
+    if (!_existing.find(p => p.id === def.id)) {
+      _existing.push(Object.assign({}, def)); // add missing entry; preserve saved ones
+      _changed = true;
+    }
+  });
+  if (_changed) setStore('agr439-admin-pages', _existing);
+
+  const pages = getStore('agr439-admin-pages');
+
+  container.innerHTML = `
+    <div class="admin-table-container">
+      <div class="admin-table-header">
+        <h3>Conteúdo Editável</h3>
+      </div>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Secção</th>
+            <th>Conteúdo Atual</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${pages.map(p => `
+            <tr>
+              <td><strong>${esc(p.label)}</strong></td>
+              <td style="max-width:500px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:${p.content ? 'var(--text-primary)' : 'var(--text-muted)'};">
+                ${p.content ? esc(p.content) : 'Padrão (sem override)'}
+              </td>
+              <td>
+                <button class="action-btn edit" onclick="openPageEditModal('${p.id}')" title="Editar conteúdo">✏️</button>
+                ${p.content ? `<button class="action-btn delete" onclick="clearPageContent('${p.id}')" title="Repor padrão">🗑️</button>` : ''}
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function openPageEditModal(id) {
+  const pages = getStore('agr439-admin-pages');
+  const page = pages.find(p => p.id === id);
+  if (!page) return;
+
+  showModal(`
+    <h3>✏️ Editar — ${esc(page.label)}</h3>
+    <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1.2rem;">
+      Este texto substitui o conteúdo padrão do site. Deixe em branco para usar o texto original.
+    </p>
+    <div class="form-group">
+      <label>Conteúdo (PT)</label>
+      <textarea id="m-page-content-pt" rows="4" placeholder="Texto em Português…">${esc(page.content || '')}</textarea>
+    </div>
+    <div class="form-group">
+      <label>Conteúdo (EN) <span style="color:var(--text-muted); font-weight:400;">(Opcional)</span></label>
+      <textarea id="m-page-content-en" rows="4" placeholder="English text (optional)…">${esc(page.contentEn || '')}</textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="savePageContent('${id}')">Guardar</button>
+    </div>
+  `);
+}
+
+function savePageContent(id) {
+  const pages = getStore('agr439-admin-pages');
+  const idx = pages.findIndex(p => p.id === id);
+  if (idx < 0) return;
+
+  pages[idx].content   = document.getElementById('m-page-content-pt').value.trim();
+  pages[idx].contentEn = document.getElementById('m-page-content-en').value.trim();
+
+  setStore('agr439-admin-pages', pages);
+  closeModal();
+  showToast('✅ Conteúdo da página guardado!');
+  renderPagesCRUD(document.getElementById('admin-content'));
+}
+
+function clearPageContent(id) {
+  if (!confirm('Repor o conteúdo padrão desta secção?')) return;
+  const pages = getStore('agr439-admin-pages');
+  const idx = pages.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  pages[idx].content   = '';
+  pages[idx].contentEn = '';
+  setStore('agr439-admin-pages', pages);
+  showToast('🔄 Conteúdo reposto ao padrão.');
+  renderPagesCRUD(document.getElementById('admin-content'));
+}
+
+
 // ---------- MEDIA PICKER MODAL ----------
-function openImagePicker(onSelect) {
+function openImagePicker(onSelect, filterCat = null) {
   const gallery = getStore('agr439-admin-gallery');
   let selectedUrl = '';
+  
+  // Store callback globally to allow "Ver Todas" to re-call this function
+  window.currentPickerOnSelect = onSelect;
+
+  // Apply filter
+  const items = filterCat ? gallery.filter(g => g.category === filterCat) : gallery;
+  const filterLabel = filterCat ? getCatLabel(filterCat) : 'Todas';
 
   const html = `
     <h3>🖼️ Selecionar Imagem</h3>
-    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
-      Escolha uma imagem da sua galeria.
-    </p>
+    <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">
+        ${filterCat ? `A mostrar apenas: <strong>${filterLabel}</strong>` : 'Escolha uma imagem da sua galeria.'}
+      </p>
+      ${filterCat ? `<button class="btn btn-outline btn-sm" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="openImagePicker(window.currentPickerOnSelect)">Ver Todas</button>` : ''}
+    </div>
     
     <div class="media-picker-grid" id="picker-grid">
-      ${gallery.map(g => `
+      ${items.map(g => `
         <div class="media-picker-item" onclick="selectPickerImage(this, '${g.url}')">
           <img src="${g.url}" alt="${esc(g.description)}">
           <div class="check">✓</div>
         </div>
       `).join('')}
-      ${gallery.length === 0 ? '<p style="grid-column: 1/-1; text-align: center; padding: 2rem;">A galeria está vazia.</p>' : ''}
+      ${items.length === 0 ? `
+        <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+          <p style="margin-bottom: 1rem;">Nenhuma imagem encontrada em "${filterLabel}".</p>
+          ${filterCat ? `<button class="btn btn-primary btn-sm" onclick="openImagePicker(window.currentPickerOnSelect)">Ver Todas as Fotos</button>` : ''}
+        </div>` : ''}
     </div>
 
     <div class="modal-actions">
@@ -1600,6 +1999,25 @@ function esc(str) {
   return div.innerHTML;
 }
 
+function getCatLabel(cat) {
+  const labels = {
+    'geral': 'Geral',
+    'lobitos': 'Lobitos',
+    'exploradores': 'Exploradores',
+    'pioneiros': 'Pioneiros',
+    'caminheiros': 'Caminheiros',
+    'acampamento': 'Acampamento',
+    'evento': 'Evento',
+    'timeline': 'Cronologia',
+    'recrutamento': 'Recrutamento',
+    'cancioneiro': 'Cancioneiro',
+    'visitantes': 'Visitantes / Postais',
+    'caixatempo': 'Caixa do Tempo (Arquivo)',
+    'hero': 'Destaques Hero'
+  };
+  return labels[cat] || cat;
+}
+
 
 function openEventImagePicker() {
   openImagePicker(url => {
@@ -1623,11 +2041,14 @@ function openEventImagePicker() {
       <span>${esc(item.description)}</span>
     `;
     list.appendChild(div);
-  });
+  }, 'evento');
 }
 
 function renderHeroStatsEditor(container) {
-  const data = JSON.parse(localStorage.getItem('agr439-admin-hero-stats')) || {
+  // Fix: wrap JSON.parse in try/catch to handle corrupted localStorage data
+  let _heroRaw;
+  try { _heroRaw = JSON.parse(localStorage.getItem('agr439-admin-hero-stats')); } catch (e) { _heroRaw = null; }
+  const data = _heroRaw || {
     icon: 'assets/logo.png',
     title1: 'Agrupamento',
     title2: '439',
@@ -1639,7 +2060,7 @@ function renderHeroStatsEditor(container) {
   };
 
   container.innerHTML = `
-    <div class="admin-card reveal">
+    <div class="admin-card">
       <h3>✨ Destaques da Página Inicial</h3>
       <p style="margin-bottom:1.5rem; color:var(--text-secondary);">Configure os textos principais e os valores das estatísticas que aparecem no topo do site.</p>
       
@@ -1729,7 +2150,7 @@ function renderHeroStatsEditor(container) {
     openImagePicker(url => {
       document.getElementById('h-icon').value = url;
       document.getElementById('h-icon-preview').src = url;
-    });
+    }, 'hero');
   };
 }
 

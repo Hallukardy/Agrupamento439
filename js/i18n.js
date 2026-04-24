@@ -228,6 +228,11 @@ const I18N = {
     news_subtitle: 'The latest from our scouting group',
     filter_all: 'All',
     filter_geral: 'General',
+    // Fix 7: previously missing EN translations for section filter buttons
+    filter_lobitos: 'Cub Scouts',
+    filter_exploradores: 'Scouts',
+    filter_pioneiros: 'Ventures',
+    filter_caminheiros: 'Rovers',
 
     // Sections
     info_faq: 'Frequently Asked Questions',
@@ -404,6 +409,9 @@ function toggleLang() {
 
 function translatePage() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
+    // Fix 9: skip elements whose text was overridden by the admin panel (marked data-custom="true")
+    // Without this, switching language would wipe out admin-configured hero title/subtitle
+    if (el.getAttribute('data-custom') === 'true') return;
     const key = el.getAttribute('data-i18n');
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
       el.placeholder = t(key);

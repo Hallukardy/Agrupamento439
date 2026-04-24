@@ -3,9 +3,21 @@
    Navbar, dark/light, scroll, quiz, countdown, gallery, etc.
    ============================================================ */
 
+
+/* ---------- STORAGE HELPER ---------- */
+function getSafeStore(key, defaultVal) {
+  try {
+    const val = localStorage.getItem(key);
+    return val ? JSON.parse(val) : defaultVal;
+  } catch (e) {
+    console.error('Error parsing local storage key: ' + key, e);
+    return defaultVal;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
-  initSectionTheme();
+  // 3. Render and initialize UI
   initNavbar();
   initParticles();
   initHeroStats();
@@ -22,10 +34,36 @@ document.addEventListener('DOMContentLoaded', () => {
   initVisits();
   renderCaixaTempo();
   initRecruitmentContent();
+  initPagesContent();
   initTimeline();
   initScrollReveal();
   translatePage();
 });
+
+/* ---------- REMOTE DATA LOADING ---------- */
+async function initRemoteData() {
+  try {
+    // Determine the path to site-data.json
+    // We use a relative path so it works everywhere (local and GitHub Pages)
+    // and add a timestamp to bypass browser cache for published updates
+    const res = await fetch(`data/site-data.json?t=${Date.now()}`);
+    if (!res.ok) return;
+
+    const remoteData = await res.json();
+    const keys = [
+      'gallery', 'news', 'events', 'caixa-tempo', 'timeline', 
+      'songs', 'visits', 'pages', 'hero-stats', 'recruitment'
+    ];
+
+    keys.forEach(key => {
+      if (remoteData[key]) {
+        localStorage.setItem(`agr439-admin-${key}`, JSON.stringify(remoteData[key]));
+      }
+    });
+  } catch (err) {
+    console.warn('Could not load remote data, using local storage fallback:', err);
+  }
+}
 
 
 
@@ -146,7 +184,7 @@ function initParticles() {
 
 /* ---------- HERO & STATS DYNAMIC LOADING ---------- */
 function initHeroStats() {
-  const data = JSON.parse(localStorage.getItem('agr439-admin-hero-stats'));
+  const data = getSafeStore('agr439-admin-hero-stats', null);
   if (!data) return;
 
   // Update hero icon
@@ -160,18 +198,19 @@ function initHeroStats() {
   const title2 = document.querySelector('[data-i18n="hero_title_2"]');
   if (title1 && data.title1) {
     title1.textContent = data.title1;
-    title1.removeAttribute('data-i18n');
+    // Fix 9: mark as custom so translatePage() skips it (language switch won't override admin text)
+    title1.setAttribute('data-custom', 'true');
   }
   if (title2 && data.title2) {
     title2.textContent = data.title2;
-    title2.removeAttribute('data-i18n');
+    title2.setAttribute('data-custom', 'true');
   }
 
   // Update Subtitle
   const subtitle = document.querySelector('.hero-subtitle');
   if (subtitle && data.subtitle) {
     subtitle.textContent = data.subtitle;
-    subtitle.removeAttribute('data-i18n');
+    subtitle.setAttribute('data-custom', 'true');
   }
 
   // Update Statistics
@@ -188,6 +227,7 @@ function initHeroStats() {
       const numEl = item.querySelector('.stat-number');
       if (numEl && statsData[index]) {
         numEl.setAttribute('data-target', statsData[index].val);
+        animateCounter(numEl); // Fix 16: re-trigger counter animation with admin-set values
       }
     });
   }
@@ -251,6 +291,7 @@ function initCountdown() {
   if (!targetDate) return;
 
   const target = new Date(targetDate).getTime();
+  if (isNaN(target)) return; // Fix 4: guard against invalid/missing data-date attribute
 
   function update() {
     const now = Date.now();
@@ -266,17 +307,17 @@ function initCountdown() {
     const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const s = Math.floor((diff % (1000 * 60)) / 1000);
 
+    // Fix 13: escapeHtml sanitizes content; line breaks are then re-inserted as <br>
     el.innerHTML = `
       <div class="countdown-block"><div class="digit">${d}</div><div class="label" data-i18n="days">${t('days')}</div></div>
       <div class="countdown-block"><div class="digit">${h}</div><div class="label" data-i18n="hours">${t('hours')}</div></div>
       <div class="countdown-block"><div class="digit">${m}</div><div class="label" data-i18n="minutes">${t('minutes')}</div></div>
       <div class="countdown-block"><div class="digit">${s}</div><div class="label" data-i18n="seconds">${t('seconds')}</div></div>
     `;
-
-    requestAnimationFrame(update);
+    // Fix 2: removed requestAnimationFrame(update) — setInterval below is sufficient at 1fps
   }
 
-  update();
+  update(); // initial render
   setInterval(update, 1000);
 }
 
@@ -432,11 +473,16 @@ function showQuizResult() {
 /* ---------- NEWS FILTER ---------- */
 function filterNews(tag) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  // Fix 3: find the matching button by its onclick attr instead of relying on deprecated implicit 'event'
+  const activeBtn = document.querySelector(`.filter-btn[onclick*="'${tag}'"]`);
+  if (activeBtn) activeBtn.classList.add('active');
 
   document.querySelectorAll('.news-card').forEach(card => {
     if (tag === 'all' || card.getAttribute('data-tag') === tag) {
       card.style.display = '';
+      // Fix 17: reset animation before re-applying so it plays on every filter change
+      card.style.animation = 'none';
+      void card.offsetHeight; // force browser reflow to restart the animation
       card.style.animation = 'fadeInUp 0.4s ease';
     } else {
       card.style.display = 'none';
@@ -454,7 +500,7 @@ function initNewsletterForm() {
     const email = form.querySelector('input').value;
 
     // Save to localStorage (demo)
-    const subs = JSON.parse(localStorage.getItem('agr439-newsletter') || '[]');
+    const subs = getSafeStore('agr439-newsletter', JSON.parse('[]'));
     subs.push({ email, date: new Date().toISOString() });
     localStorage.setItem('agr439-newsletter', JSON.stringify(subs));
 
@@ -478,7 +524,7 @@ function initContactForm() {
       date: new Date().toISOString(),
     };
 
-    const msgs = JSON.parse(localStorage.getItem('agr439-messages') || '[]');
+    const msgs = getSafeStore('agr439-messages', JSON.parse('[]'));
     msgs.push(data);
     localStorage.setItem('agr439-messages', JSON.stringify(msgs));
 
@@ -520,7 +566,7 @@ function renderDynamicNews() {
   const grid = document.getElementById('newsGrid');
   if (!grid) return;
 
-  const news = JSON.parse(localStorage.getItem('agr439-admin-news') || '[]').filter(n => n.published);
+  const news = getSafeStore('agr439-admin-news', JSON.parse('[]')).filter(n => n.published);
   
   if (news.length === 0) {
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 2rem; color: var(--text-muted);">Sem notícias publicadas no momento.</div>';
@@ -548,8 +594,8 @@ function renderDynamicEvents() {
   const grid = document.getElementById('calendarGrid');
   if (!grid) return;
 
-  const events = JSON.parse(localStorage.getItem('agr439-admin-events') || '[]');
-  const gallery = JSON.parse(localStorage.getItem('agr439-admin-gallery') || '[]');
+  const events = getSafeStore('agr439-admin-events', JSON.parse('[]'));
+  const gallery = getSafeStore('agr439-admin-gallery', JSON.parse('[]'));
   
   if (events.length === 0) {
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 2rem; color: var(--text-muted);">Ainda não há eventos previstos.</div>';
@@ -584,8 +630,8 @@ function renderDynamicEvents() {
           <h3>${escapeHtml(e.title)}</h3>
           <p>${escapeHtml(e.description).replace(/\n/g, '<br>')}</p>
           <div class="event-actions">
-            <button class="gcal-btn" onclick="addToGoogleCalendar('${escapeHtmlQuotes(e.title)}','${e.date}','${escapeHtmlQuotes(e.location)}','${escapeHtmlQuotes(e.description)}')">📅 Calendário</button>
-            <button class="share-btn" onclick="shareEvent('${escapeHtmlQuotes(e.title)}', 'Vem connosco!')">🔗 Partilhar</button>
+            <button class="gcal-btn" data-event-id="${e.id}" onclick="handleEventAction(this,'gcal')">📅 Calendário</button>
+            <button class="share-btn" data-event-id="${e.id}" onclick="handleEventAction(this,'share')">🔗 Partilhar</button>
           </div>
         </div>
       </div>
@@ -593,9 +639,22 @@ function renderDynamicEvents() {
   }).join('');
 }
 
+/* Item 5 fix: reads full event data from store by ID — avoids XSS / apostrophe bugs in inline onclick */
+function handleEventAction(el, action) {
+  const id = el.dataset.eventId;
+  const events = getSafeStore('agr439-admin-events', JSON.parse('[]'));
+  const e = events.find(ev => ev.id === id);
+  if (!e) return;
+  if (action === 'gcal') {
+    addToGoogleCalendar(e.title, e.date, e.location || '', e.description || '');
+  } else if (action === 'share') {
+    shareEvent(e.title, 'Vem connosco!');
+  }
+}
+
 /* ---------- RECRUITMENT CONTENT ---------- */
 function initRecruitmentContent() {
-  const data = JSON.parse(localStorage.getItem('agr439-admin-recruitment') || '{}');
+  const data = getSafeStore('agr439-admin-recruitment', JSON.parse('{}'));
   
   if (data.flyerUrl) {
     const flyer = document.getElementById('recruitment-flyer-img');
@@ -619,6 +678,39 @@ function initRecruitmentContent() {
 }
 
 
+/* ---------- PAGES CONTENT (from Admin > Conteúdo de Páginas) ---------- */
+function initPagesContent() {
+  let pages;
+  try { pages = getSafeStore('agr439-admin-pages', JSON.parse('[]')); } catch (e) { pages = []; }
+  if (!pages.length) return;
+
+  const lang = localStorage.getItem('agr439-lang') || 'pt';
+
+  pages.forEach(page => {
+    // Prefer the EN translation when that language is active, fall back to PT content
+    const content = (lang === 'en' && page.contentEn && page.contentEn.trim())
+      ? page.contentEn
+      : (page.content || '').trim();
+    if (!content) return;
+
+    if (page.id === 'hero') {
+      // Update hero subtitle — equivalent to data-i18n="hero_subtitle"
+      const el = document.querySelector('[data-i18n="hero_subtitle"]');
+      if (el) {
+        el.textContent = content;
+        el.setAttribute('data-custom', 'true'); // prevent translatePage() from overwriting
+      }
+    } else if (page.id === 'about') {
+      // Update footer description — equivalent to data-i18n="footer_desc"
+      const el = document.querySelector('[data-i18n="footer_desc"]');
+      if (el) {
+        el.textContent = content;
+        el.setAttribute('data-custom', 'true');
+      }
+    }
+  });
+}
+
 function escapeHtml(str) {
   if (!str) return '';
   return str.replace(/[&<>'"]/g, tag => ({
@@ -638,9 +730,11 @@ function escapeHtmlQuotes(str) {
 /* ---------- CANCIONEIRO DINÂMICO ---------- */
 function initSongbook() {
   // Sync INITIAL_SONGS to localStorage if empty
-  const stored = localStorage.getItem('agr439-admin-songs');
-  if (!stored || JSON.parse(stored).length === 0) {
-    localStorage.setItem('agr439-admin-songs', JSON.stringify(INITIAL_SONGS));
+  const songs = getSafeStore('agr439-admin-songs', []);
+  if (songs.length === 0) {
+    if (typeof INITIAL_SONGS !== 'undefined') {
+      localStorage.setItem('agr439-admin-songs', JSON.stringify(INITIAL_SONGS));
+    }
   }
   
   renderSongsList();
@@ -650,7 +744,7 @@ function renderSongsList() {
   const grid = document.getElementById('songsGrid');
   if (!grid) return;
 
-  const songs = JSON.parse(localStorage.getItem('agr439-admin-songs') || '[]');
+  const songs = getSafeStore('agr439-admin-songs', JSON.parse('[]'));
   
   if (songs.length === 0) {
     grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted);">Cancioneiro em atualização...</p>';
@@ -669,7 +763,7 @@ function renderSongsList() {
 }
 
 function openSongModal(id) {
-  const songs = JSON.parse(localStorage.getItem('agr439-admin-songs') || '[]');
+  const songs = getSafeStore('agr439-admin-songs', JSON.parse('[]'));
   const song = songs.find(s => s.id === id);
   if (!song) return;
 
@@ -695,7 +789,7 @@ function openSongModal(id) {
     const embedUrl = getYoutubeEmbedUrl(song.videoUrl);
     if (embedUrl) {
       videoPlaceholder.style.display = 'block';
-      let iframeStyle = '';
+      // Fix 10: removed unused 'iframeStyle' variable
       if (song.audioOnly) {
          videoPlaceholder.style.paddingBottom = '0';
          videoPlaceholder.style.height = '60px'; // Altura apenas para ver os controlos play/pause
@@ -748,8 +842,8 @@ function getYoutubeEmbedUrl(url) {
 
 /* ---------- VISITANTES ---------- */
 function initVisits() {
-  const stored = localStorage.getItem('agr439-admin-visits');
-  if (!stored || JSON.parse(stored).length === 0) {
+  const visits = getSafeStore('agr439-admin-visits', []);
+  if (visits.length === 0) {
     if (typeof INITIAL_VISITS !== 'undefined') {
       localStorage.setItem('agr439-admin-visits', JSON.stringify(INITIAL_VISITS));
     }
@@ -761,7 +855,7 @@ function renderVisitsList() {
   const grid = document.getElementById('visitsGrid');
   if (!grid) return;
 
-  const visits = JSON.parse(localStorage.getItem('agr439-admin-visits') || '[]');
+  const visits = getSafeStore('agr439-admin-visits', JSON.parse('[]'));
   
   if (visits.length === 0) {
     grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color: var(--text-muted);">A carregar recordações...</p>';
@@ -791,6 +885,7 @@ function openVisitLightbox(url, title) {
   if (!lb || !lbImg) return;
 
   lbImg.src = url;
+  lbImg.alt = title || 'Visitante Agrupamento 439'; // Fix 8: use the title parameter for accessibility
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -802,9 +897,11 @@ function renderCaixaTempo() {
   const grid = document.getElementById('caixaTempoGrid');
   if (!grid) return;
 
-  let items = JSON.parse(localStorage.getItem('agr439-admin-caixa-tempo') || '[]');
+  let items = getSafeStore('agr439-admin-caixa-tempo', JSON.parse('[]'));
   
-  if (items.length === 0) {
+  // Fix 5: only seed mock data if localStorage key has NEVER been set (null != empty array)
+  // This prevents mock data from coming back after admin intentionally clears all items
+  if (items.length === 0 && localStorage.getItem('agr439-admin-caixa-tempo') === null) {
     // Mock data for initial view
     items = [
       {
@@ -830,27 +927,71 @@ function renderCaixaTempo() {
   // Sort by year descending (approximate)
   items.sort((a, b) => b.year - a.year);
 
-  grid.innerHTML = items.map(item => `
-    <div class="archive-card reveal" data-item-id="${item.id}">
-      <div class="archive-tag">${escapeHtml(item.category || 'Arquivo')}</div>
-      <div class="archive-card-inner">
-        <div class="archive-img-wrapper" onclick="openLightbox('${item.imageUrl}', '${escapeHtml(item.title)}')">
-          <img src="${item.imageUrl}" class="archive-img" alt="${escapeHtml(item.title)}">
+  grid.innerHTML = items.map(item => {
+    const urls = item.imageUrls && item.imageUrls.length > 0 ? item.imageUrls : [item.imageUrl];
+    const hasMultiple = urls.length > 1;
+
+    return `
+      <div class="archive-card reveal" data-item-id="${item.id}" data-current-img="0" data-images="${escapeHtml(JSON.stringify(urls))}">
+        <div class="archive-tag">${escapeHtml(item.category || 'Arquivo')}</div>
+        <div class="archive-card-inner">
+          <div class="archive-img-wrapper">
+            <img src="${urls[0]}" class="archive-img" alt="${escapeHtml(item.title)}" onclick="openLightbox(this.src, '${escapeHtml(item.title)}')">
+            
+            ${hasMultiple ? `
+              <div class="archive-carousel-controls">
+                <button class="carousel-btn prev" onclick="switchArchiveImage('${item.id}', -1, event)">‹</button>
+                <button class="carousel-btn next" onclick="switchArchiveImage('${item.id}', 1, event)">›</button>
+              </div>
+              <div class="archive-carousel-dots">
+                ${urls.map((_, i) => `<div class="carousel-dot ${i === 0 ? 'active' : ''}"></div>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+          <span class="archive-year">${escapeHtml(item.year)}</span>
+          <h3 class="archive-title">${escapeHtml(item.title)}</h3>
+          <p class="archive-desc">${escapeHtml(item.description)}</p>
         </div>
-        <span class="archive-year">${escapeHtml(item.year)}</span>
-        <h3 class="archive-title">${escapeHtml(item.title)}</h3>
-        <p class="archive-desc">${escapeHtml(item.description)}</p>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
+
+/** Lógica para trocar imagem no carrossel da Caixa do Tempo */
+window.switchArchiveImage = (itemId, direction, event) => {
+  if (event) event.stopPropagation();
+  
+  const card = document.querySelector(`.archive-card[data-item-id="${itemId}"]`);
+  if (!card) return;
+
+  const images = JSON.parse(card.getAttribute('data-images'));
+  let currentIdx = parseInt(card.getAttribute('data-current-img'));
+  
+  currentIdx += direction;
+  if (currentIdx < 0) currentIdx = images.length - 1;
+  if (currentIdx >= images.length) currentIdx = 0;
+
+  card.setAttribute('data-current-img', currentIdx);
+  
+  // Atualizar imagem
+  const img = card.querySelector('.archive-img');
+  if (img) img.src = images[currentIdx];
+
+  // Atualizar dots
+  const dots = card.querySelectorAll('.carousel-dot');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentIdx);
+  });
+};
 
 /* ---------- CRONOLOGIA DINÂMICA E MODAL ---------- */
 function initTimeline() {
-  const stored = localStorage.getItem('agr439-admin-timeline');
-  if (!stored || JSON.parse(stored).length === 0) {
+  const timeline = getSafeStore('agr439-admin-timeline', []);
+  if (timeline.length === 0) {
     if (typeof INITIAL_TIMELINE !== 'undefined') {
       localStorage.setItem('agr439-admin-timeline', JSON.stringify(INITIAL_TIMELINE));
+    } else {
+      console.warn('Agrupamento 439: timeline-data.js não carregou corretamente. A cronologia ficará vazia.');
     }
   }
   renderTimelineList();
@@ -860,7 +1001,7 @@ function renderTimelineList() {
   const grid = document.getElementById('timelineGrid');
   if (!grid) return;
 
-  const timeline = JSON.parse(localStorage.getItem('agr439-admin-timeline') || '[]');
+  const timeline = getSafeStore('agr439-admin-timeline', JSON.parse('[]'));
   
   // Parse numeric year for proper sorting
   timeline.sort((a, b) => {
@@ -887,7 +1028,7 @@ function renderTimelineList() {
 }
 
 function openTimelineModal(id) {
-  const timeline = JSON.parse(localStorage.getItem('agr439-admin-timeline') || '[]');
+  const timeline = getSafeStore('agr439-admin-timeline', JSON.parse('[]'));
   const data = timeline.find(t => t.id === id);
   if (!data) return;
 

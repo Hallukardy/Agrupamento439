@@ -271,17 +271,52 @@
       "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/2003_202604281345.png",
       "approved": true,
       "date": "2026-04-28T13:45:07.846Z"
+    },
+    {
+      "id": "moip5xtxpodep",
+      "description": "imagem",
+      "category": "geral",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/imagem2_202604281404.png",
+      "approved": true,
+      "date": "2026-04-28T14:04:04.869Z"
     }
   ],
   "news": [
     {
-      "id": "mo4hpxkuld9r5",
-      "title": "titulo teste",
-      "content": "conteudeo teste",
+      "id": "moiojnt59fvak",
+      "title": "titulo1",
+      "content": "conteudo1",
       "tag": "geral",
       "published": true,
       "imageUrl": "",
-      "date": "2026-04-18T15:26:54.270Z"
+      "date": "2026-04-28T13:51:57.050Z"
+    },
+    {
+      "id": "moiou67obtay0",
+      "title": "afa",
+      "content": "sfafsas",
+      "tag": "geral",
+      "published": false,
+      "imageUrl": "",
+      "date": "2026-04-28T13:54:55.860Z"
+    },
+    {
+      "id": "moioucyyqe397",
+      "title": "asfa",
+      "content": "sfafasf",
+      "tag": "geral",
+      "published": true,
+      "imageUrl": "",
+      "date": "2026-04-28T13:55:04.618Z"
+    },
+    {
+      "id": "moip66pqaugp0",
+      "title": "fgdfj",
+      "content": "gfhjfgjh",
+      "tag": "geral",
+      "published": true,
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/imagem2_202604281404.png",
+      "date": "2026-04-28T14:04:16.382Z"
     }
   ],
   "events": [

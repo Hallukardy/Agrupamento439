@@ -564,7 +564,7 @@
       "subtitle": "Música e Letra",
       "lyrics": "Na oração encontro calma\nNa oração encontro paz\nOrar a Deus faz bem à alma\nFalar com Deus me satisfaz\nFalar com Deus, que privilégio\nAbrir a alma ao Criador\nSentir que os céus estão abertos\nE ouvir a voz do Salvador\n\nGrande é o nosso Deus\nE as obras que Ele faz\nO Seu amor não tem limites\nEm Seu perdão encontro paz\nFalar com Deus é o que preciso\nPois Ele é fonte de poder\nSó Nele a vida faz sentido\nPois me dá forças pra viver",
       "chords": "",
-      "videoUrl": "https://www.youtube.com/watch?v=CP1NJWNA988",
+      "videoUrl": "https://www.youtube.com/watch?v=6vLP0wvJXGI",
       "audioOnly": false
     },
     {
@@ -775,7 +775,7 @@
     }
   ],
   "hero-stats": {
-    "badge": "",
+    "badge": "🏕️ 50 Anos de Escutismo em Vila do Conde",
     "groupPhoto": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/imagem_202604281336.jpg",
     "icon": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/icon_202604181551.png",
     "title1": "Agrupamento",
@@ -786,5 +786,11 @@
     "camps": 200,
     "nights": 1000
   },
-  "recruitment": []
+  "recruitment": {
+    "flyerUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/scout_registration_2026_home_202604181552.png",
+    "headerUrl": "assets/vemser_img2.png",
+    "pdfLink": "https://drive.google.com/file/d/1QQajQ4CBA_Sn8JnB8fJhNBXKV9-QcPUE/view",
+    "pdfImageUrl": "assets/flyer1.jpg",
+    "lastUpdated": "2026-04-28T14:18:09.135Z"
+  }
 }

@@ -247,6 +247,30 @@
       "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo35_202604281244.jpg",
       "approved": true,
       "date": "2026-04-28T12:44:10.190Z"
+    },
+    {
+      "id": "moio7565g2yt5",
+      "description": "farda",
+      "category": "hero",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/imagem_202604281336.jpg",
+      "approved": true,
+      "date": "2026-04-28T13:37:01.421Z"
+    },
+    {
+      "id": "moiogk20hgvvm",
+      "description": "1981",
+      "category": "timeline",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1981_202604281344.png",
+      "approved": true,
+      "date": "2026-04-28T13:44:20.616Z"
+    },
+    {
+      "id": "moiohkhya7dr0",
+      "description": "2003",
+      "category": "timeline",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/2003_202604281345.png",
+      "approved": true,
+      "date": "2026-04-28T13:45:07.846Z"
     }
   ],
   "news": [
@@ -342,14 +366,45 @@
       "year": "1975",
       "title": "Fundação do Agrupamento",
       "description": "Início oficial do agrupamento.",
-      "content": "\n      <p>Primeiras promessas realizadas a 22 de Junho de 1975.</p>\n      <p>No primeiro ano, o agrupamento tinha 30 rapazes.</p>\n      <p>Filiado em Ordem de Serviço Nacional nº 353, com data de 22.06.1975.</p>\n      <p><strong>Unidades Filiadas:</strong><br>\n      Alcateia nº 164 – S. Francisco de Assis<br>\n      Grupo Explorador nº 164 – São João Baptista<br>\n      Grupo Pioneiro nº 164 – Nª Srª da Guia<br>\n      Clã nº 107 – São Nuno</p>\n      <p>É o chefe Joaquim Orlando Pacheco e o então Prior de Vila do Conde, Padre Adriano Teixeira, quem fundam o atual Agrupamento 439 – São João Baptista de Vila do Conde.</p>\n    "
+      "content": "\n      <p>Primeiras promessas realizadas a 22 de Junho de 1975.</p>\n      <p>No primeiro ano, o agrupamento tinha 30 rapazes.</p>\n      <p>Filiado em Ordem de Serviço Nacional nº 353, com data de 22.06.1975.</p>\n      <p><strong>Unidades Filiadas:</strong><br>\n      Alcateia nº 164 – S. Francisco de Assis<br>\n      Grupo Explorador nº 164 – São João Baptista<br>\n      Grupo Pioneiro nº 164 – Nª Srª da Guia<br>\n      Clã nº 107 – São Nuno</p>\n      <p>É o chefe Joaquim Orlando Pacheco e o então Prior de Vila do Conde, Padre Adriano Teixeira, quem fundam o atual Agrupamento 439 – São João Baptista de Vila do Conde.</p>\n    ",
+      "items": [
+        {
+          "id": "moiobmyxm0vti",
+          "title": "1º promessas ",
+          "date": "22 de Junho de 1975.",
+          "description": "Primeiras promessas realizadas a, 22 de Junho de 1975.\n\n\nNo primeiro ano o agrupamento tinha 30 rapazes. ",
+          "content": "",
+          "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1975_1_202604181637.jpg",
+          "videoUrl": ""
+        },
+        {
+          "id": "moioc2vtgplba",
+          "title": "Fundação",
+          "date": "até 22/06/1975",
+          "description": "Filiado em Ordem de Serviço Nacional nº 353, com data de 22.06.1975.\n\nUnidades Filiadas:\n\nAlcateia nº 164 – S. Francisco de Assis,\n\nGrupo Explorador nº 164 – São João Baptista,\n\nGrupo Pioneiro nº 164 - Nª Srª da Guia, \n\nClã nº 107 – São Nuno.\n\n\nÉ o chefe Joaquim Orlando Pacheco e, o então Prior de Vila do Conde, Padre Adriano Teixeira quem fundam o atual Agrupamento 439 – São João Baptista de Vila do Conde. ",
+          "content": "",
+          "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1975_2_202604181637.png",
+          "videoUrl": ""
+        }
+      ]
     },
     {
       "id": "1981",
       "year": "1981",
       "title": "Primeiras Cerimónias",
       "description": "Promessas 1981",
-      "content": "\n      <p>Cerimónia da Promessa realiza-se na Igreja Matriz, em 22 de Junho de 1981.</p>\n      <p>No primeiro ano o agrupamento tinha 30 rapazes.</p>\n    "
+      "content": "\n      <p>Cerimónia da Promessa realiza-se na Igreja Matriz, em 22 de Junho de 1981.</p>\n      <p>No primeiro ano o agrupamento tinha 30 rapazes.</p>\n    ",
+      "items": [
+        {
+          "id": "moiog4n96gql5",
+          "title": "Promessas 1981 ",
+          "date": " 22 de Junho de 1981",
+          "description": "Cerimónia da Promessa realiza-se na Igreja Matriz, em 22 de Junho de 1981.\n\n\nNo primeiro ano o agrupamento tinha 30 rapazes. ",
+          "content": "",
+          "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1981_202604281344.png",
+          "videoUrl": ""
+        }
+      ]
     },
     {
       "id": "1987",
@@ -370,7 +425,18 @@
       "year": "2003",
       "title": "Roverway Portugal",
       "description": "“NOVOS MUNDOS, UM SÓ RUMO!”",
-      "content": "\n      <p>Os caminheiros do Clã 107 – Beato Nuno, do Agrupamento 439 – São João Baptista de Vila do Conde, vão associar-se às comemorações dos 400 anos da Capela do Socorro, monumento fortemente ligado ao passado marítimo de Vila do Conde, construindo um acampamento sob a forma de uma embarcação quinhentista, na zona ribeirinha onde durante décadas estiveram implantados os estaleiros navais.</p>\n      <p>A iniciativa integra-se no projeto Roverway, uma atividade internacional. O trabalho de construção da embarcação, uma atividade de pioneirismo típica dos escuteiros, e a encenação à época da atividade alfandegária serão executados por cinco equipas de escuteiros estrangeiros, e pela equipa José Régio, do Clã 107.</p>\n      <p>A construção tem aproximadamente 14,50 m de comprimento e 4,60 m de largura. Na área de descanso, há uma tenda elevada e um altar para o “Fogo de Conselho”.</p>\n      <p>Nesta encenação estão envolvidas 50 personagens, todas vestidas à época, e contará com diversas atividades e ateliers, como a construção naval em madeira típica dos estaleiros de Vila do Conde.</p>\n    "
+      "content": "\n      <p>Os caminheiros do Clã 107 – Beato Nuno, do Agrupamento 439 – São João Baptista de Vila do Conde, vão associar-se às comemorações dos 400 anos da Capela do Socorro, monumento fortemente ligado ao passado marítimo de Vila do Conde, construindo um acampamento sob a forma de uma embarcação quinhentista, na zona ribeirinha onde durante décadas estiveram implantados os estaleiros navais.</p>\n      <p>A iniciativa integra-se no projeto Roverway, uma atividade internacional. O trabalho de construção da embarcação, uma atividade de pioneirismo típica dos escuteiros, e a encenação à época da atividade alfandegária serão executados por cinco equipas de escuteiros estrangeiros, e pela equipa José Régio, do Clã 107.</p>\n      <p>A construção tem aproximadamente 14,50 m de comprimento e 4,60 m de largura. Na área de descanso, há uma tenda elevada e um altar para o “Fogo de Conselho”.</p>\n      <p>Nesta encenação estão envolvidas 50 personagens, todas vestidas à época, e contará com diversas atividades e ateliers, como a construção naval em madeira típica dos estaleiros de Vila do Conde.</p>\n    ",
+      "items": [
+        {
+          "id": "moioi56dpgw5j",
+          "title": "Atividade - Vila do Conde",
+          "date": "",
+          "description": "“  NOVOS MUNDOS , UM SÓ RUMO  ! “\n\n      – o projecto de Vila do Conde no ROVERWAY\n\n \n\nOs caminheiros do Clã 107 – Beato Nuno, do Agrupamento 439 – São João Baptista de Vila do Conde, vão, também, associar-se às comemorações dos 400 anos da Capela do Socorro, monumento fortemente ligado ao passado marítimo de Vila do Conde, construindo um acampamento sob a forma de uma embarcação quinhentista, na zona ribeirinha onde durante décadas estiveram implantados os estaleiros navais, a qual servirá, depois, para recrear cenicamente a chegada ao porto de uma embarcação da mesma época com todas as diligências que a mesma obrigava, tal como a vistoria sanitária à tripulação e demais operações de controlo das mercadorias.\n\n\nA iniciativa integra-se no projeto Roverway, uma atividade internacional que decorre em Portugal a partir do próximo dia 31 deste mês a 11 de Agosto. O trabalho de construção da embarcação, uma atividade de pioneirismo típica dos escuteiros, e a encenação à época da atividade alfandegária serão executados por cinco equipas de escuteiros estrangeiros, nomeadamente, Italianos, Suíços, Eslovenos, Franceses e Espanhóis e pela equipa José Régio, do Clã 107 – Beato Nuno, do Agrupamento 439 São João Baptista de Vila do Conde.\n\nAssim, no dia 3 de Agosto pelas nove horas começará a ser erguida a referida embarcação que ocupará cerca de 60 m2. Terá aproximadamente 14,50 m de comprimento e 4,60 m de largura, dois mastros, um com 4,50 m e outro com 5,50m e duas velas em pano com 11,50m2. Nas amarrações e espias serão aplicados 1000 m de corda, de várias espessuras e, em madeira cerca de 217,50 m de madeira linear com diâmetro médio de 13 cm e, ainda, 415 m de cana-da-índia. Esta construção terá: na área da cozinha uma banca para lavar a louça, a copa e uma mesa com 2m2 para as refeições e trabalhos; na área de descanso, uma tenda elevada e um lavatório; um altar e um espaço para o “Fogo de Conselho “. Na proa situar-se-á a arrecadação de materiais. Na parte exterior existirá uma balança, recreação da época, para pesagem das mercadorias.\n\n \n\nPelas 21,30 horas, desse mesmo dia, tendo como cenário esta estrutura e o edifício da Alfândega Régia será feita a reposição da chegada de uma embarcação bem como todo o movimento do cais e alfândega que, então, tal facto motivava.\n\nNesta encenação estarão envolvidas 50 personagens (os escuteiros participantes no projeto “Novos Mundos, um só Rumo “ do Roverway), todos eles vestidos à época, falando diversas línguas e um conjunto de adereços: 8 pacotes; 10 barricas; 18 caixas e seis sacos em serapilheira com mercadorias; 7 livros – do escrivão da mesa, do escrivão da descarga, do feitor, do escrivão da receita, do juiz, do tesoureiro, do porteiro; 5 “pergaminhos “ – Rol de carga, Certidão do escrivão da mesa, Auto do escrivão da descarga, Bilhete do feitor e Declaração de pagamento.\n\n \n\nOs jovens escuteiros irão montar a sua “base” nos terrenos do Mosteiro de Santa Clara. Para além da atividade acima referida terão ainda: a visita ao Mercado Municipal, a confeção de um prato típico da região, a visita à zona histórica e à Alfândega Régia, uma celebração ecuménica, um arraial minhoto, um atelier sobre a construção naval em madeira, típica dos estaleiros de Vila do Conde bem como a visita aos referidos estaleiros; um atelier de canoagem no Rio Ave; um “Jogo de Cidade” ou a descoberta da cidade de Vila do Conde e alguns jogos radicais junto ao Forte de São João.\n\n \n\nNesta atividade para além do Clã 107 tem estado envolvido todo o Agrupamento ocupando diariamente cerca de três horas nos últimos quatro meses aos seus elementos e dirigentes. Nesta iniciativa contam ainda com o apoio da Câmara Municipal de Vila do Conde, da Junta de Freguesia de Vila do Conde, outras associações, entidades e empresas locais.",
+          "content": "",
+          "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/2003_202604281345.png",
+          "videoUrl": ""
+        }
+      ]
     },
     {
       "id": "2007",
@@ -674,6 +740,8 @@
     }
   ],
   "hero-stats": {
+    "badge": "",
+    "groupPhoto": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/imagem_202604281336.jpg",
     "icon": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/icon_202604181551.png",
     "title1": "Agrupamento",
     "title2": "439",

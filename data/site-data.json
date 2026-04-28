@@ -39,6 +39,214 @@
       "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/1975_2_202604181637.png",
       "approved": true,
       "date": "2026-04-18T16:37:30.408Z"
+    },
+    {
+      "id": "moi4yuqyvy9iq",
+      "description": "test2",
+      "category": "hero",
+      "url": "https://example.com/image.png",
+      "approved": true,
+      "date": "2026-04-28T04:38:41.962Z"
+    },
+    {
+      "id": "moi4zhvggbrsw",
+      "description": "test_with_token",
+      "category": "hero",
+      "url": "https://example.com/test.png",
+      "approved": true,
+      "date": "2026-04-28T04:39:11.932Z"
+    },
+    {
+      "id": "moi65yeohrd44",
+      "description": "carta1",
+      "category": "visitantes",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/visitantes1_202604280512.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:12:12.912Z"
+    },
+    {
+      "id": "moi667nmxarfw",
+      "description": "carta2",
+      "category": "visitantes",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/visitantes2_202604280512.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:12:24.898Z"
+    },
+    {
+      "id": "moi66fnduuce4",
+      "description": "carta3",
+      "category": "visitantes",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/visitantes3_202604280512.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:12:35.257Z"
+    },
+    {
+      "id": "moi74rs09ci3y",
+      "description": "caixadotempo1",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/caixadotempo1_202604280539.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:39:17.280Z"
+    },
+    {
+      "id": "moi753tlpcaop",
+      "description": "caixadotempo2",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/caixadotempo2_202604281254.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:39:32.889Z"
+    },
+    {
+      "id": "moi764vplycf1",
+      "description": "ocafoto10",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo10_202604280540.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:40:20.917Z"
+    },
+    {
+      "id": "moi76gq17vgm0",
+      "description": "ocafoto11",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo11_202604280540.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:40:36.265Z"
+    },
+    {
+      "id": "moi76v298hhwf",
+      "description": "ocafoto12",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo12_202604280540.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:40:54.849Z"
+    },
+    {
+      "id": "moi775yhqv0y3",
+      "description": "ocafoto13",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo13_202604280557.jpg",
+      "approved": true,
+      "date": "2026-04-28T05:41:08.969Z"
+    },
+    {
+      "id": "moi7yliom73ji",
+      "description": "test-item",
+      "category": "hero",
+      "url": "https://example.com/image.jpg",
+      "approved": true,
+      "date": "2026-04-28T06:02:28.848Z"
+    },
+    {
+      "id": "moilfuwtkqz34",
+      "description": "ocafoto14",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo14_202604281219.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:19:49.181Z"
+    },
+    {
+      "id": "moilg3thsk2r2",
+      "description": "ocafoto15",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo15_202604281219.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:20:00.725Z"
+    },
+    {
+      "id": "moilgeh387wx5",
+      "description": "ocafoto20",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo20_202604281220.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:20:14.535Z"
+    },
+    {
+      "id": "moilgnzzfvtzv",
+      "description": "ocafoto21",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo21_202604281220.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:20:26.879Z"
+    },
+    {
+      "id": "moilgygopgffg",
+      "description": "ocafoto22",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo22_202604281220.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:20:40.440Z"
+    },
+    {
+      "id": "moilh7vx1txu4",
+      "description": "ocafoto23",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo23_202604281220.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:20:52.653Z"
+    },
+    {
+      "id": "moim9856m3jb0",
+      "description": "ocafoto24",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo24_202604281242.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:42:39.355Z"
+    },
+    {
+      "id": "moim9i7b4seki",
+      "description": "ocafoto25",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo25_202604281242.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:42:52.391Z"
+    },
+    {
+      "id": "moim9x3qa4290",
+      "description": "ocafoto30",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo30_202604281243.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:43:11.702Z"
+    },
+    {
+      "id": "moima5rxdwmr1",
+      "description": "ocafoto31",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo31_202604281243.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:43:22.941Z"
+    },
+    {
+      "id": "moimaf3ek57ky",
+      "description": "ocafoto32",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo32_202604281243.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:43:35.018Z"
+    },
+    {
+      "id": "moimao8g2p5k0",
+      "description": "ocafoto33",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo33_202604281243.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:43:46.864Z"
+    },
+    {
+      "id": "moimax5v2d657",
+      "description": "ocafoto34",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo34_202604281243.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:43:58.435Z"
+    },
+    {
+      "id": "moimb68eebjbo",
+      "description": "ocafoto35",
+      "category": "caixatempo",
+      "url": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo35_202604281244.jpg",
+      "approved": true,
+      "date": "2026-04-28T12:44:10.190Z"
     }
   ],
   "news": [
@@ -65,19 +273,67 @@
   "caixa-tempo": [
     {
       "id": "mock1",
-      "year": "1985",
-      "title": "Escuteiros 439 em destaque no jornal local",
-      "description": "Reportagem sobre a atividade dos nossos pioneiros durante o acampamento de verão.",
-      "imageUrl": "https://images.unsplash.com/photo-1585829365234-750ca8186175?auto=format&fit=crop&q=80&w=800",
-      "category": "Imprensa"
+      "title": "O Cafoto N0",
+      "year": "2003",
+      "category": "Imprensa",
+      "description": "O Cafoto N0",
+      "imageUrls": [
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo13_202604280557.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo14_202604281219.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo15_202604281219.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo11_202604280540.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo12_202604280540.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo10_202604280540.jpg"
+      ],
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo13_202604280557.jpg",
+      "date": "2026-04-28T12:49:32.406Z"
     },
     {
       "id": "mock2",
-      "year": "1976",
-      "title": "A primeira promessa do Agrupamento",
-      "description": "Recorte histórico do jornal da paróquia assinalando as primeiras promessas do 439.",
-      "imageUrl": "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=800",
-      "category": "História"
+      "title": "O Cafoto N1",
+      "year": "2003",
+      "category": "Impresa",
+      "description": "O Cafoto N1",
+      "imageUrls": [
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo20_202604281220.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo21_202604281220.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo22_202604281220.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo23_202604281220.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo24_202604281242.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo25_202604281242.jpg"
+      ],
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo20_202604281220.jpg",
+      "date": "2026-04-28T12:50:34.127Z"
+    },
+    {
+      "id": "moimkl0nfr77p",
+      "title": "O Cafoto N2",
+      "year": "2003",
+      "category": "Imprensa",
+      "description": "O Cafoto N3",
+      "imageUrls": [
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo30_202604281243.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo31_202604281243.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo32_202604281243.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo33_202604281243.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo34_202604281243.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo35_202604281244.jpg"
+      ],
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/ocafofo30_202604281243.jpg",
+      "date": "2026-04-28T12:51:54.372Z"
+    },
+    {
+      "id": "moimm33kgxo9w",
+      "title": "A Quarta",
+      "year": "2003",
+      "category": "Imprensa",
+      "description": "Cla 107",
+      "imageUrls": [
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/caixadotempo1_202604280539.jpg",
+        "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/caixadotempo2_202604281254.jpg"
+      ],
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/caixadotempo1_202604280539.jpg",
+      "date": "2026-04-28T12:54:22.339Z"
     }
   ],
   "timeline": [
@@ -180,7 +436,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Abriu-se a manhã e eu Te encontrei.\nTua chama brilhou e o seu fogo entrou em mim.\nMesmo se distantes, para nós o longe é perto,\no nosso horizonte é um céu unido ao mar.\nAmar é a partida de um sonho sem chegada,\nVoar nas asas do vento e subir ao infinito.\nNão há fronteiras que separem\nNossa amizade em sermos um só.\nSó o Amor faz renascer\na vida em nós, a vida em nós.",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=a2qMWfto0xw",
+      "audioOnly": false
     },
     {
       "id": "s2",
@@ -188,7 +445,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Despertou de um sonho… um homem viu…\nE fez nascer em cada olhar a semente da nova alegria.\nDando a mão a quem precisa, sempre certos da divisa,\ncaminhando monte acima renovando a vida.\nOlhar o mundo como ele o vê\nqueremos ser a imagem de B.P..\nO topo está mais perto, dentro de nós,\nvamos levar ao mundo a sua voz;\na sua voz, a razão de viver, o seu viver para construir,\ndeixando o mundo sempre um pouco melhor,\nsempre alerta para servir.",
       "chords": "Sol Dó Sol\nDó Sol Si- Dó Lá- Ré\nSol Dó Sol Dó\nSol Si- Dó Lá- Ré\nSol Ré\nSol Ré\nDó Ré\nDó Ré\nSi- Mi- Si- Mi-\nLá- Ré\nLá- Ré",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=MCzzM3aUV5Y",
+      "audioOnly": false
     },
     {
       "id": "s3",
@@ -196,7 +454,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Há quem me chame maluco\nEu não sei bem porque é\nDeve ser pelo meu aspecto\nOu pela cor do meu boné.\nQuando vou acampar\nLevo só o necessário\nDesde a máquina de lavar\nAo alpista pró canário.\n\nRefrão:\nNão importa o que dizem\nNão importa o que pensam\nPorque eu sou, porque eu sou\nEscuta do CNE.\n\nP’ra se viver no campo\nÉ preciso ser esperto\nNunca entrar numa tenda\nSem que o fecho esteja aberto\nHá ainda uma regra\nQue não deve ser violada\nQuando o chefe te chamar\nBate logo em retirada.",
       "chords": "Mi Lá Si\nMi Lá Si\nMi Lá Si\nMi Lá Si\nLá Si\nLá Si\nLá Si\nMi",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=qilePADNCYU",
+      "audioOnly": false
     },
     {
       "id": "s4",
@@ -204,7 +463,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Na oração encontro calma\nNa oração encontro paz\nOrar a Deus faz bem à alma\nFalar com Deus me satisfaz\nFalar com Deus, que privilégio\nAbrir a alma ao Criador\nSentir que os céus estão abertos\nE ouvir a voz do Salvador\n\nGrande é o nosso Deus\nE as obras que Ele faz\nO Seu amor não tem limites\nEm Seu perdão encontro paz\nFalar com Deus é o que preciso\nPois Ele é fonte de poder\nSó Nele a vida faz sentido\nPois me dá forças pra viver",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=CP1NJWNA988",
+      "audioOnly": false
     },
     {
       "id": "s5",
@@ -212,7 +472,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Eu por ti acertaria o meu passo\nao teu caminhar\nEu por ti o teu problema\narcaria sobre mim\nE abraçaria o horizonte\nque trazes dentro do teu olhar.\nEu por ti, buscar-te-ia no mar da tua solidão\nEu por ti, te encontraria no grito dos teus porquês\nNão pensando às minhas decisões\nE aos meus critérios se falas Tu.\n\nEu por ti, palpitaria pelos teus desejos,\nEu por ti, daria voz às tuas mil razões,\nEu por ti, Eu por ti\nPerder-me-ia no teu pranto,\ncantaria o teu próprio canto\nQue esta força em mim,\ndeixaria a ti primeiro, colher a flor do meu jardim\n\nEu por ti, faria ecoar no meu peito a voz da tua dor\nEu por ti, suportaria a tua fragilidade,\nE ancorar-te-ia à minha mão,\nse fosses arrastado na maré\nEu por ti, faria minha a angústia que vive em ti\nEu por ti, entregaria os meus trunfos à tua mão.\nPor ti sentiria a saudade,\npelo fragor da terra que deixaste\nEu por ti, Eu por ti\nSeria o eco do teu canto, na apatia e na alegria.\nQue esta força em mim\ndeixaria a ti primeiro, colher a flor do meu jardim",
       "chords": "Si- Sol Lá\nSi- Sol Lá\nMi Ré Mi Lá\nRé Mi\nFá#- Ré Mi\nFá#- Ré Mi\nLá- Fá Sol Dó\nLá- Sol Fá\nSol Dó\nLá- Sol Fá\nMi- Lá- Sol Fá Sol Lá-",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=gc6IVqCxv0A",
+      "audioOnly": false
     },
     {
       "id": "s6",
@@ -220,7 +481,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Somos a flor da fragrância\nQue se difunde à distância\nPulsamos dentro do peito\nUm coração que anda feito\nAos heroicos sacrifícios\nDe vencer paixões e vícios\nE à mais renhida peleja\nPela Pátria e pela Igreja\nNos combates da virtude\nConquistamos a saúde\nE ganhamos cada dia\nO doce pão da alegria\nQueremos a alma no olhar\nLimpidamente a brilhar\nEncantadora a sorrir\nBela aurora do porvir",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=5cpndN5WkyI",
+      "audioOnly": false
     },
     {
       "id": "s7",
@@ -228,7 +490,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Foi um dia em Brownsea que tudo aconteceu\nCriado por um homem de fé, o escutismo apareceu.\nBaden-Powell seu nome o nosso querido B.P.\nJuntou os jovens que andavam no mundo sem saberem porquê\n\n(Refrão)\nAmarelo, verde, Vermelho ou Azul\nNão importa o lenço que se usar\nPara fazer deste mundo um lugar bom para amar\nPor isso, irmão escuteiro\nLobito, Chefe ou Explorador/Caminheiro\nDá aqueles que te rodeiam alegria e amor.\n\nPor vezes não é nada fácil os outros ajudar\nMas é nos momentos difíceis que não deves desanimar\nE com fé e coragem conseguirás chegar ao fim\nE a tua B.A. desse dia cumprirás assim.\n\nOrgulha-te da farda que usas como ela, não há igual\nEla é o melhor testemunho do teu altivo ideal\nLembra a tua promessa na renunciaste ao mal\nE prometeste ficar sempre alerta por Portugal!",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=pELr2iqZUdk",
+      "audioOnly": false
     },
     {
       "id": "s8",
@@ -236,7 +499,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Nós somos os escuteiros\nDesta Pátria sem rival\nE fomos nós os primeiros\nA levantar Portugal\n\nAvante escuteiros\nEm frente a cantar\nMarchemos ligeiros\nE sem vacilar\n\nA Pátria confia\nNo escuta leal\nÉ deus quem nos guia\nALERTA!!!\nViva Portugal",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=0nY-4EkwJU4",
+      "audioOnly": false
     },
     {
       "id": "s9",
@@ -244,7 +508,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Somos escuteiros, (bis)\nGostamos do campo, (bis)\nde fazer raids, (bis)\ne acampar. (bis)\nSomos exploradores, (bis)\nQueremos crescer, (bis)\nDe verde ao peito, (bis)\nPara vencer. (bis)\nVivemos aventuras dos nossos heróis,\nE seguimos as pistas deixadas por BP\n\nRefrão:\nSegunda, segunda, somos a segunda secção (bis)\n\nLogo amanhece, (bis)\nMochilas às costas, (bis)\nNovos desafios, (bis)\nIremos viver. (bis)\nMais tarde escurece, (bis)\nVamos acampar, (bis)\nMontar a tenda, (bis)\nE descansar. (bis)\nE à noitinha todos nos reunimos,\nE à fogueira, para rir e cantar.",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=EV16qchU-Rs",
+      "audioOnly": false
     },
     {
       "id": "s10",
@@ -252,7 +517,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "São Francisco de Assis\nEnsina cada lobito :\nComo há-de ser feliz. (Bis)\nPraticou a boa ação,\nSempre fiel, cada dia;\ntinha um bom coração,\nSempre cheio de alegria.\nFoi puro e obediente,\nDeu exemplo de bondade;\nViveu sempre contente,\nEspalhou a felicidade.",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=DrtPcwBBlqw",
+      "audioOnly": false
     },
     {
       "id": "s11",
@@ -260,7 +526,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "O nosso azul, cor do céu e do mar,\nDá-nos mais força, para lá chegar.\nChegar é ser feliz, sentir-te perto de mim\nPoder cantar e rir, dizer-te sempre que sim.\n\nSomos pioneiros, e sempre os primeiros,\nQueremos viver, sempre a crescer.\nPega na mochila, na tua viola,\nVamos em equipa, todos acampar.\n\nRefrão:\nVamos acampar, para serra e para o mar,\nE à fogueira, as cantigas ao luar.\nSeguimos a pista, de mãos dadas,\nE, em conjunto, rumo ao fim.\nSomos pioneiros, construtores do Mundo,\nSentimos força, p´ra criar e lutar.\nProtege o verde, que nos deixa viver,\nEstar sempre Alerta para Servir.",
       "chords": "Mi Si7 Dó#m Sol#m\nLá Mi Lá Si7\nMi Si7 Dó#m Sol#\nLá Mi Si7 Mi\nFá#m Si7 Mi Dó#m\nFá#m Si7\nFá#m Si7 Mi Dó#m\nFá#m Si7",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=rGk-c0zVxk0",
+      "audioOnly": false
     },
     {
       "id": "s12",
@@ -268,7 +535,8 @@
       "subtitle": "BP é quem nos diz",
       "lyrics": "Não deixes cair teus olhos,\nNem te deixes enganar.\nOlha de frente os escolhos,\nOlha, podes encalhar.\nÉ urgente estar atento,\nVer para onde corre a maré.\nVer donde sopra o vento,\nNão vás tu perder o pé.\n\nBP é quem nos diz Oh, Oh,\nimpele a tua própria canoa\nSe queres mesmo ser feliz.\nNão te deixes ir à toa,\nImpele a tua própria canoa,\nImpele a tua própria canoa.\n\nA vida não é deserto,\nNão queiras ficar no cais.\nBP é rumo certo,\nDecide tu aonde vais,\nNão queiras ficar no cais.",
       "chords": "Ré Lá Sol Mi-\nRé Lá Mi- Sol Lá Ré\nRé Sol Lá\nRé Lá Ré\nSol Lá\nSol Si-\nRé Lá\nSol Lá Ré",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=XUXu5Om-pnQ",
+      "audioOnly": false
     },
     {
       "id": "s13",
@@ -276,7 +544,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Se sentes dentro de ti a vontade de amar\nEm gestos que criem fontes, a audácia de sonhar\nMais longínquos horizontes e o apelo a escalar\nCada vez mais altos montes\nCada vez mais altos montes\nEntão...\n\nTens em ti um pedacinho de Deus\nTens rumos certos no coração\nDesperta o sonho: tens em ti os céus\nLiberta a vida da palma da mão\nFaz desses rumos os caminhos teus\nDe Jesus recebeste esta missão\n\nSe sentes dentro de ti sempre a sede de gritar\no nome da liberdade, a coragem de falar\na palavra da verdade e a servir participar\nna construção da cidade, então…\nSe sentes dentro de ti o silêncio inspirar\na paz ao teu coração chamando-te a enfrentar\na vida com decisão e teimas acreditar\nna esperança de um mundo bom, então…",
       "chords": "Ré Fá#- Mi- Lá\nRé Fá#- Mi- Fá#-\nSol Fá#- Sol Fá#-\nSol Fá#- Mi- Lá\nRé Sol Dó Ré Sol\nRé Sol Dó Ré\nSi- Sol Lá Sol Ré",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=EG6xfbX19Tk",
+      "audioOnly": false
     },
     {
       "id": "s14",
@@ -284,7 +553,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Lá fora a vida acontece\nTu preso num medo vazio\nEmbora a tua alma estremeça\nAnsiando aquele desafio\nVives agarrado ao banal\nSem coragem de ir embora\nMas como vais ser feliz\nSabendo o que espera lá fora?\n\nEntão faz a mochila e segue caminho\nNo fundo tu sabes que não estás sozinho\nPara cima, mais alto, é a direção\nE não há melhor bússola que o coração\n\nTens o mundo à tua espera\nE uma sede de infinito\nSolta a tua voz mais sincera\nFaz ouvir o teu grito!\nÉs tu quem traça o teu destino\nNão deixes a folha em branco\nAgarra os lápis e pinta\nPreenche cada recanto",
       "chords": "D A E F#m\nA E F#m D\nB F#m G#m E",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=qVmD1aUiwEY",
+      "audioOnly": false
     },
     {
       "id": "s15",
@@ -292,7 +562,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Se um dia eu ficasse sem Ti,\nolharia as estrelas do céu\np’ra lembrar que viveste por mim,\ne para sempre guardar-Te, para sempre lembrar-Te\nna marca de um gesto meu.\n\nRenasce em mim, mostra como ama alguém\nque precisa de mim\np’ra mostrar o melhor que Deus tem.\n\nO que sinto não posso explicar, é difícil saber e dizer…\nO que eu tenho, não posso negar que é aquilo que eu quero,\né a Ti que eu desejo, e não vou abandonar.\n\nReviver o que vivi, renascer conTigo,\nconquistar o Teu espaço astral,\npois quem ama não teme o bem e o mal.",
       "chords": "Dó Sol Ré\nLá- Sol Dó Sol\nLá- Dó\nSol Dó Sol Dó Ré\nMi- Dó Sol Dó Ré\nDó Ré Mi- Dó Ré- Mi-\nDó Ré\nLá- Sol Dó Ré",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=6fv1ZBctGx4",
+      "audioOnly": false
     },
     {
       "id": "s16",
@@ -300,7 +571,8 @@
       "subtitle": "Rumos do Homem Novo",
       "lyrics": "Na vara que se abre em dois caminhos\naceitamos proposta de opção\nsabendo que nunca vamos, sozinhos\nquando é por Cristo, a decisão.\n\nMochila às costas, com o pão e a palavra\nlevamos tenda prontos para partir\nguia-nos um fogo, que não se apaga\nque acende no lenço, a cor do servir.\n\nSer Caminheiro nos rumos do Homem Novo\nser construtor, de um mundo novo\ncaminhando no amor ser Homem Novo.\n\nPelo projecto pessoal da vida sonhamos cada dia o amanhã\ne que queremos de esperança decidida e partilhar na carta de clã.\nNossos rumos prosseguem aventuras\nde encontros do Homem com Deus, na história\na exigir a coragem de rupturas de que a cruz no mundo, gritar memórias.\n\nNas palavras de montanha, a verdade\na chamar por coerência e compromisso\no evangelho feito comunidade vivido em atitude de serviço.\nDe B.P. vem o apelo a navegar caminhos de triunfo, a felicidade\nem Jesus Cristo a meta a alcançar o Homem Novo chamado à eternidade.",
       "chords": "Dó9 Sim7 Lám7\nDó9 Sim7 Mim Lám7 Dó9 Ré\nSol Fá Dó Ré\nDó9 Sol Lá# Fá",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=TCXYuqDB6LA",
+      "audioOnly": false
     },
     {
       "id": "s17",
@@ -308,7 +580,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Minha promessa atende, meu Deus, Deus meu\nE sobre mim estende o manto Teu\nEu te amo e quero amar cada vez mais\nNão deixes de escutar, Senhor, meus ais.\n\nJuro seguir Teus passos como Cristão\nE depôr em Teus braços meu coração\nDefende-me do mal, Jesus meu rei\nE em prol de Portugal batalharei\nMinh’alma toda cega de fé e de amor\nHoje e sempre se entrega a Vós Senhor",
       "chords": "Dó Lá- Sol Dó Sol Sol7 Dó\nFá Dó Ré- Dó Fá Dó Ré- Sol Sol7 Dó",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=D3dW2y9azVc",
+      "audioOnly": false
     },
     {
       "id": "s18",
@@ -316,7 +589,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Se te sentes só no mundo e pensas que não tens um amigo\nSe te sentes uma ilha toda rodeada de mar\nVem junta-te a nós\n\nSomos ilhas como tu\nSó que o mar que nos rodeia é feito de escutas sempre a cantar\nSomos ilhas, mas estamos juntos sempre juntos no ideal de BP\nNão há mar que nos separe\nNão há guerra que nos pare\nÉ este mar de jovens cantando que nos dá força p’ra prosseguir\n\nHá continentes inteiros que estão separados\nSão as guerras só quem não quer é que não vê\nSomos ilhas mas estamos juntos\nE do mundo queremos fazer uma ilha gigante e unida pelo ideal de BP",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=zRHHzRiKW0Q",
+      "audioOnly": false
     },
     {
       "id": "s19",
@@ -324,7 +598,8 @@
       "subtitle": "Hino do Agrupamento",
       "lyrics": "Ao passar a vida, eu sei que nem tudo vai ser como sonhei.\nTer caminho p’ra fazer e um plano, sem saber ser “Mais alguém”.\n\nE vais ver, vais sentir, Não precisas desistir\nQuando a vida te pára e diz “Não!”\nPois Eu estou junto a ti, Dou-te a Força que há em mim,\nTu és mais do que um só – somos Um!\n\nSomos Um, somos Um, somos Um... (Eu e tu somos um)\n\nPosso ser igual a mim, ou terei de desistir de ser assim?\nConfiar no coração, ou no plano que Deus Tem para mim?\nMesmo os que aqui não estão De ti esperam, com razão,\nTeu rumo tu estás a traçar.\nSeres alguém, seres feliz, Porque “Alguém” assim o quis,\nSeres um “mais” para ti: somos um!\n\nSomos um, eu e tu, Como a terra e o céu, Unidos pelo mesmo sol.\nE de ti vais colher O orgulho de crescer\nE sorrires quando vires que somos um!",
       "chords": "Sol Si- Mi- Ré Dó Sol\nSol Lá- Fá Dó Sol Dó Ré Sol Ré Sol\nSol Dó Ré",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=GrYMgEfcqJY",
+      "audioOnly": false
     },
     {
       "id": "s20",
@@ -332,7 +607,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Desde sempre sopra uma brisa, Forte envolvência que nos quer guiar,\nSábia voz que nos toca o coração. Sabemos hoje onde nos pode levar.\nO mundo avança com a nossa vontade. Se uma criança sonhar ser grande:\nNós queremos realizar esse sonho! Será um tempo novo… Novo!\n\nSeremos realizadores de sonhos, (seremos realizadores de sonhos)\nHomens Novos, num Tempo Novo. (num Tempo Novo, e Amanhã)\nSeremos realizadores de sonhos (…um Tempo Novo…)\nTempo Novo (…Homens Novos!) Homens Novos!\n\nAo chegar ao alto da montanha, desafia o eco gritando: Felicidade!\nE ela virá de volta uma e outra vez de cada vez que encontres a dificuldade.\nQueremos aceitar o nosso desafio! Caminheiro é saber crescer por dentro,\nDespertar do sonho, realizar a vida, e avançar, consciente, em cada encruzilhada.\n\nE espalharemos esta mensagem: Há sempre uma brisa que sopra.\nEla traz a Voz sábia de Deus E irá tocar-vos o Coração.",
       "chords": "Ré Dó#- Si- Lá\nMi Ré Lá Mi Ré Lá Fá#-\nDó#- Ré Si- Mi",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=QluvJJ6Zeb0",
+      "audioOnly": false
     },
     {
       "id": "s21",
@@ -340,7 +616,8 @@
       "subtitle": "Hino do ACAREG 2016",
       "lyrics": "Vem! Vem! Vem! Dá o passo em frente\nDá o teu melhor e sê um ESCUTEIRO DIFERENTE!\n\nTudo começou com a melhor das vontades\nSaber ver, ouvir, falar sempre a verdade. Qual é?\nA tua vontade de seguir nesta caçada?\nDepois vem a lei, vem o ser generoso\nDescobres que vida é já mais do que um jogo. Qual é?\nA tua vontade de embarcar nesta grande aventura?\n\nHey! Hey! Hey! Este é o jogo da vida\nO teu querer é a tua medida\nUm modo de ser, forma de viver\nPorque a promessa não é só prometer\n\nVem! Vem! Vem! Dá o passo em frente\nDá o teu melhor e sê um ESCUTEIRO DIFERENTE!",
       "chords": "Ré Lá Sol Lá Ré\nRé Lá Sim Sol\nLá Sol Lá",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=bGjOiv8d9XE",
+      "audioOnly": false
     },
     {
       "id": "s22",
@@ -348,7 +625,8 @@
       "subtitle": "Música e Letra",
       "lyrics": "Abri a caixa do tempo E relembrei como foi\nEsvaziei o pensamento E num sonho viajei\nCorre, salta, dança, voa Vem andar sobre o luar\nAma, agradece num sorriso Quem te olha a chorar (bis)\nErgue o teu olhar O Mundo vai-te abraçar (bis)",
       "chords": "Sol Ré9(/Fá#) Dó9",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=YxSaWUpFJjE",
+      "audioOnly": false
     },
     {
       "id": "s23",
@@ -356,23 +634,31 @@
       "subtitle": "Clã nº 107 – São Nuno",
       "lyrics": "(Letra a adicionar via Admin)",
       "chords": "",
-      "videoUrl": ""
+      "videoUrl": "https://www.youtube.com/watch?v=A11_mzOpFIc",
+      "audioOnly": false
     }
   ],
   "visits": [
     {
       "id": "v1",
-      "title": "Agrupamento 123 - Lisboa",
-      "date": "Agosto 2024",
-      "imageUrl": "assets/visits/visit1.jpg",
-      "description": "Uma mensagem de amizade deixada pelos pioneiros de Lisboa durante o seu acampamento de verão em Vila do Conde."
+      "title": "Carta de agradecimento",
+      "date": "",
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/visitantes3_202604280512.jpg",
+      "description": ""
     },
     {
       "id": "v2",
-      "title": "Caminheiros de Braga",
-      "date": "Julho 2023",
-      "imageUrl": "assets/visits/visit2.jpg",
+      "title": "Agrupamento 391 Antas",
+      "date": "",
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/visitantes2_202604280512.jpg",
       "description": "Postal de agradecimento pela hospitalidade na nossa sede."
+    },
+    {
+      "id": "moi72ni3nqkan",
+      "title": "Agrupamento 1338 Vairão",
+      "date": "28+29/01/2023",
+      "imageUrl": "https://raw.githubusercontent.com/Hallukardy/Agrupamento439/main/assets/gallery/visitantes1_202604280512.jpg",
+      "description": ""
     }
   ],
   "pages": [

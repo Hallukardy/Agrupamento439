@@ -21,7 +21,11 @@ function getSafeStore(key, defaultVal) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Fetch latest data from GitHub (overwrites localStorage if available)
+  await initRemoteData();
+
+  // 2. Initialize Core
   initTheme();
   // 3. Render and initialize UI
   initNavbar();
@@ -57,6 +61,13 @@ function initChatbotVisibility() {
 
 /* ---------- REMOTE DATA LOADING ---------- */
 async function initRemoteData() {
+  // Se estiver logado como admin, não sobrescreve os dados locais com os remotos
+  // Isso evita perder edições pendentes ao navegar no site localmente
+  if (sessionStorage.getItem('agr439-admin-auth') === 'true') {
+    console.log('Admin detectado: Sincronização remota ignorada para preservar alterações locais.');
+    return;
+  }
+
   try {
     // Determine the path to site-data.json
     // We use a relative path so it works everywhere (local and GitHub Pages)

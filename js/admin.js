@@ -217,11 +217,21 @@ function renderDashboard(container) {
   const archive = getStore('agr439-admin-caixa-tempo');
 
   container.innerHTML = `
-    <div class="stats-row" style="grid-column: 1/-1; margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+    <div class="stats-row" style="grid-column: 1/-1; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+      <div style="background: rgba(var(--c-primary-rgb), 0.1); border-left: 4px solid var(--c-primary); padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+        <h4 style="color: var(--c-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          ⚠️ Nota Importante
+        </h4>
+        <p style="font-size: 0.9rem; line-height: 1.5;">
+          As alterações que faz neste painel (notícias, eventos, etc.) são guardadas apenas no seu navegador. 
+          Para que elas apareçam no site oficial para todos os visitantes, <strong>deve clicar no botão "Publicar Agora"</strong> abaixo.
+        </p>
+      </div>
+
       <section class="stat-card" style="flex: 1; min-width: 280px; border: 2px solid var(--c-primary);">
         <h4 style="margin-bottom: 0.5rem;">🚀 Publicação do Site</h4>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-          Dica: Clique em "Publicar" para enviar as suas alterações para o site oficial.
+          Envia os dados atuais para o repositório GitHub para atualizar o site de produção.
         </p>
         <div style="display:flex; gap:0.75rem; flex-wrap: wrap;">
           <button id="btn-publish" class="btn btn-save" onclick="publishSiteData()">🚀 Publicar Agora</button>
@@ -799,20 +809,31 @@ function renderGalleryCRUD(container) {
         <button class="btn btn-primary btn-sm" onclick="openGalleryModal()">+ Adicionar Foto</button>
       </div>
       ${gallery.length === 0 ? '<div class="empty-state"><div class="icon">🖼️</div><p>Nenhuma foto encontrada com os filtros atuais.</p><button class="btn btn-primary btn-sm" onclick="openGalleryModal()">Adicionar Foto</button></div>' : `
+        <div class="info-alert" style="margin-bottom: 1rem; font-size: 0.85rem; border-left: 4px solid var(--accent); background: rgba(var(--accent-rgb), 0.1); padding: 0.8rem; border-radius: 4px;">
+          <strong>💡 Dica de Sincronização:</strong> Fotos com URL <code>assets/...</code> são locais. Use o botão <strong>Upload</strong> ao editar para enviá-las ao GitHub e garantir que apareçam no site publicado.
+        </div>
         <table class="admin-table">
           <thead>
             <tr>
               <th class="sortable" onclick="setGallerySort('description')">Descrição ${sortIcon('description')}</th>
               <th class="sortable" onclick="setGallerySort('category')">Categoria ${sortIcon('category')}</th>
+              <th>Localização</th>
               <th>Estado</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            ${gallery.map(g => `
+            ${gallery.map(g => {
+              const isRemote = g.url && g.url.startsWith('http');
+              return `
               <tr>
                 <td>${esc(g.description)}</td>
                 <td>${esc(getCatLabel(g.category))}</td>
+                <td>
+                  <span style="font-size: 0.8rem; padding: 2px 6px; border-radius: 3px; background: ${isRemote ? '#dcfce7' : '#fee2e2'}; color: ${isRemote ? '#166534' : '#991b1b'};">
+                    ${isRemote ? '🌐 GitHub' : '💻 Local'}
+                  </span>
+                </td>
                 <td><span class="status-badge ${g.approved ? 'status-published' : 'status-draft'}">${g.approved ? 'Aprovada' : 'Pendente'}</span></td>
                 <td>
                   <button class="action-btn edit" onclick="openGalleryModal('${g.id}')" title="Editar">✏️</button>
@@ -820,7 +841,7 @@ function renderGalleryCRUD(container) {
                   <button class="action-btn delete" onclick="deleteGalleryItem('${g.id}')" title="Apagar">🗑️</button>
                 </td>
               </tr>
-            `).join('')}
+            `;}).join('')}
           </tbody>
         </table>
       `}
@@ -1639,12 +1660,20 @@ async function publishSiteData() {
     });
     
     console.log('Payload gerado com sucesso:', Object.keys(payload));
+    console.log('Resumo do Payload:', {
+      noticias: payload.news?.length || 0,
+      galeria: payload.gallery?.length || 0,
+      eventos: payload.events?.length || 0,
+      musicas: payload.songs?.length || 0,
+      caixaTempo: payload['caixa-tempo']?.length || 0
+    });
 
     // 2. Get current SHA if file exists
     let sha = null;
     const path = 'data/site-data.json';
     const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
     
+    console.log('Buscando SHA atual em:', apiUrl);
     const getRes = await fetch(apiUrl, {
       headers: { 'Authorization': `token ${config.token}` }
     });
@@ -1652,9 +1681,16 @@ async function publishSiteData() {
     if (getRes.ok) {
       const fileData = await getRes.json();
       sha = fileData.sha;
+      console.log('SHA atual encontrado:', sha);
+    } else if (getRes.status === 404) {
+      console.log('Arquivo site-data.json não existe no GitHub. Criando novo...');
+    } else {
+      const err = await getRes.json();
+      throw new Error(`Erro ao buscar SHA: ${err.message || getRes.statusText}`);
     }
 
     // 3. Upload/Update file
+    console.log('Enviando dados para o GitHub (PUT)...');
     const putRes = await fetch(apiUrl, {
       method: 'PUT',
       headers: {
@@ -1671,18 +1707,25 @@ async function publishSiteData() {
 
     if (!putRes.ok) {
       let errMsg = 'Erro na API do GitHub';
+      const status = putRes.status;
       try {
         const err = await putRes.json();
         errMsg = err.message || errMsg;
+        
+        if (status === 401) errMsg = 'Token do GitHub inválido ou expirado. Verifique as Definições.';
+        if (status === 404) errMsg = 'Repositório ou branch não encontrado. Verifique as Definições.';
+        if (status === 422) errMsg = 'Conflito de SHA ou dados inválidos. Tente Sincronizar primeiro.';
       } catch (e) {
-        errMsg = `HTTP ${putRes.status}: ${putRes.statusText}`;
+        errMsg = `HTTP ${status}: ${putRes.statusText}`;
       }
       throw new Error(errMsg);
     }
 
+    console.log('Publicação concluída com sucesso!');
     showToast('✨ Site publicado com sucesso! Visite para ver as mudanças.');
   } catch (err) {
-    alert('Erro na publicação: ' + err.message);
+    console.error('Falha na publicação:', err);
+    alert('❌ Erro na publicação:\n' + err.message);
   } finally {
     btn.disabled = false;
     btn.textContent = originalText;

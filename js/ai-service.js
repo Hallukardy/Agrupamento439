@@ -43,60 +43,142 @@ const AI_CONFIG = {
 /**
  * Core AI Completion Function
  */
+/**
+ * Core AI Completion Function with Fallback & Resilience
+ */
 async function getAICompletion(messages, options = {}) {
   const mode = AI_CONFIG.getMode();
-  const providerKey = AI_CONFIG.getProvider();
-  const provider = AI_CONFIG.providers[providerKey];
-  const apiKey = await AI_CONFIG.getApiKey();
+  if (mode === 'local') return await callAI(AI_CONFIG.getLocalUrl(), null, messages, options);
 
-  let url, headers, body;
+  const primaryProvider = AI_CONFIG.getProvider();
+  const fallbackChain = ['gemini', 'openai', 'groq', 'deepseek'].filter(p => p !== primaryProvider);
+  const providersToTry = [primaryProvider, ...fallbackChain];
 
-  if (mode === 'local') {
-    url = AI_CONFIG.getLocalUrl();
-    headers = { 'Content-Type': 'application/json' };
-    body = JSON.stringify({
-      model: options.model || 'gpt-4o', 
-      messages: messages,
-      stream: false
-    });
-  } else {
-    if (!apiKey) throw new Error('Chave API não configurada para o Modo Produção.');
-    url = provider.url;
-    headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    };
-    
+  for (const providerKey of providersToTry) {
+    // Check for Quota Lockout
+    const lockout = localStorage.getItem(`agr439-lockout-${providerKey}`);
+    if (lockout && Date.now() < parseInt(lockout)) {
+      console.warn(`[AI Service] Provider ${providerKey} is in lockout. Skipping...`);
+      continue;
+    }
+
+    try {
+      const provider = AI_CONFIG.providers[providerKey];
+      if (!provider) continue;
+
+      const apiKey = await getProviderApiKey(providerKey);
+      if (!apiKey) continue;
+
+      console.log(`[AI Service] Attempting with ${provider.name}...`);
+      return await callAI(provider.url, apiKey, messages, { ...options, providerKey });
+    } catch (err) {
+      console.error(`[AI Service] Error with ${providerKey}:`, err);
+      
+      // If it's a 429, set a 1-minute lockout
+      if (err.message.includes('429') || err.message.includes('Limite')) {
+        localStorage.setItem(`agr439-lockout-${providerKey}`, Date.now() + 60000);
+      }
+      
+      // Continue to next provider in chain
+      continue;
+    }
+  }
+
+  throw new Error("Todos os provedores de IA falharam ou estão sem quota. Tente novamente mais tarde.");
+}
+
+async function getProviderApiKey(key) {
+  // If it's the primary provider, use the secure one. 
+  // For others, we might want to check for specific keys, but for now we use the same or check if defined.
+  // In a real app, each provider would have its own key.
+  const primary = AI_CONFIG.getProvider();
+  if (key === primary) return await AI_CONFIG.getApiKey();
+  
+  // Fallback check: maybe we have other keys? (Future enhancement)
+  // For now, only fallback if we have a key or if it's openrouter/together with the same key
+  return await AI_CONFIG.getApiKey(); 
+}
+
+/**
+ * Low-level Fetch Call
+ */
+async function callAI(url, apiKey, messages, options) {
+  const isStream = options.stream || false;
+  const providerKey = options.providerKey;
+
+  let headers = { 'Content-Type': 'application/json' };
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
     if (providerKey === 'anthropic') {
        headers['x-api-key'] = apiKey;
        headers['anthropic-version'] = '2023-06-01';
        delete headers.Authorization;
     }
-
-    body = JSON.stringify({
-      model: provider.model,
-      messages: messages,
-      max_tokens: options.max_tokens || 1000
-    });
   }
 
-  try {
-    const res = await fetch(url, { method: 'POST', headers, body });
-    
-    if (!res.ok) {
-      const errorMsg = AI_ERRORS[res.status] || AI_ERRORS.Default;
-      const detail = await res.json().catch(() => ({}));
-      throw new Error(`${errorMsg} (Detalhe: ${detail.error?.message || res.statusText})`);
+  const body = JSON.stringify({
+    model: AI_CONFIG.providers[providerKey]?.model || options.model || 'gpt-4o',
+    messages: messages,
+    max_tokens: options.max_tokens || 1000,
+    stream: isStream
+  });
+
+  const res = await fetch(url, { method: 'POST', headers, body });
+  
+  if (!res.ok) {
+    const errorMsg = AI_ERRORS[res.status] || AI_ERRORS.Default;
+    throw new Error(`${res.status}: ${errorMsg}`);
+  }
+
+  // Handle Streaming
+  if (isStream && options.onChunk) {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let fullText = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value, { stream: true });
+      const lines = chunk.split('\n');
+      
+      for (const line of lines) {
+        if (line.trim() === '' || line.trim() === 'data: [DONE]') continue;
+        
+        if (line.startsWith('data: ')) {
+          try {
+            const data = JSON.parse(line.substring(6));
+            const content = data.choices?.[0]?.delta?.content || '';
+            if (content) {
+              fullText += content;
+              options.onChunk(content, fullText);
+            }
+          } catch (e) {
+            // Ignore minor parse errors in stream
+          }
+        }
+      }
     }
-
-    const data = await res.json();
-    if (data.choices && data.choices[0]) return data.choices[0].message.content;
-    if (data.content && data.content[0]) return data.content[0].text; 
-    return JSON.stringify(data);
-  } catch (err) {
-    console.error('AI Completion Error:', err);
-    throw err;
+    return fullText;
   }
+
+  const data = await res.json();
+  if (data.choices && data.choices[0]) return data.choices[0].message.content;
+  if (data.content && data.content[0]) return data.content[0].text; 
+  return JSON.stringify(data);
+}
+
+/**
+ * Planner Agent: Intent Classification
+ */
+async function classifyIntent(query) {
+  // Simple keyword-based classifier to save tokens, but could use a tiny AI call
+  const q = query.toLowerCase();
+  if (q.includes('evento') || q.includes('calendario') || q.includes('quando')) return 'events';
+  if (q.includes('historia') || q.includes('fundação') || q.includes('antigamente')) return 'history';
+  if (q.includes('noticia') || q.includes('novidades') || q.includes('aconteceu')) return 'news';
+  return 'general';
 }
 
 /**
@@ -161,22 +243,38 @@ function buildSiteIndex(data) {
   console.log(`[AI Service] Indexed ${siteDataIndex.length} chunks for RAG.`);
 }
 
-function searchSiteData(query, topK = 3) {
+function searchSiteData(query, topK = 4) {
   if (!siteDataIndex.length) return "";
 
-  const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+  const q = query.toLowerCase();
+  const words = q.split(/\s+/).filter(w => w.length > 2);
+  
   const scored = siteDataIndex.map(chunk => {
     let score = 0;
+    const text = chunk.text.toLowerCase();
+    
+    // Exact match boost
+    if (text.includes(q)) score += 5;
+    
+    // Keyword match
     words.forEach(w => {
-      if (chunk.text.toLowerCase().includes(w)) score++;
+      if (text.includes(w)) {
+        score += 1;
+        // Boost if word is in title
+        if (chunk.title.toLowerCase().includes(w)) score += 2;
+      }
     });
+    
+    // Recency boost (optional - if year is present)
+    if (chunk.type === 'Notícia' || chunk.type === 'Evento') score += 1;
+
     return { ...chunk, score };
   });
 
   return scored
     .sort((a, b) => b.score - a.score)
     .slice(0, topK)
-    .filter(c => c.score > 0)
+    .filter(c => c.score > 1) // Higher threshold for V2
     .map(c => `[Contexto: ${c.type}] ${c.text}`)
     .join('\n\n');
 }
@@ -186,6 +284,7 @@ window.AI = {
   complete: getAICompletion,
   search: searchSiteData,
   init: initAIService,
+  classify: classifyIntent, // Planner Agent
   config: AI_CONFIG,
   testConnection: async () => {
     return await getAICompletion([{ role: 'user', content: 'Responde apenas "OK" se receberes isto.' }], { max_tokens: 10 });

@@ -36,7 +36,12 @@ function doLogout() {
 document.addEventListener('DOMContentLoaded', () => {
   if (checkAuth()) {
     showDashboard();
-    syncFromGitHub(); // Sincronização automática silenciosa ao carregar
+    // Apenas sincroniza automaticamente se o storage estiver vazio ou se não houver configurações do GitHub
+    cleanGhostGalleryItems();
+    const gallery = getStore('agr439-admin-gallery');
+    if (gallery.length === 0) {
+      syncFromGitHub();
+    }
     fixGalleryPaths();
   } else {
     showLogin();
@@ -108,7 +113,7 @@ function navigateTo(section) {
       renderNewsCRUD(main);
       break;
     case 'hero':
-      headerTitle.innerHTML = '✨ <span>Destaques Hero</span>';
+      headerTitle.innerHTML = '✨ <span>Página Inicial / Títulos</span>';
       renderHeroStatsEditor(main);
       break;
     case 'events':
@@ -135,10 +140,7 @@ function navigateTo(section) {
       headerTitle.innerHTML = '⌛ <span>Caixa do Tempo</span>';
       renderCaixaTempoCRUD(main);
       break;
-    case 'pages':
-      headerTitle.innerHTML = '🌐 <span>Conteúdo de Páginas</span>';
-      renderPagesCRUD(main);
-      break;
+
     case 'recruitment':
       headerTitle.innerHTML = '📢 <span>Recrutamento</span>';
       renderRecruitmentCRUD(main);
@@ -171,7 +173,12 @@ function navigateTo(section) {
 function getStore(key) {
   try {
     const val = localStorage.getItem(key);
-    return val ? JSON.parse(val) : [];
+    if (!val) return [];
+    
+    if (val.startsWith('{') || val.startsWith('[')) {
+      return JSON.parse(val);
+    }
+    return val;
   } catch (e) {
     console.error(`Error parsing ${key}`, e);
     return [];
@@ -179,7 +186,7 @@ function getStore(key) {
 }
 
 function setStore(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  localStorage.setItem(key, typeof data === 'string' ? data : JSON.stringify(data));
 }
 
 function generateId() {
@@ -211,19 +218,19 @@ function renderDashboard(container) {
 
   container.innerHTML = `
     <div class="stats-row" style="grid-column: 1/-1; margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-      <div class="stat-card" style="flex: 1; min-width: 300px; border: 2px solid var(--c-primary);">
+      <section class="stat-card" style="flex: 1; min-width: 280px; border: 2px solid var(--c-primary);">
         <h4 style="margin-bottom: 0.5rem;">🚀 Publicação do Site</h4>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
           Dica: Clique em "Publicar" para enviar as suas alterações para o site oficial.
         </p>
-        <div style="display:flex; gap:0.75rem;">
-          <button class="btn btn-save" onclick="publishSiteData()">🚀 Publicar Agora</button>
+        <div style="display:flex; gap:0.75rem; flex-wrap: wrap;">
+          <button id="btn-publish" class="btn btn-save" onclick="publishSiteData()">🚀 Publicar Agora</button>
           <button class="btn btn-outline" onclick="syncFromGitHub(true)">🔄 Sincronizar Dados</button>
         </div>
-      </div>
+      </section>
     </div>
 
-    <div class="stats-row">
+    <div class="stats-row" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; width: 100%;">
       <div class="stat-card">
         <div class="stat-icon">📰</div>
         <div class="stat-value">${news.length}</div>
@@ -256,28 +263,30 @@ function renderDashboard(container) {
       </div>
     </div>
 
-    <div class="admin-table-container">
+    <section class="admin-table-container" style="margin-top: 2rem;">
       <div class="admin-table-header">
         <h3>📋 Últimas Mensagens</h3>
       </div>
-      ${msgs.length === 0 ? '<div class="empty-state"><div class="icon">📭</div><p>Sem mensagens recebidas.</p></div>' : `
-        <table class="admin-table">
-          <thead>
-            <tr><th>Nome</th><th>Email</th><th>Mensagem</th><th>Data</th></tr>
-          </thead>
-          <tbody>
-            ${msgs.slice(-5).reverse().map(m => `
-              <tr>
-                <td>${esc(m.name)}</td>
-                <td>${esc(m.email)}</td>
-                <td>${esc(m.message?.substring(0, 60))}${m.message?.length > 60 ? '…' : ''}</td>
-                <td>${new Date(m.date).toLocaleDateString('pt-PT')}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `}
-    </div>
+      <div style="overflow-x: auto;">
+        ${msgs.length === 0 ? '<div class="empty-state"><div class="icon">📭</div><p>Sem mensagens recebidas.</p></div>' : `
+          <table class="admin-table">
+            <thead>
+              <tr><th>Nome</th><th>Email</th><th>Mensagem</th><th>Data</th></tr>
+            </thead>
+            <tbody>
+              ${msgs.slice(-5).reverse().map(m => `
+                <tr>
+                  <td>${esc(m.name)}</td>
+                  <td>${esc(m.email)}</td>
+                  <td>${esc(m.message?.substring(0, 60))}${m.message?.length > 60 ? '…' : ''}</td>
+                  <td>${new Date(m.date).toLocaleDateString('pt-PT')}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `}
+      </div>
+    </section>
   `;
 }
 
@@ -380,6 +389,7 @@ function saveNews(id) {
     news.push(data);
   }
 
+  console.log('DEBUG: Salvando notícias no storage...', news);
   setStore('agr439-admin-news', news);
   closeModal();
   showToast('✅ Notícia guardada!');
@@ -387,8 +397,8 @@ function saveNews(id) {
 }
 
 function deleteNews(id) {
-  if (!confirm('Apagar esta notícia?')) return;
-  const news = getStore('agr439-admin-news').filter(n => n.id !== id);
+  console.log('DEBUG: deleteNews called with ID:', id);
+  const news = getStore('agr439-admin-news').filter(n => String(n.id) !== String(id));
   setStore('agr439-admin-news', news);
   showToast('🗑️ Notícia apagada.');
   renderNewsCRUD(document.getElementById('admin-content'));
@@ -503,8 +513,8 @@ function saveEvent(id) {
 }
 
 function deleteEvent(id) {
-  if (!confirm('Apagar este evento?')) return;
-  const events = getStore('agr439-admin-events').filter(e => e.id !== id);
+  console.log('DEBUG: deleteEvent called with ID:', id);
+  const events = getStore('agr439-admin-events').filter(e => String(e.id) !== String(id));
   setStore('agr439-admin-events', events);
   showToast('🗑️ Evento apagado.');
   renderEventsCRUD(document.getElementById('admin-content'));
@@ -606,11 +616,11 @@ function saveTimelineMilestone(id) {
 }
 
 function deleteTimelineMilestone(id) {
-  if (!confirm('Apagar este ano inteiro e todos os seus blocos de informação?')) return;
-  const timeline = getStore('agr439-admin-timeline').filter(t => t.id !== id);
+  if (!confirm('Apagar este marco da cronologia?')) return;
+  const timeline = getStore('agr439-admin-timeline').filter(m => String(m.id) !== String(id));
   setStore('agr439-admin-timeline', timeline);
-  showToast('🗑️ Ano apagado.');
-  renderTimelineCRUD();
+  showToast('🗑️ Marco apagado.');
+  renderTimelineCRUD(document.getElementById('admin-content'));
 }
 
 // --- SUB-ITEMS CRUD ---
@@ -805,6 +815,7 @@ function renderGalleryCRUD(container) {
                 <td>${esc(getCatLabel(g.category))}</td>
                 <td><span class="status-badge ${g.approved ? 'status-published' : 'status-draft'}">${g.approved ? 'Aprovada' : 'Pendente'}</span></td>
                 <td>
+                  <button class="action-btn edit" onclick="openGalleryModal('${g.id}')" title="Editar">✏️</button>
                   <button class="action-btn edit" onclick="toggleGalleryApproval('${g.id}')" title="${g.approved ? 'Desaprovar' : 'Aprovar'}">${g.approved ? '❌' : '✅'}</button>
                   <button class="action-btn delete" onclick="deleteGalleryItem('${g.id}')" title="Apagar">🗑️</button>
                 </td>
@@ -833,55 +844,64 @@ function setGallerySort(col) {
 }
 
 
-function openGalleryModal() {
+function openGalleryModal(id) {
+  const gallery = getStore('agr439-admin-gallery');
+  const item = id ? gallery.find(g => g.id === id) : null;
+
   showModal(`
-    <h3>🖼️ Adicionar Foto</h3>
+    <h3>${item ? '✏️ Editar Foto' : '🖼️ Adicionar Foto'}</h3>
     <div class="form-group">
       <label>Descrição</label>
-      <input type="text" id="m-gallery-desc">
+      <input type="text" id="m-gallery-desc" value="${item ? esc(item.description) : ''}">
     </div>
     <div class="form-group">
       <label>Categoria</label>
       <select id="m-gallery-cat">
-        <option value="hero">Destaques Hero</option>
-        <option value="timeline">Cronologia</option>
-        <option value="geral">Geral</option>
-        <option value="lobitos">Lobitos</option>
-        <option value="exploradores">Exploradores</option>
-        <option value="pioneiros">Pioneiros</option>
-        <option value="caminheiros">Caminheiros</option>
-        <option value="acampamento">Acampamento</option>
-        <option value="evento">Evento</option>
-        <option value="recrutamento">Recrutamento</option>
-        <option value="cancioneiro">Cancioneiro</option>
-        <option value="visitantes">Visitantes / Postais</option>
-        <option value="caixatempo">Caixa do Tempo (Arquivo)</option>
+        <option value="hero" ${item?.category === 'hero' ? 'selected' : ''}>Página Inicial / Títulos</option>
+        <option value="timeline" ${item?.category === 'timeline' ? 'selected' : ''}>Cronologia</option>
+        <option value="geral" ${item?.category === 'geral' ? 'selected' : ''}>Notícia / Aviso</option>
+        <option value="lobitos" ${item?.category === 'lobitos' ? 'selected' : ''}>Lobitos</option>
+        <option value="exploradores" ${item?.category === 'exploradores' ? 'selected' : ''}>Exploradores</option>
+        <option value="pioneiros" ${item?.category === 'pioneiros' ? 'selected' : ''}>Pioneiros</option>
+        <option value="caminheiros" ${item?.category === 'caminheiros' ? 'selected' : ''}>Caminheiros</option>
+        <option value="acampamento" ${item?.category === 'acampamento' ? 'selected' : ''}>Acampamento</option>
+        <option value="evento" ${item?.category === 'evento' ? 'selected' : ''}>Evento</option>
+        <option value="recrutamento" ${item?.category === 'recrutamento' ? 'selected' : ''}>Recrutamento</option>
+        <option value="cancioneiro" ${item?.category === 'cancioneiro' ? 'selected' : ''}>Cancioneiro</option>
+        <option value="visitantes" ${item?.category === 'visitantes' ? 'selected' : ''}>Visitantes / Postais</option>
+        <option value="caixatempo" ${item?.category === 'caixatempo' ? 'selected' : ''}>Caixa do Tempo (Arquivo)</option>
       </select>
     </div>
     <div class="form-group">
-      <label>Opção 1: Upload de Ficheiro (Recomendado)</label>
+      <label>Opção 1: Upload de Ficheiro (Substitui existente)</label>
       <input type="file" id="m-gallery-file" accept="image/*">
       <small style="color: var(--text-muted); font-size: 0.75rem;">A foto será enviada para o seu GitHub.</small>
     </div>
     <div style="text-align: center; margin: 1rem 0; color: var(--text-muted); font-size: 0.8rem;">— OU —</div>
     <div class="form-group">
       <label>Opção 2: URL da Imagem (Externo)</label>
-      <input type="url" id="m-gallery-url" placeholder="https://...">
+      <input type="url" id="m-gallery-url" placeholder="https://..." value="${item ? esc(item.url) : ''}">
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" id="btn-save-gallery" onclick="saveGalleryItem()">Guardar</button>
+      <button class="btn-save" id="btn-save-gallery" onclick="saveGalleryItem('${id || ''}')">Guardar</button>
     </div>
 
   `);
 }
 
-async function saveGalleryItem() {
+async function saveGalleryItem(id) {
   const fileInput = document.getElementById('m-gallery-file');
   const urlInput = document.getElementById('m-gallery-url');
   const desc = document.getElementById('m-gallery-desc').value;
   const cat = document.getElementById('m-gallery-cat').value;
   const btn = document.getElementById('btn-save-gallery');
+
+  const gallery = getStore('agr439-admin-gallery');
+  let itemIndex = -1;
+  if (id) {
+    itemIndex = gallery.findIndex(g => g.id === id);
+  }
 
   let finalUrl = urlInput.value;
 
@@ -894,7 +914,8 @@ async function saveGalleryItem() {
       finalUrl = result.githubUrl; // Utilizar o URL direto do GitHub para visibilidade imediata
       showToast('🚀 Imagem enviada para o GitHub!');
     } catch (err) {
-      alert('Erro no upload: ' + err.message);
+      console.error('Upload error:', err);
+      showToast('❌ Erro no upload: ' + err.message + '\n\nVerifique se o Token do GitHub está configurado corretamente nas Definições.');
       btn.disabled = false;
       btn.textContent = 'Guardar';
       return;
@@ -902,19 +923,24 @@ async function saveGalleryItem() {
   }
 
   if (!finalUrl) {
-    alert('Por favor, selecione um ficheiro ou insira um URL.');
+    showToast('Por favor, selecione um ficheiro ou insira um URL.');
     return;
   }
 
-  const gallery = getStore('agr439-admin-gallery');
-  gallery.push({
-    id: generateId(),
-    description: desc,
-    category: cat,
-    url: finalUrl,
-    approved: true,
-    date: new Date().toISOString(),
-  });
+  if (itemIndex >= 0) {
+    gallery[itemIndex].description = desc;
+    gallery[itemIndex].category = cat;
+    gallery[itemIndex].url = finalUrl;
+  } else {
+    gallery.push({
+      id: generateId(),
+      description: desc,
+      category: cat,
+      url: finalUrl,
+      approved: true,
+      date: new Date().toISOString(),
+    });
+  }
   
   setStore('agr439-admin-gallery', gallery);
   closeModal();
@@ -932,9 +958,18 @@ function toggleGalleryApproval(id) {
 }
 
 function deleteGalleryItem(id) {
-  if (!confirm('Apagar esta foto?')) return;
-  const gallery = getStore('agr439-admin-gallery').filter(g => g.id !== id);
-  setStore('agr439-admin-gallery', gallery);
+  // Removido confirm temporariamente para debugar se o browser o está a bloquear
+  console.log('DEBUG: Tentando apagar item:', id);
+  
+  const gallery = getStore('agr439-admin-gallery');
+  const newGallery = gallery.filter(g => String(g.id) !== String(id));
+  
+  if (newGallery.length === gallery.length) {
+    showToast('Erro: Item não encontrado para eliminar (ID: ' + id + ');');
+    return;
+  }
+  
+  setStore('agr439-admin-gallery', newGallery);
   showToast('🗑️ Foto apagada.');
   renderGalleryCRUD(document.getElementById('admin-content'));
 }
@@ -1101,10 +1136,10 @@ function saveSong(id) {
 }
 
 function deleteSong(id) {
-  if (!confirm('Apagar esta música do cancioneiro?')) return;
-  const songs = getStore('agr439-admin-songs').filter(s => s.id !== id);
+  if (!confirm('Apagar este cântico?')) return;
+  const songs = getStore('agr439-admin-songs').filter(s => String(s.id) !== String(id));
   setStore('agr439-admin-songs', songs);
-  showToast('🗑️ Música removida.');
+  showToast('🗑️ Cântico apagado.');
   renderSongsCRUD(document.getElementById('admin-content'));
 }
 
@@ -1206,10 +1241,10 @@ function saveVisit(id) {
 }
 
 function deleteVisit(id) {
-  if (!confirm('Apagar este registo de visita?')) return;
-  const visits = getStore('agr439-admin-visits').filter(v => v.id !== id);
+  if (!confirm('Apagar este registo?')) return;
+  const visits = getStore('agr439-admin-visits').filter(v => String(v.id) !== String(id));
   setStore('agr439-admin-visits', visits);
-  showToast('🗑️ Registo removido.');
+  showToast('🗑️ Registo apagado.');
   renderVisitsCRUD(document.getElementById('admin-content'));
 }
 
@@ -1342,7 +1377,7 @@ function saveCaixaTempoItem(id) {
 
 function deleteCaixaTempoItem(id) {
   if (!confirm('Deseja apagar este recorte histórico?')) return;
-  const items = getStore('agr439-admin-caixa-tempo').filter(n => n.id !== id);
+  const items = getStore('agr439-admin-caixa-tempo').filter(n => String(n.id) !== String(id));
   setStore('agr439-admin-caixa-tempo', items);
   showToast('🗑️ Recorte apagado.');
   renderCaixaTempoCRUD(document.getElementById('admin-content'));
@@ -1351,13 +1386,12 @@ function deleteCaixaTempoItem(id) {
 // [showModal and closeModal are defined once in the UI HELPERS section below]
 
 
-// ---------- SETTINGS & GITHUB API ----------
-  `;
-}
+
 
 async function renderAISettings(container) {
   const mode = localStorage.getItem('agr439-ai-mode') || 'local';
   const provider = localStorage.getItem('agr439-ai-provider') || 'openai';
+  const chatbotEnabled = localStorage.getItem('agr439-chatbot-enabled') === 'true';
   
   let apiKey = '';
   const encrypted = localStorage.getItem('agr439-ai-apikey-secure');
@@ -1371,8 +1405,23 @@ async function renderAISettings(container) {
         <h3>🤖 Configuração de Inteligência Artificial</h3>
       </div>
       <div style="padding: 1.5rem;">
+        
+        <!-- --- SECTION: CHATBOT TOGGLE --- -->
+        <div class="admin-card" style="margin-bottom: 2rem; border: 1px solid var(--border-color); background: rgba(var(--c-primary-rgb), 0.05);">
+          <h4 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">💬 Assistente Virtual (Chatbot)</h4>
+          <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-weight: 600;">
+              <input type="checkbox" id="chatbot-enabled" ${chatbotEnabled ? 'checked' : ''} style="width: 20px; height: 20px;">
+              <span>Ativar Chatbot no Site</span>
+            </label>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+              Quando ativo, um ícone de robô aparecerá no canto inferior do site para responder a perguntas dos visitantes.
+            </p>
+          </div>
+        </div>
+
         <div class="form-group" style="margin-bottom: 2rem;">
-          <label>Modo de Conexão</label>
+          <label>Modo de Conexão do Motor AI</label>
           <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
               <input type="radio" name="ai-mode" value="local" ${mode === 'local' ? 'checked' : ''} onchange="toggleAIFields()">
@@ -1383,38 +1432,39 @@ async function renderAISettings(container) {
               <span>Modo Produção (Direto)</span>
             </label>
           </div>
-          <small style="color: var(--text-muted);">Use Portal_AI para desenvolvimento local. Use Produção para quando o site estiver publicado.</small>
+          <small style="color: var(--text-muted);">Use Portal_AI para desenvolvimento local. Use Produção para quando o site estiver publicado (exige Chave API).</small>
         </div>
 
         <div id="ai-production-fields" style="display: ${mode === 'production' ? 'block' : 'none'}; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
           <div class="form-group">
-            <label>Provedor AI (Top 10)</label>
+            <label>Provedor AI (Recomendado: Google Gemini)</label>
             <select id="ai-provider" style="width: 100%;">
-              <option value="openai" ${provider === 'openai' ? 'selected' : ''}>OpenAI (Default)</option>
-              <option value="gemini" ${provider === 'gemini' ? 'selected' : ''}>Google Gemini</option>
+              <option value="gemini" ${provider === 'gemini' ? 'selected' : ''}>Google Gemini (Grátis/Baixo Custo)</option>
+              <option value="openai" ${provider === 'openai' ? 'selected' : ''}>OpenAI (ChatGPT)</option>
               <option value="anthropic" ${provider === 'anthropic' ? 'selected' : ''}>Anthropic Claude</option>
-              <option value="groq" ${provider === 'groq' ? 'selected' : ''}>Groq (Llama 3)</option>
-              <option value="mistral" ${provider === 'mistral' ? 'selected' : ''}>Mistral AI</option>
-              <option value="perplexity" ${provider === 'perplexity' ? 'selected' : ''}>Perplexity</option>
+              <option value="groq" ${provider === 'groq' ? 'selected' : ''}>Groq (Ultra Rápido)</option>
               <option value="deepseek" ${provider === 'deepseek' ? 'selected' : ''}>DeepSeek</option>
-              <option value="together" ${provider === 'together' ? 'selected' : ''}>Together AI</option>
-              <option value="openrouter" ${provider === 'openrouter' ? 'selected' : ''}>OpenRouter</option>
-              <option value="cohere" ${provider === 'cohere' ? 'selected' : ''}>Cohere</option>
+              <option value="openrouter" ${provider === 'openrouter' ? 'selected' : ''}>OpenRouter (Vários)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>API Key</label>
-            <input type="password" id="ai-apikey" value="${apiKey}" placeholder="Sua chave API...">
-            <small style="color: var(--text-muted);">A chave é guardada localmente no seu navegador.</small>
+            <label id="label-apikey">Chave API (Gemini/Outro)</label>
+            <input type="password" id="ai-apikey" value="${apiKey}" placeholder="Cole aqui a sua chave API...">
+            <div style="margin-top: 0.5rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.8rem; line-height: 1.4;">
+              <strong>Como obter uma chave para o Gemini?</strong><br>
+              1. Vá ao <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--c-primary);">Google AI Studio</a>.<br>
+              2. Crie uma "API Key".<br>
+              3. Cole-a no campo acima e clique em "Guardar".
+            </div>
           </div>
         </div>
 
         <div style="margin-top: 2rem; padding: 1rem; background: rgba(var(--c-primary-rgb), 0.1); border-radius: 8px;">
-          <h4 style="margin-bottom: 0.5rem;">🧠 Estado do RAG (Contexto Local)</h4>
+          <h4 style="margin-bottom: 0.5rem;">🧠 Estado do RAG (Base de Conhecimento)</h4>
           <p style="font-size: 0.85rem; color: var(--text-secondary);">
-            O sistema está a indexar automaticamente o seu <code>site-data.json</code> para fornecer contexto ao Chatbot.
+            O chatbot utiliza os dados do site (notícias, eventos, história) para responder.
           </p>
-          <button class="btn btn-outline btn-sm" style="margin-top: 0.5rem;" onclick="window.AI.init(); showToast('🧠 Dados re-indexados!');">🔄 Re-indexar Agora</button>
+          <button class="btn btn-outline btn-sm" style="margin-top: 0.5rem;" onclick="window.AI.init(); showToast('🧠 Dados re-indexados!');">🔄 Atualizar Base de Conhecimento</button>
         </div>
 
         <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -1432,13 +1482,17 @@ function toggleAIFields() {
   fields.style.display = mode === 'production' ? 'block' : 'none';
 }
 
+
+
 async function saveAISettings() {
   const mode = document.querySelector('input[name="ai-mode"]:checked').value;
   const provider = document.getElementById('ai-provider').value;
   const apiKey = document.getElementById('ai-apikey').value.trim();
+  const chatbotEnabled = document.getElementById('chatbot-enabled').checked;
 
   localStorage.setItem('agr439-ai-mode', mode);
   localStorage.setItem('agr439-ai-provider', provider);
+  localStorage.setItem('agr439-chatbot-enabled', chatbotEnabled);
   
   if (apiKey && window.Security) {
     const encrypted = await window.Security.encrypt(apiKey);
@@ -1465,12 +1519,14 @@ async function testAndSaveAISettings() {
   
   try {
     const result = await window.AI.testConnection();
-    alert(`✅ Ligação com o provedor estabelecida com sucesso!\n\nResposta do provedor: ${result}`);
+    showToast(`✅ Ligação com o provedor estabelecida com sucesso!\n\nResposta do provedor: ${result}`);
   } catch (err) {
-    alert(`❌ Falha na ligação AI:\n\n${err.message}\n\nA sua chave foi guardada na mesma, mas poderá não funcionar corretamente com a configuração atual.`);
+    showToast(`❌ Falha na ligação AI:\n\n${err.message}\n\nA sua chave foi guardada na mesma, mas poderá não funcionar corretamente com a configuração atual.`);
   } finally {
-    btn.disabled = false;
-    btn.textContent = originalText;
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
   }
 }
 
@@ -1560,25 +1616,29 @@ async function syncFromGitHub(manual = false) {
 async function publishSiteData() {
   const config = getGitHubConfig();
   if (!config.token || !config.owner || !config.repo) {
-    alert('Erro: Configure o Token do GitHub nas Definições primeiro.');
+    showToast('Erro: Configure o Token do GitHub nas Definições primeiro.');
     return;
   }
 
-  if (!confirm('Tem a certeza que deseja tornar as suas alterações públicas para todos os visitantes?')) return;
+  // Comentado para evitar bloqueio do browser durante debug
+  // if (!confirm('Tem a certeza que deseja tornar as suas alterações públicas?')) return;
 
   const btn = document.getElementById('btn-publish');
-  const originalText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = '🚀 A publicar...';
+  const originalText = btn ? btn.textContent : '🚀 Publicar Agora';
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '🚀 A publicar...';
+  }
 
   try {
-    // 1. Collect all data
+    console.log('Iniciando publicação...');
     const payload = {};
     SYNC_KEYS.forEach(key => {
       const dataKey = key.replace('agr439-admin-', '').replace('agr439-', '');
-      const saved = localStorage.getItem(key);
-      payload[dataKey] = saved ? JSON.parse(saved) : [];
+      payload[dataKey] = getStore(key); // Usar getStore que já é seguro
     });
+    
+    console.log('Payload gerado com sucesso:', Object.keys(payload));
 
     // 2. Get current SHA if file exists
     let sha = null;
@@ -1610,8 +1670,14 @@ async function publishSiteData() {
     });
 
     if (!putRes.ok) {
-      const err = await putRes.json();
-      throw new Error(err.message || 'Erro ao comunicar com a API do GitHub');
+      let errMsg = 'Erro na API do GitHub';
+      try {
+        const err = await putRes.json();
+        errMsg = err.message || errMsg;
+      } catch (e) {
+        errMsg = `HTTP ${putRes.status}: ${putRes.statusText}`;
+      }
+      throw new Error(errMsg);
     }
 
     showToast('✨ Site publicado com sucesso! Visite para ver as mudanças.');
@@ -1621,6 +1687,46 @@ async function publishSiteData() {
     btn.disabled = false;
     btn.textContent = originalText;
   }
+}
+
+
+function renderSettings(container) {
+  const config = getGitHubConfig();
+
+  container.innerHTML = `
+    <div class="admin-card" style="max-width: 600px;">
+      <h3>⚙️ Configurações do GitHub (Auto-Publish)</h3>
+      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+        Configure estas definições para que o sistema possa publicar automaticamente as suas alterações no site.
+      </p>
+
+      <div class="form-group">
+        <label>Personal Access Token (GitHub)</label>
+        <input type="password" id="gh-token" value="${esc(config.token)}" placeholder="ghp_xxxxxxxxxxxx">
+        <small style="color: var(--text-muted);">A sua chave é guardada apenas localmente no navegador.</small>
+      </div>
+
+      <div class="form-group-row" style="display: flex; gap: 1rem; margin-top: 1rem;">
+        <div class="form-group" style="flex: 1;">
+          <label>Proprietário (Owner)</label>
+          <input type="text" id="gh-owner" value="${esc(config.owner)}" placeholder="Ex: Hallukardy">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Repositório (Repo)</label>
+          <input type="text" id="gh-repo" value="${esc(config.repo)}" placeholder="Ex: Agrupamento439">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 1rem;">
+        <label>Branch</label>
+        <input type="text" id="gh-branch" value="${esc(config.branch)}" placeholder="Ex: main">
+      </div>
+
+      <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+        <button class="btn btn-primary" onclick="saveGitHubSettings()">💾 Guardar Configuração</button>
+      </div>
+    </div>
+  `;
 }
 
 function getGitHubConfig() {
@@ -1690,8 +1796,14 @@ async function uploadToGitHub(file) {
   });
 
   if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.message || 'Erro no upload para o GitHub');
+    let errorMsg = 'Erro no upload para o GitHub';
+    try {
+      const err = await response.json();
+      errorMsg = err.message || errorMsg;
+    } catch (e) {
+      errorMsg = `Erro ${response.status}: ${response.statusText}`;
+    }
+    throw new Error(errorMsg);
   }
 
   const result = await response.json();
@@ -2001,7 +2113,7 @@ function esc(str) {
 
 function getCatLabel(cat) {
   const labels = {
-    'geral': 'Geral',
+    'geral': 'Notícia / Aviso',
     'lobitos': 'Lobitos',
     'exploradores': 'Exploradores',
     'pioneiros': 'Pioneiros',
@@ -2013,7 +2125,7 @@ function getCatLabel(cat) {
     'cancioneiro': 'Cancioneiro',
     'visitantes': 'Visitantes / Postais',
     'caixatempo': 'Caixa do Tempo (Arquivo)',
-    'hero': 'Destaques Hero'
+    'hero': 'Página Inicial / Títulos'
   };
   return labels[cat] || cat;
 }
@@ -2049,6 +2161,8 @@ function renderHeroStatsEditor(container) {
   let _heroRaw;
   try { _heroRaw = JSON.parse(localStorage.getItem('agr439-admin-hero-stats')); } catch (e) { _heroRaw = null; }
   const data = _heroRaw || {
+    badge: '🏕️ 50 Anos de Escutismo em Vila do Conde',
+    groupPhoto: 'assets/imagem.jpg',
     icon: 'assets/logo.png',
     title1: 'Agrupamento',
     title2: '439',
@@ -2061,11 +2175,32 @@ function renderHeroStatsEditor(container) {
 
   container.innerHTML = `
     <div class="admin-card">
-      <h3>✨ Destaques da Página Inicial</h3>
+      <h3>✨ Página Inicial / Títulos</h3>
       <p style="margin-bottom:1.5rem; color:var(--text-secondary);">Configure os textos principais e os valores das estatísticas que aparecem no topo do site.</p>
       
-      <form id="hero-stats-form" onsubmit="event.preventDefault(); saveHeroStats();">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+      <form id="hero-stats-form" onsubmit="event.preventDefault(); window.saveHeroStats();">
+        <div class="form-group">
+          <label>Texto da Badge (Topo)</label>
+          <input type="text" id="h-badge" value="${esc(data.badge || '')}">
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem;">
+          <div class="form-group">
+            <label>Foto de Grupo (Topo - URL)</label>
+            <div style="display:flex; gap:0.5rem;">
+              <input type="text" id="h-group-photo" value="${esc(data.groupPhoto || '')}" style="flex-grow:1;">
+              <button type="button" class="btn btn-outline" onclick="openHeroPhotoPicker()" style="padding:0.5rem 1rem;">🖼️</button>
+            </div>
+          </div>
+          <div class="form-group">
+             <label>Preview Foto</label>
+             <div style="background:var(--bg-secondary); padding:0.5rem; border-radius:var(--r-md); text-align:center;">
+                <img id="h-group-preview" src="${data.groupPhoto || ''}" style="height:50px; border-radius:4px; border:1px solid var(--border-color); object-fit:cover; width:100px;">
+             </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:1rem;">
           <div class="form-group">
             <label>Ícone/Logo (URL)</label>
             <div style="display:flex; gap:0.5rem;">
@@ -2126,13 +2261,19 @@ function renderHeroStatsEditor(container) {
     </div>
   `;
 
-  // Update preview on URL change
+  // Update previews on URL change
   document.getElementById('h-icon').addEventListener('input', e => {
      document.getElementById('h-icon-preview').src = e.target.value;
   });
+  document.getElementById('h-group-photo').addEventListener('input', e => {
+     document.getElementById('h-group-preview').src = e.target.value;
+  });
 
   window.saveHeroStats = () => {
+    console.log('DEBUG: saveHeroStats starting...');
     const newData = {
+      badge: document.getElementById('h-badge').value,
+      groupPhoto: document.getElementById('h-group-photo').value,
       icon: document.getElementById('h-icon').value,
       title1: document.getElementById('h-title1').value,
       title2: document.getElementById('h-title2').value,
@@ -2142,8 +2283,16 @@ function renderHeroStatsEditor(container) {
       camps: parseInt(document.getElementById('h-camps').value),
       nights: parseInt(document.getElementById('h-nights').value)
     };
+    console.log('DEBUG: Data collected:', newData);
     localStorage.setItem('agr439-admin-hero-stats', JSON.stringify(newData));
-    alert('✅ Configurações salvas com sucesso! A página inicial foi atualizada.');
+    showToast('✅ Configurações salvas com sucesso! A página inicial foi atualizada.');
+  };
+
+  window.openHeroPhotoPicker = () => {
+    openImagePicker(url => {
+      document.getElementById('h-group-photo').value = url;
+      document.getElementById('h-group-preview').src = url;
+    }, 'hero');
   };
 
   window.openHeroIconPicker = () => {
@@ -2156,6 +2305,25 @@ function renderHeroStatsEditor(container) {
 
 function toggleSidebar() {
   document.querySelector('.admin-sidebar')?.classList.toggle('open');
+}
+
+function cleanGhostGalleryItems() {
+  const gallery = getStore('agr439-admin-gallery');
+  if (!gallery || gallery.length === 0) return;
+
+  const ghostIds = ['test2', 'test_with_token', 'test-item', 'test_item'];
+  const newGallery = gallery.filter(item => {
+    // Remove se o ID estiver na lista de fantasmas
+    if (ghostIds.includes(item.id)) return false;
+    // Remove se o URL contiver "test" e não parecer um URL real
+    if (item.url && (item.url.includes('test2') || item.url.includes('test_with_token'))) return false;
+    return true;
+  });
+
+  if (newGallery.length !== gallery.length) {
+    console.log(`CLEANUP: Removed ${gallery.length - newGallery.length} ghost items.`);
+    setStore('agr439-admin-gallery', newGallery);
+  }
 }
 
 

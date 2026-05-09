@@ -8,9 +8,15 @@
 function getSafeStore(key, defaultVal) {
   try {
     const val = localStorage.getItem(key);
-    return val ? JSON.parse(val) : defaultVal;
+    if (!val) return defaultVal;
+    
+    // Check if it's already an object/array or needs parsing
+    if (val.startsWith('{') || val.startsWith('[')) {
+      return JSON.parse(val);
+    }
+    return val;
   } catch (e) {
-    console.error('Error parsing local storage key: ' + key, e);
+    console.error(`Error parsing local storage key: ${key}`, e);
     return defaultVal;
   }
 }
@@ -34,11 +40,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initVisits();
   renderCaixaTempo();
   initRecruitmentContent();
-  initPagesContent();
+
   initTimeline();
   initScrollReveal();
+  initChatbotVisibility();
   translatePage();
 });
+
+function initChatbotVisibility() {
+  const enabled = localStorage.getItem('agr439-chatbot-enabled') === 'true';
+  const widget = document.querySelector('.ai-bot-widget');
+  if (widget) {
+    widget.style.display = enabled ? 'block' : 'none';
+  }
+}
 
 /* ---------- REMOTE DATA LOADING ---------- */
 async function initRemoteData() {
@@ -185,7 +200,23 @@ function initParticles() {
 /* ---------- HERO & STATS DYNAMIC LOADING ---------- */
 function initHeroStats() {
   const data = getSafeStore('agr439-admin-hero-stats', null);
+  console.log('DEBUG: Dados do Hero carregados:', data);
   if (!data) return;
+
+  // Update badge
+  const badge = document.querySelector('.hero-badge');
+  console.log('DEBUG: Elemento Badge encontrado?', !!badge);
+  if (badge && data.badge) {
+    console.log('DEBUG: Aplicando novo texto à Badge:', data.badge);
+    badge.textContent = data.badge;
+    badge.setAttribute('data-custom', 'true');
+  }
+
+  // Update group photo
+  const groupPhoto = document.querySelector('.hero-group-photo');
+  if (groupPhoto && data.groupPhoto) {
+    groupPhoto.src = data.groupPhoto;
+  }
 
   // Update hero icon
   const logo = document.querySelector('.hero-logo');
@@ -208,9 +239,13 @@ function initHeroStats() {
 
   // Update Subtitle
   const subtitle = document.querySelector('.hero-subtitle');
-  if (subtitle && data.subtitle) {
+  if (subtitle && data.subtitle && data.subtitle !== 'SSSS') {
     subtitle.textContent = data.subtitle;
     subtitle.setAttribute('data-custom', 'true');
+  } else if (subtitle) {
+    // Fallback case: if data is invalid, ensure we don't show SSSS
+    // The translatePage() will later fill this with the correct translation if data-custom is not set
+    subtitle.removeAttribute('data-custom');
   }
 
   // Update Statistics
@@ -566,9 +601,13 @@ function renderDynamicNews() {
   const grid = document.getElementById('newsGrid');
   if (!grid) return;
 
-  const news = getSafeStore('agr439-admin-news', JSON.parse('[]')).filter(n => n.published);
+  const allNews = getSafeStore('agr439-admin-news', []);
+  const news = allNews.filter(n => n.published === true || n.published === 'true');
   
   if (news.length === 0) {
+    if (allNews.length > 0) {
+      console.warn('AVISO: Existem ' + allNews.length + ' notícias guardadas, mas nenhuma está marcada como PUBLICADA.');
+    }
     grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 2rem; color: var(--text-muted);">Sem notícias publicadas no momento.</div>';
     return;
   }
@@ -576,19 +615,46 @@ function renderDynamicNews() {
   // Sort by date descending
   news.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  grid.innerHTML = news.map(n => `
-    <div class="news-card reveal visible" data-tag="${n.tag}">
-      ${n.imageUrl ? `<img src="${n.imageUrl}" class="news-card-img" alt="${escapeHtml(n.title)}" onclick="openLightbox(this.src)">` : ''}
-      <div class="news-card-body">
-        <span class="news-card-tag tag-${n.tag}">${n.tag}</span>
-        <h3>${escapeHtml(n.title)}</h3>
-        <p>${escapeHtml(n.content).replace(/\n/g, '<br>')}</p>
-        <div class="news-card-date">📅 ${new Date(n.date).toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' })}</div>
-      </div>
-    </div>
-  `).join('');
+  grid.innerHTML = news.map(n => {
+    const safeTitle = escapeHtml(n.title);
+    const safeContent = escapeHtml(n.content).replace(/\n/g, '<br>');
+    const dateStr = new Date(n.date).toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' });
+    
+    return `
+      <article class="news-card reveal visible" data-tag="${n.tag}">
+        ${n.imageUrl ? `<img src="${n.imageUrl}" class="news-card-img" alt="${safeTitle}" onclick="openLightbox(this.src)" onload="resizeAllGridItems()" loading="lazy">` : ''}
+        <div class="news-card-body">
+          <span class="news-card-tag tag-${n.tag}">${n.tag}</span>
+          <h3>${safeTitle}</h3>
+          <p>${safeContent}</p>
+          <div class="news-card-date">📅 ${dateStr}</div>
+        </div>
+      </article>
+    `;
+  }).join('');
 
+  // Apply Bento Grid (Masonry) layout
+  setTimeout(resizeAllGridItems, 100);
 }
+
+function resizeGridItem(item) {
+  const grid = document.getElementById('newsGrid');
+  if (!grid) return;
+  const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+  const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+  const contentHeight = item.getBoundingClientRect().height;
+  const rowSpan = Math.ceil((contentHeight + rowGap) / (rowHeight + rowGap));
+  item.style.gridRowEnd = `span ${rowSpan}`;
+}
+
+function resizeAllGridItems() {
+  const allItems = document.getElementsByClassName('news-card');
+  for (let x = 0; x < allItems.length; x++) {
+    resizeGridItem(allItems[x]);
+  }
+}
+
+window.addEventListener('resize', resizeAllGridItems);
 
 function renderDynamicEvents() {
   const grid = document.getElementById('calendarGrid');
@@ -688,15 +754,16 @@ function initPagesContent() {
 
   pages.forEach(page => {
     // Prefer the EN translation when that language is active, fall back to PT content
-    const content = (lang === 'en' && page.contentEn && page.contentEn.trim())
-      ? page.contentEn
-      : (page.content || '').trim();
+    const content = (lang === 'en' && page.contentEn && page.contentEn.trim()) ?
+      page.contentEn :
+      (page.content || '').trim();
     if (!content) return;
 
     if (page.id === 'hero') {
       // Update hero subtitle — equivalent to data-i18n="hero_subtitle"
       const el = document.querySelector('[data-i18n="hero_subtitle"]');
-      if (el) {
+      // Only update if it hasn't been customized by initHeroStats yet
+      if (el && el.getAttribute('data-custom') !== 'true') {
         el.textContent = content;
         el.setAttribute('data-custom', 'true'); // prevent translatePage() from overwriting
       }
@@ -935,8 +1002,9 @@ function renderCaixaTempo() {
       <div class="archive-card reveal" data-item-id="${item.id}" data-current-img="0" data-images="${escapeHtml(JSON.stringify(urls))}">
         <div class="archive-tag">${escapeHtml(item.category || 'Arquivo')}</div>
         <div class="archive-card-inner">
-          <div class="archive-img-wrapper">
-            <img src="${urls[0]}" class="archive-img" alt="${escapeHtml(item.title)}" onclick="openLightbox(this.src, '${escapeHtml(item.title)}')">
+          <div class="archive-img-wrapper" onclick="openLightbox(this.querySelector('.archive-img').src, '${escapeHtml(item.title)}')">
+            <img src="${urls[0]}" class="archive-img" alt="${escapeHtml(item.title)}">
+            <div class="archive-zoom-overlay"><span class="icon">🔍</span></div>
             
             ${hasMultiple ? `
               <div class="archive-carousel-controls">
@@ -1039,7 +1107,11 @@ function openTimelineModal(id) {
     let itemsHtml = items.map(item => {
       let mediaHtml = '';
       if (item.imageUrl) {
-        mediaHtml += `<img src="${escapeHtml(item.imageUrl)}" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" alt="Imagem do Evento">`;
+        mediaHtml += `<img src="${escapeHtml(item.imageUrl)}" 
+                        onclick="openLightbox(this.src)" 
+                        title="Clique para ampliar"
+                        style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; cursor: zoom-in;" 
+                        alt="Imagem do Evento">`;
       }
       if (item.videoUrl) {
         const embedUrl = getYoutubeEmbedUrl(item.videoUrl);
@@ -1091,6 +1163,23 @@ function openTimelineModal(id) {
 
 function closeTimelineModal() {
   const modal = document.getElementById('timeline-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+/* ---------- PRIVACY MODAL ---------- */
+function openPrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closePrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
   if (modal) {
     modal.classList.remove('active');
     document.body.style.overflow = '';

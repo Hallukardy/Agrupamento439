@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/style.css?v=2">
   
   <!-- AI Service & i18n -->
+  <script src="js/security-utils.js"></script>
   <script src="js/ai-service.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/chatbot.js" defer></script>
@@ -57,8 +58,10 @@
   </nav>
 
   <!-- ============ HERO ============ -->
-  <section class="hero" id="inicio">
-    <div class="hero-bg"></div>
+  <header class="hero" id="inicio">
+    <div class="hero-bg">
+      <div class="hero-mesh"></div>
+    </div>
     <div class="hero-overlay"></div>
     <div class="hero-particles"></div>
 
@@ -71,7 +74,10 @@
         <div class="hero-group-photo-overlay"></div>
       </div>
 
-      <img src="assets/logo.png" alt="Flor de Lis" class="hero-logo">
+      <div style="position: relative; width: 90px; height: 90px; margin: 0 auto var(--s-lg);">
+        <div class="hero-logo-glow"></div>
+        <img src="assets/logo.png" alt="Flor de Lis" class="hero-logo" style="margin: 0;">
+      </div>
       <h1>
         <span data-i18n="hero_title_1">Agrupamento</span>
         <span class="highlight" data-i18n="hero_title_2">439</span>
@@ -104,9 +110,9 @@
     </div>
 
     <div class="hero-scroll">
-      <div class="hero-scroll-icon"></div>
+      <div class="hero-scroll-icon" aria-hidden="true"></div>
     </div>
-  </section>
+  </header>
 
   <!-- ============ NEWS ============ -->
   <section class="section" id="noticias">
@@ -703,18 +709,18 @@
 
         <!-- COL A: Agrupamento 439 -->
         <div class="contacts-block">
-          <div class="contacts-block-header">
-            <span class="contacts-block-icon">⚜️</span>
+          <header class="contacts-block-header">
+            <span class="contacts-block-icon" aria-hidden="true">⚜️</span>
             <h3>Agrupamento 439</h3>
-          </div>
+          </header>
           <div class="contact-cards">
-            <div class="contact-card">
-              <div class="contact-icon">📧</div>
+            <article class="contact-card">
+              <div class="contact-icon" aria-hidden="true">📧</div>
               <div>
                 <h4>Email Geral</h4>
                 <p><a href="mailto:geral.439@escutismo.pt">geral.439@escutismo.pt</a></p>
               </div>
-            </div>
+            </article>
             <div class="contact-card">
               <div class="contact-icon">📋</div>
               <div>
@@ -924,7 +930,7 @@
 
         <div class="footer-col">
           <h4 data-i18n="footer_legal">Legal</h4>
-          <a href="#" data-i18n="footer_privacy">Privacidade</a>
+          <a href="javascript:void(0)" onclick="openPrivacyModal()" data-i18n="footer_privacy">Privacidade</a>
           <a href="admin.html" data-i18n="nav_admin">Área Admin</a>
         </div>
       </div>
@@ -959,6 +965,39 @@
           <p id="song-no-video" style="display: none; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
             Vídeo não disponível para esta música.
           </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Modal -->
+  <div class="modal-overlay" id="privacy-modal">
+    <div class="modal" style="max-width: 700px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        <h2 style="color: var(--c-primary); font-family: var(--f-heading);">🛡️ Política de Privacidade</h2>
+        <button class="nav-toggle-btn" onclick="closePrivacyModal()" style="width: 36px; height: 36px;">✕</button>
+      </div>
+      
+      <div style="line-height: 1.6; color: var(--text-primary); font-size: 0.95rem; max-height: 60vh; overflow-y: auto; padding-right: 1rem;">
+        <p>No <strong>Agrupamento 439 — São João Baptista</strong>, a privacidade e a segurança dos dados dos nossos membros, encarregados de educação e visitantes são fundamentais.</p>
+        
+        <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1.1rem; color: var(--c-primary);">1. Recolha de Dados</h3>
+        <p>Recolhemos dados através do formulário de contacto (Nome, Email) e do formulário de newsletter. Estes dados são fornecidos voluntariamente pelo utilizador ao interagir com o site.</p>
+        
+        <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1.1rem; color: var(--c-primary);">2. Finalidade</h3>
+        <p>Os dados do formulário de contacto são usados exclusivamente para responder aos pedidos de informação. O endereço de email da newsletter é usado apenas para o envio de comunicações e novidades do Agrupamento.</p>
+        
+        <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1.1rem; color: var(--c-primary);">3. Cookies</h3>
+        <p>O nosso site utiliza apenas cookies técnicos essenciais para o funcionamento básico, como memorizar a sua preferência de tema (claro/escuro) e idioma. Não utilizamos cookies de rastreio ou publicidade de terceiros.</p>
+        
+        <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1.1rem; color: var(--c-primary);">4. Proteção de Dados</h3>
+        <p>Comprometemo-nos a não partilhar, vender ou alugar os seus dados pessoais a terceiros. O acesso à informação é restrito apenas aos responsáveis do Agrupamento necessários para o tratamento do pedido.</p>
+        
+        <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1.1rem; color: var(--c-primary);">5. Os Seus Direitos</h3>
+        <p>Pode solicitar a retificação ou remoção dos seus dados em qualquer altura, contactando-nos através do formulário de contacto no site ou dirigindo-se à nossa sede.</p>
+        
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(var(--c-primary-rgb), 0.05); border-radius: 8px; font-size: 0.85rem; color: var(--text-muted);">
+          Ao utilizar este site, declara estar ciente e concordar com os termos desta política. Última atualização: Abril de 2026.
         </div>
       </div>
     </div>

@@ -3,9 +3,12 @@
  * Uses Web Crypto API (SubtleCrypto) for AES-GCM encryption.
  */
 class SecurityService {
-    static async #getSecretKey() {
+    /**
+     * Internal method to get or derive the secret key.
+     * @private
+     */
+    static async _getSecretKey() {
         // Encontra ou gera um salt único baseado na maquina simulada (browser fingerprint hash)
-        // No contexto de browser, usamos um segredo persistente se disponível.
         let salt = localStorage.getItem('agr439-secure-salt');
         if (!salt) {
             salt = crypto.randomUUID();
@@ -38,7 +41,7 @@ class SecurityService {
     static async encrypt(text) {
         if (!text) return null;
         try {
-            const key = await this.#getSecretKey();
+            const key = await this._getSecretKey();
             const iv = crypto.getRandomValues(new Uint8Array(12));
             const encoder = new TextEncoder();
             const encrypted = await crypto.subtle.encrypt(
@@ -64,7 +67,7 @@ class SecurityService {
             const binary = Uint8Array.from(atob(data), c => c.charCodeAt(0));
             const iv = binary.slice(0, 12);
             const content = binary.slice(12);
-            const key = await this.#getSecretKey();
+            const key = await this._getSecretKey();
             
             const decrypted = await crypto.subtle.decrypt(
                 { name: "AES-GCM", iv },

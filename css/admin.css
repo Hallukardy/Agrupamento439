@@ -287,6 +287,7 @@
 
 .action-btn.edit:hover { color: #4285F4; }
 .action-btn.delete:hover { color: #E53935; }
+.action-btn * { pointer-events: none; }
 
 /* ---------- MODAL ---------- */
 .modal-overlay {
